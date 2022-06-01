@@ -43,7 +43,7 @@ import com.lenovo.innovate.widget.GuideTipsDialog;
 
 import com.lenovo.innovate.fragment.news.NewsFragment;
 import com.lenovo.innovate.fragment.other.AboutFragment;
-import com.lenovo.innovate.fragment.other.SettingsFragment;
+import com.lenovo.innovate.prince.fragment.ExploitationFragment;
 import com.lenovo.innovate.fragment.profile.ProfileFragment;
 import com.lenovo.innovate.fragment.trending.TrendingFragment;
 import com.xuexiang.xaop.annotation.SingleClick;
@@ -157,7 +157,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
             } else {
                 int id = menuItem.getItemId();
                 if (id == R.id.nav_settings) {
-                    openNewPage(SettingsFragment.class);
+                    openNewPage(ExploitationFragment.class);
                 } else if (id == R.id.nav_about) {
                     openNewPage(AboutFragment.class);
                 } else {

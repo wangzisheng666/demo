@@ -15,11 +15,12 @@
  *
  */
 
-package com.lenovo.innovate.activity;
+package com.lenovo.innovate.prince.activity;
 
 import android.view.KeyEvent;
 
 import com.lenovo.innovate.R;
+import com.lenovo.innovate.activity.MainActivity;
 import com.lenovo.innovate.prince.activity.PermissionActivity;
 import com.lenovo.innovate.utils.SettingUtils;
 import com.lenovo.innovate.utils.TokenUtils;

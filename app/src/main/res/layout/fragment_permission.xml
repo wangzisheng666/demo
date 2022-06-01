@@ -99,6 +99,11 @@
                 app:sLeftTopTextString="相机"
                 app:sLeftViewGravity="left_center"
                 app:sRightTextString="111" />
+
+            <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
+                android:id="@+id/super_ex"
+                style="@style/InfoItem.Account"
+                app:sCenterTextString="权限利用" />
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

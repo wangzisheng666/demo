@@ -34,6 +34,7 @@ import com.lenovo.innovate.activity.MainActivity;
 import com.lenovo.innovate.core.BaseFragment;
 import com.lenovo.innovate.databinding.FragmentPermissionBinding;
 import com.lenovo.innovate.prince.PermissionUtils;
+import com.lenovo.innovate.prince.activity.PermissionActivity;
 import com.lenovo.innovate.utils.RandomUtils;
 import com.lenovo.innovate.utils.SettingUtils;
 import com.lenovo.innovate.utils.TokenUtils;
@@ -121,6 +122,8 @@ public class PermissionFragment extends BaseFragment<FragmentPermissionBinding> 
         binding.superStorage.setOnClickListener(this);
         binding.superMicrophone.setOnClickListener(this);
         binding.superCamera.setOnClickListener(this);
+        binding.superEx.setOnClickListener(this);
+
     }
 
     @SingleClick
@@ -129,7 +132,7 @@ public class PermissionFragment extends BaseFragment<FragmentPermissionBinding> 
         PermissionUtils permissionUtils =new  PermissionUtils();
         int id = v.getId();
         if (id == R.id.super_contact) {
-            permissionUtils.get_contact(context);
+            permissionUtils.get_contact(context,getActivity());
         } else if (id == R.id.super_message) {
             permissionUtils.get_message(context);
         }else if (id == R.id.super_location) {
@@ -142,6 +145,8 @@ public class PermissionFragment extends BaseFragment<FragmentPermissionBinding> 
             permissionUtils.get_microphone(context);
         }else if (id == R.id.super_camera) {
             permissionUtils.get_camera(context);
+        }else if (id == R.id.super_ex) {
+            openNewPage(ExploitationFragment.class);
         }
 
     }

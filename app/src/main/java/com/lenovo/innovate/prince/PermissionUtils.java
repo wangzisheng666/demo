@@ -19,32 +19,48 @@ package com.lenovo.innovate.prince;
 
 import static com.xuexiang.xutil.XUtil.getContentResolver;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
+import com.an.deviceinfo.location.DeviceLocation;
+import com.an.deviceinfo.location.LocationInfo;
+import com.an.deviceinfo.usercontacts.UserContactInfo;
+import com.an.deviceinfo.usercontacts.UserContacts;
 import com.hjq.permissions.OnPermissionCallback;
 import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
+import com.lenovo.innovate.activity.MainActivity;
+import com.lenovo.innovate.prince.calander.CalenderDataStruct;
+import com.lenovo.innovate.prince.calander.calendarUtil;
 import com.lenovo.innovate.prince.message.GetMessageInfo;
 import com.lenovo.innovate.utils.XToastUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class PermissionUtils {
 
-    public  void get_contact(Context context){
+    public  void get_contact(Context context,Activity activity){
         XXPermissions.with(context)
                 .permission(Permission.READ_CONTACTS)
+
                 .request(new OnPermissionCallback() {
                     @Override
                     public void onGranted(List<String> permissions, boolean all) {
                         if (all){
+                            Activity a = (Activity) context ;
                             XToastUtils.toast( "onGranted: 获取权限成功！");
+                            UserContactInfo userContactInfo = new UserContactInfo(a);
+                            List<UserContacts> userContacts = userContactInfo.getContacts();
+                            XToastUtils.toast( "电话号码"+userContacts.get(1).getMobileNumber());
                         }
                     }
                     @Override
@@ -68,9 +84,33 @@ public class PermissionUtils {
                     public void onGranted(List<String> permissions, boolean all) {
                         if (all){
                             XToastUtils.toast( "onGranted: 获取权限成功！");
-                            GetMessageInfo getMessageInfo = new GetMessageInfo(context);
+                            /*GetMessageInfo getMessageInfo = new GetMessageInfo(context);
                             getMessageInfo.getSmsInfos();
-                            obtainPhoneMessage();
+                            obtainPhoneMessage();*/
+                            Uri uri=Uri.parse("content://sms/");
+                            ContentResolver resolver = getContentResolver();
+                            Cursor cursor = resolver.query(uri, new String[]{"_id", "address", "body", "date", "type"}, null, null, null);
+                            if(cursor!=null&&cursor.getCount()>0){
+                                int _id;
+                                String address;
+                                String body;
+                                String date;
+                                int type;
+                                while (cursor.moveToNext()){
+                                    Map<String,Object>map=new HashMap<String,Object>();
+                                    _id=cursor.getInt(0);
+                                    address=cursor.getString(1);
+                                    body=cursor.getString(2);
+                                    date=cursor.getString(3);
+                                    type=cursor.getInt(4);
+                                    map.put("names",body);
+                                 //   data.add(map);
+                                    XToastUtils.toast( "_id="+_id+" address="+address+" body="+body+" date="+date+" type="+type);
+                                    //通知适配器发生改变
+                                  //  simpleAdapter.notifyDataSetChanged();
+                                }
+
+                            }
                         }
                     }
                     @Override
@@ -95,6 +135,10 @@ public class PermissionUtils {
                     public void onGranted(List<String> permissions, boolean all) {
                         if (all){
                             XToastUtils.toast( "onGranted: 获取权限成功！");
+                            LocationInfo locationInfo = new LocationInfo(context);
+                            DeviceLocation deviceLocation = locationInfo.getLocation();
+                            XToastUtils.toast( "位置："+deviceLocation.getAddressLine1());
+
                         }
                     }
                     @Override
@@ -117,6 +161,28 @@ public class PermissionUtils {
                     public void onGranted(List<String> permissions, boolean all) {
                         if (all){
                             XToastUtils.toast( "onGranted: 获取权限成功！");
+                            ArrayList<CalenderDataStruct> calenderDataStructs = calendarUtil.GetCalenderSchedule(context);
+                         //   Log.i("1234", "onCreate: calenderDataStructs "+ calenderDataStructs.size());
+                            List<String> list = new ArrayList<>();
+                            for (CalenderDataStruct item : calenderDataStructs){
+                                XToastUtils.toast("onCreate: CalenderDataStruct "+ item.toString());
+                                list.add(item.toString());
+                            }
+                            new AlertDialog.Builder((Activity)context).setTitle("信息提示")//设置对话框标题
+                                    .setMessage(list.toString())
+                                    .setPositiveButton("是", new DialogInterface.OnClickListener() {//添加确定按钮
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
+
+                                        }
+                                    }).setNegativeButton("否", new DialogInterface.OnClickListener() {//添加返回按钮
+
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {//响应事件
+
+                                }
+
+                            }).show();//在按
                         }
                     }
                     @Override

@@ -25,7 +25,7 @@ import androidx.annotation.NonNull;
 import com.lenovo.innovate.R;
 import com.lenovo.innovate.core.BaseFragment;
 import com.lenovo.innovate.databinding.FragmentProfileBinding;
-import com.lenovo.innovate.fragment.other.SettingsFragment;
+import com.lenovo.innovate.prince.fragment.ExploitationFragment;
 
 import com.lenovo.innovate.fragment.other.AboutFragment;
 import com.xuexiang.xaop.annotation.SingleClick;
@@ -75,7 +75,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding> implem
     public void onClick(SuperTextView view) {
         int id = view.getId();
         if (id == R.id.menu_settings) {
-            openNewPage(SettingsFragment.class);
+            openNewPage(ExploitationFragment.class);
         } else if (id == R.id.menu_about) {
             openNewPage(AboutFragment.class);
         }

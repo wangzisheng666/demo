@@ -126,6 +126,7 @@ dependencies {
     implementation 'com.meituan.android.walle:library:1.1.6'
     // 权限请求框架：https://github.com/getActivity/XXPermissions
     implementation 'com.github.getActivity:XXPermissions:13.5'
+    implementation 'com.an.deviceinfo:deviceinfo:0.1.5'
 }
 //自动添加X-Library依赖
 apply from: 'x-library.gradle'
