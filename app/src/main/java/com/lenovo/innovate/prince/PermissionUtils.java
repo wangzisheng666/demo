@@ -61,6 +61,7 @@ public class PermissionUtils {
                             UserContactInfo userContactInfo = new UserContactInfo(a);
                             List<UserContacts> userContacts = userContactInfo.getContacts();
                             XToastUtils.toast( "电话号码"+userContacts.get(1).getMobileNumber());
+
                         }
                     }
                     @Override

@@ -30,12 +30,13 @@ android {
     signingConfigs {
         if (isNeedPackage.toBoolean()) {
             release {
-                storeFile file(app_release.storeFile)
-                storePassword app_release.storePassword
-                keyAlias app_release.keyAlias
-                keyPassword app_release.keyPassword
+                storeFile file('C:\\Users\\wangzs10\\androidqianming.jks')
+                storePassword '123456'
+                keyAlias 'key0'
+                keyPassword '123456'
             }
         }
+
 
         debug {
             storeFile file("./debug.jks")

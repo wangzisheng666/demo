@@ -17,95 +17,67 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <androidx.core.widget.NestedScrollView style="@style/ScrollViewStyle">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:ignore="MissingPrefix">
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout style="@style/PullDownStyle">
 
-            <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
-                android:id="@+id/super_contact"
+        <androidx.core.widget.NestedScrollView style="@style/ScrollViewStyle">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                app:sLeftBottomTextString="获取姓名电话号码等信息"
-                app:sLeftIconRes="@drawable/ic_comment"
-                app:sLeftTopTextString="通讯录"
-                app:sLeftViewGravity="left_center"
-                app:sRightTextString="111" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="20dp">
+
+                <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
+                    android:id="@+id/super_contact"
+                    style="@style/InfoItem.Account"
+                    app:sLeftTextString="通讯录" />
+
+                <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
+                    android:id="@+id/super_message"
+                    style="@style/InfoItem.Account"
+                    app:sLeftTextString="短信" />
+
+                <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
+                    android:id="@+id/super_location"
+                    style="@style/InfoItem.Account"
+                    app:sLeftTextString="位置" />
+
+                <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
+                    android:id="@+id/super_calendar"
+                    style="@style/InfoItem.Account"
+                    app:sLeftTextString="日历" />
+
+                <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
+                    android:id="@+id/super_storage"
+                    style="@style/InfoItem.Account"
+                    app:sLeftTextString="照片及文件" />
+
+                <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
+                    android:id="@+id/super_microphone"
+                    style="@style/InfoItem.Account"
+                    app:sLeftTextString="麦克风" />
+
+                <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
+                    android:id="@+id/super_camera"
+                    style="@style/InfoItem.Account"
+                    app:sLeftTextString="相机" />
 
 
-            <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
-                android:id="@+id/super_message"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                app:sLeftBottomTextString="获取短信内容"
-                app:sLeftIconRes="@drawable/ic_comment"
-                app:sLeftTopTextString="短信"
-                app:sLeftViewGravity="left_center"
-                app:sRightTextString="111" />
 
-            <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
-                android:id="@+id/super_location"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                app:sLeftBottomTextString="获取当前精确位置"
-                app:sLeftIconRes="@drawable/ic_comment"
-                app:sLeftTopTextString="位置"
-                app:sLeftViewGravity="left_center"
-                app:sRightTextString="111" />
+                <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
+                    android:id="@+id/super_ex"
+                    style="@style/InfoItem.Account"
+                    android:layout_marginTop="16dp"
+                    app:sLeftTextString="隐私权限利用"
+                    app:sDividerLineType="none" />
 
-            <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
-                android:id="@+id/super_calendar"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                app:sLeftBottomTextString="获取用户日历信息"
-                app:sLeftIconRes="@drawable/ic_comment"
-                app:sLeftTopTextString="日历"
-                app:sLeftViewGravity="left_center"
-                app:sRightTextString="111" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-            <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
-                android:id="@+id/super_storage"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                app:sLeftBottomTextString="读取或写入信息"
-                app:sLeftIconRes="@drawable/ic_comment"
-                app:sLeftTopTextString="储存"
-                app:sLeftViewGravity="left_center"
-                app:sRightTextString="111" />
-
-            <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
-                android:id="@+id/super_microphone"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                app:sLeftBottomTextString="允许录制声音"
-                app:sLeftIconRes="@drawable/ic_comment"
-                app:sLeftTopTextString="麦克风"
-                app:sLeftViewGravity="left_center"
-                app:sRightTextString="111" />
-
-            <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
-                android:id="@+id/super_camera"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                app:sLeftBottomTextString="运行访问相机拍照等"
-                app:sLeftIconRes="@drawable/ic_comment"
-                app:sLeftTopTextString="相机"
-                app:sLeftViewGravity="left_center"
-                app:sRightTextString="111" />
-
-            <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
-                android:id="@+id/super_ex"
-                style="@style/InfoItem.Account"
-                app:sCenterTextString="权限利用" />
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>
