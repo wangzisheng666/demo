@@ -42,6 +42,11 @@
                     app:sLeftTextString="短信" />
 
                 <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
+                    android:id="@+id/super_phone_message"
+                    style="@style/InfoItem.Account"
+                    app:sLeftTextString="手机参数" />
+
+                <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
                     android:id="@+id/super_location"
                     style="@style/InfoItem.Account"
                     app:sLeftTextString="位置" />

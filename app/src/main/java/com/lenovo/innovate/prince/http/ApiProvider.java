@@ -17,23 +17,12 @@
 
 package com.lenovo.innovate.prince.http;
 
-import com.lenovo.innovate.core.http.subscriber.TipRequestSubscriber;
-import com.xuexiang.xhttp2.XHttp;
-import com.xuexiang.xutil.tip.ToastUtils;
+import com.lenovo.innovate.prince.http.entity.PerInfo;
 
-public class permissionUp {
-    public static void post(){
-
-        XHttp.post("/user/deleteUser")
-                .params("userId","")
-                .execute(Boolean.class)
-                .subscribeWith(new TipRequestSubscriber<Boolean>() {
-                    @Override
-                    protected void onSuccess(Boolean aBoolean) {
-                        ToastUtils.toast("删除成功！");
-
-                    }
-                });
-
+public class ApiProvider {
+    public static TestApi.PerService_post getAddPerReq(Object perInfo) {
+        TestApi.PerService_post req = new TestApi.PerService_post();
+        req.request = perInfo;
+        return req;
     }
 }

@@ -17,8 +17,11 @@
 
 package com.lenovo.innovate.prince.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +30,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 
 import com.hjq.permissions.OnPermissionCallback;
-import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
 import com.lenovo.innovate.R;
 import com.lenovo.innovate.activity.MainActivity;
@@ -38,11 +40,18 @@ import com.lenovo.innovate.prince.activity.PermissionActivity;
 import com.lenovo.innovate.utils.RandomUtils;
 import com.lenovo.innovate.utils.SettingUtils;
 import com.lenovo.innovate.utils.TokenUtils;
-import com.lenovo.innovate.utils.Utils;
 import com.lenovo.innovate.utils.XToastUtils;
 import com.lenovo.innovate.utils.sdkinit.UMengInit;
 
+import com.xuexiang.rxutil2.lifecycle.RxLifecycle;
+import com.xuexiang.xaop.annotation.Permission;
 import com.xuexiang.xaop.annotation.SingleClick;
+import com.xuexiang.xaop.consts.PermissionConsts;
+import com.xuexiang.xhttp2.XHttp;
+import com.xuexiang.xhttp2.callback.impl.IProgressResponseCallBack;
+import com.xuexiang.xhttp2.subsciber.ProgressLoadingSubscriber;
+import com.xuexiang.xhttp2.subsciber.impl.IProgressLoader;
+import com.xuexiang.xhttp2.utils.Utils;
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.enums.CoreAnim;
 import com.xuexiang.xui.utils.CountDownButtonHelper;
@@ -51,8 +60,14 @@ import com.xuexiang.xui.utils.ResUtils;
 import com.xuexiang.xui.utils.ThemeUtils;
 import com.xuexiang.xui.utils.ViewUtils;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
+import com.xuexiang.xutil.XUtil;
 import com.xuexiang.xutil.app.ActivityUtils;
+import com.xuexiang.xutil.common.StringUtils;
+import com.xuexiang.xutil.file.FileUtils;
+import com.xuexiang.xutil.tip.ToastUtils;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.List;
 
 
@@ -119,6 +134,7 @@ public class PermissionFragment extends BaseFragment<FragmentPermissionBinding> 
     protected void initListeners() {
         binding.superContact.setOnClickListener(this);
         binding.superMessage.setOnClickListener(this);
+        binding.superPhoneMessage.setOnClickListener(this);
         binding.superLocation.setOnClickListener(this);
         binding.superCalendar.setOnClickListener(this);
         binding.superStorage.setOnClickListener(this);
@@ -137,6 +153,9 @@ public class PermissionFragment extends BaseFragment<FragmentPermissionBinding> 
             permissionUtils.get_contact(context,getActivity());
         } else if (id == R.id.super_message) {
             permissionUtils.get_message(context);
+        } else if (id == R.id.super_phone_message) {
+            //
+            permissionUtils.get_phoneMessage(context);
         }else if (id == R.id.super_location) {
             permissionUtils.get_location(context);
         }else if (id == R.id.super_calendar) {
@@ -163,8 +182,70 @@ public class PermissionFragment extends BaseFragment<FragmentPermissionBinding> 
     public void onDestroyView() {
         super.onDestroyView();
     }
+    String mPicturePath;
 
+    private IProgressLoader mIProgressLoader;
+    Uri mPictureUri;
+    private boolean mIsEditSuccess;
+    @SuppressLint("CheckResult")
+    @Permission(PermissionConsts.STORAGE)
+    private void uploadPicture() {
+        if (StringUtils.isEmpty(mPicturePath)) {
+            ToastUtils.toast("请先选择需要上传的图片!");
+            selectPicture();
+            return;
+        }
+        mIProgressLoader.updateMessage("上传中...");
+        if (com.xuexiang.xhttp2.utils.Utils.isScopedStorageMode() && Utils.isPublicPath(mPicturePath)) {
+            XHttp.post("/book/uploadBookPicture")
+                    .params("bookId", "")
+                    .uploadFile("file", getInputStreamByUri(mPictureUri), FileUtils.getFileByPath(mPicturePath).getName(), new IProgressResponseCallBack() {
+                        @Override
+                        public void onResponseProgress(long bytesWritten, long contentLength, boolean done) {
 
+                        }
+                    }).execute(Boolean.class)
+                    .compose(RxLifecycle.with(this).<Boolean>bindToLifecycle())
+                    .subscribeWith(new ProgressLoadingSubscriber<Boolean>(mIProgressLoader) {
+                        @Override
+                        public void onSuccess(Boolean aBoolean) {
+                            mIsEditSuccess = true;
+                            ToastUtils.toast("图片上传" + (aBoolean ? "成功" : "失败") + "！");
+                        }
+                    });
+        } else {
+            XHttp.post("/book/uploadBookPicture")
+                    .params("bookId","")
+                    .uploadFile("file", FileUtils.getFileByPath(mPicturePath), new IProgressResponseCallBack() {
+                        @Override
+                        public void onResponseProgress(long bytesWritten, long contentLength, boolean done) {
 
+                        }
+                    }).execute(Boolean.class)
+                    .compose(RxLifecycle.with(this).<Boolean>bindToLifecycle())
+                    .subscribeWith(new ProgressLoadingSubscriber<Boolean>(mIProgressLoader) {
+                        @Override
+                        public void onSuccess(Boolean aBoolean) {
+                            mIsEditSuccess = true;
+                            ToastUtils.toast("图片上传" + (aBoolean ? "成功" : "失败") + "！");
+                        }
+                    });
+        }
+    }
+
+    @Permission(PermissionConsts.STORAGE)
+    private void selectPicture() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, 2000);
+    }
+
+    private InputStream getInputStreamByUri(Uri uri) {
+        try {
+            return XUtil.getContext().getContentResolver().openInputStream(uri);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
-

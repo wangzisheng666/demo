@@ -87,11 +87,11 @@ public final class XBasicLibInit {
         }
 //        XHttpSDK.debug(new CustomLoggingInterceptor()); //设置自定义的日志打印拦截器
         //设置网络请求的全局基础地址
-        XHttpSDK.setBaseUrl("https://gitee.com/");
+        XHttpSDK.setBaseUrl("http://127.0.0.1:1010");
 //        //设置动态参数添加拦截器
-//        XHttpSDK.addInterceptor(new CustomDynamicInterceptor());
+      //  XHttpSDK.addInterceptor(new CustomDynamicInterceptor());
 //        //请求失效校验拦截器
-//        XHttpSDK.addInterceptor(new CustomExpiredInterceptor());
+       // XHttpSDK.addInterceptor(new CustomExpiredInterceptor());
     }
 
     /**
