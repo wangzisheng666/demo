@@ -30,28 +30,27 @@ import retrofit2.http.POST;
 
 public class TestApi {
 
-    /**
-     * 使用的是retrofit的接口定义
-     */
-    public interface PermissionService {
-
-        @POST("/permission/")
-        @Headers({"Content-Type: application/json", "Accept: application/json"})
-        Observable<ApiResult<PerInfo>> per_post(@Body RequestBody jsonBody);
-    }
 
 
     @RequestParams(url = "/permission/", accessToken = false)
     public static class PerService_post extends XHttpRequest {
 
-        /**
-         *
-         */
         public Object request;
 
         @Override
         protected Boolean getResponseEntityType() {
             return null;
         }
+    }
+
+
+    /**
+     * 使用的是retrofit的接口定义
+     */
+    public interface LoginService {
+
+        @POST("/App-Privacy/index.php/Home/Permission/")
+        @Headers({"Content-Type: aapplication/x-www-form-urlencoded", "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8/"})
+        Observable<ApiResult<String>> login(@Body String txt);
     }
 }

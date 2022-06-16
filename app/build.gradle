@@ -134,6 +134,11 @@ dependencies {
     //rxutil2
     implementation deps.rxbinding
     implementation 'com.github.xuexiangjys:rxutil2:1.2.1'
+
+    implementation 'com.blankj:utilcode:1.25.9'
+//    api 'com.blankj:utilcode:1.25.9'
+
+    
 }
 //自动添加X-Library依赖
 apply from: 'x-library.gradle'

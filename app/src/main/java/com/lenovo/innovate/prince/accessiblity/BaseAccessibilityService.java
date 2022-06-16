@@ -15,15 +15,21 @@
  *
  */
 
-package com.lenovo.innovate.prince.http;
+package com.lenovo.innovate.prince.accessiblity;
 
-import com.lenovo.innovate.prince.http.entity.PerInfo;
+import android.accessibilityservice.AccessibilityService;
+import android.view.accessibility.AccessibilityEvent;
 
-public class ApiProvider {
+public class BaseAccessibilityService extends AccessibilityService {
 
-    public static TestApi.PerService_post getAddPerReq(Object object) {
-        TestApi.PerService_post req = new TestApi.PerService_post();
-        req.request = object;
-        return req;
+    @Override
+    public void onAccessibilityEvent(AccessibilityEvent accessibilityEvent) {
+
     }
+
+    @Override
+    public void onInterrupt() {
+
+    }
+
 }

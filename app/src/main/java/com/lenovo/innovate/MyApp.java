@@ -22,6 +22,8 @@ import android.content.Context;
 
 import androidx.multidex.MultiDex;
 
+import com.an.deviceinfo.device.model.App;
+import com.lenovo.innovate.prince.accessiblity.AccessService;
 import com.lenovo.innovate.utils.sdkinit.ANRWatchDogInit;
 import com.lenovo.innovate.utils.sdkinit.UMengInit;
 import com.lenovo.innovate.utils.sdkinit.XBasicLibInit;
@@ -33,6 +35,8 @@ import com.lenovo.innovate.utils.sdkinit.XUpdateInit;
  */
 public class MyApp extends Application {
 
+    static MyApp instance;
+    public AccessService service;
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
@@ -43,6 +47,7 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        instance = this;
         initLibs();
     }
 
@@ -60,6 +65,19 @@ public class MyApp extends Application {
         ANRWatchDogInit.init();
     }
 
+    public static MyApp getInstance() {
+        return instance;
+    }
+
+
+
+    public void setService(AccessService accessService) {
+        service = accessService;
+    }
+
+    public AccessService getService() {
+        return service;
+    }
 
     /**
      * @return 当前app是否是调试开发模式

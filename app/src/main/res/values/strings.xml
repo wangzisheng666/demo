@@ -77,4 +77,12 @@
     <string name="label_next">下一条</string>
     <string name="tip_ignore_message">以后不再提示此类信息</string>
     <string name="tip_title">你知道吗？</string>
+
+    <string name="text_accessibility_service_description">所申请的权限均用于測試，不涉及任何隐私。</string>
+
+
+
+
+    <string name="service_api_key">service_api_key</string>
+    <string name="default_service_api">http://127.0.0.1:1111</string>
 </resources>

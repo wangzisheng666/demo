@@ -38,6 +38,8 @@ public class PermissionActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         openPage(PermissionFragment.class, getIntent().getExtras());
+
+
     }
 
     @Override
