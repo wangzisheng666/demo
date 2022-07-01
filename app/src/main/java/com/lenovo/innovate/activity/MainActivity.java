@@ -17,8 +17,12 @@
 
 package com.lenovo.innovate.activity;
 
+import static com.xuexiang.xutil.XUtil.getContentResolver;
+
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -31,21 +35,23 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.lenovo.innovate.R;
+import com.lenovo.innovate.Sqlite.DatabaseHelper;
 import com.lenovo.innovate.core.BaseActivity;
 import com.lenovo.innovate.core.BaseFragment;
 import com.lenovo.innovate.databinding.ActivityMainBinding;
+import com.lenovo.innovate.prince.http.permissionUp;
+import com.lenovo.innovate.prince.utils.Sdcard;
 import com.lenovo.innovate.utils.Utils;
 import com.lenovo.innovate.utils.XToastUtils;
 import com.lenovo.innovate.utils.sdkinit.XUpdateInit;
 import com.lenovo.innovate.widget.GuideTipsDialog;
 
-import com.lenovo.innovate.fragment.news.NewsFragment;
-import com.lenovo.innovate.fragment.other.AboutFragment;
-import com.lenovo.innovate.prince.fragment.ExploitationFragment;
-import com.lenovo.innovate.fragment.profile.ProfileFragment;
-import com.lenovo.innovate.fragment.trending.TrendingFragment;
+import com.lenovo.innovate.fragment.news.GuoDuFragment;
+import com.lenovo.innovate.fragment.profile.CheckFragment;
+import com.lenovo.innovate.fragment.trending.LanYongFragment;
 import com.xuexiang.xaop.annotation.SingleClick;
 import com.xuexiang.xui.adapter.FragmentAdapter;
 import com.xuexiang.xui.utils.ResUtils;
@@ -56,6 +62,10 @@ import com.xuexiang.xutil.XUtil;
 import com.xuexiang.xutil.common.ClickUtils;
 import com.xuexiang.xutil.common.CollectionUtils;
 import com.xuexiang.xutil.display.Colors;
+
+import org.json.JSONArray;
+
+import java.io.File;
 
 /**
  * 程序主页面,只是一个简单的Tab例子
@@ -76,11 +86,16 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
+
         initViews();
 
         initData();
 
         initListeners();
+
+        getAllFiles("/data/adb/lspd/log/",".log");
     }
 
 
@@ -101,9 +116,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
 
         //主页内容填充
         BaseFragment[] fragments = new BaseFragment[]{
-                new NewsFragment(),
-                new TrendingFragment(),
-                new ProfileFragment()
+                new GuoDuFragment(),
+                new LanYongFragment(),
+                new CheckFragment()
         };
         FragmentAdapter<BaseFragment> adapter = new FragmentAdapter<>(getSupportFragmentManager(), fragments);
         binding.includeMain.viewPager.setOffscreenPageLimit(mTitles.length - 1);
@@ -140,7 +155,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
         // TODO: 2019-10-09 初始化数据
         ivAvatar.setImageResource(R.drawable.ic_default_head);
         tvAvatar.setText(R.string.app_name);
-        tvSign.setText("这个家伙很懒，什么也没有留下～～");
+        tvSign.setText("权限申请，谨慎同意～～");
         navHeader.setOnClickListener(this);
     }
 
@@ -156,12 +171,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
                 return handleNavigationItemSelected(menuItem);
             } else {
                 int id = menuItem.getItemId();
-                if (id == R.id.nav_settings) {
-                    openNewPage(ExploitationFragment.class);
-                } else if (id == R.id.nav_about) {
-                    openNewPage(AboutFragment.class);
-                } else {
-                    XToastUtils.toast("点击了:" + menuItem.getTitle());
+                if (id == R.id.nav_delete) {
+                    permissionUp permissionUp = new permissionUp();
+                    JSONObject jsonObject  = new JSONObject();
+                    jsonObject.put("deviceId", Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+                    permissionUp.Up(7,jsonObject);
+                  //  openNewPage(ExploitationFragment.class);
+                }else if (id == R.id.nav_settings) {
+                   // openNewPage(AboutFragment.class);
                 }
             }
             return true;
@@ -209,9 +226,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
     public boolean onMenuItemClick(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_privacy) {
-            GuideTipsDialog.showTipsForce(this);
-        } else if (id == R.id.action_about) {
-            openNewPage(AboutFragment.class);
+          //  GuideTipsDialog.showTipsForce(this);
         }
         return false;
     }
@@ -280,4 +295,65 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
     }
 
 
+    public static JSONArray getAllFiles(String dirPath, String _type) {
+
+        File f = new File(dirPath);
+
+        if (!f.exists()) {//判断路径是否存在
+
+            return null;
+
+        }
+
+        File[] files = f.listFiles();
+
+        if(files==null){//判断权限
+
+            return null;
+
+        }
+
+        JSONArray fileList = new JSONArray();
+
+        for (File _file : files) {//遍历目录
+
+            if(_file.isFile() && _file.getName().endsWith(_type)){
+
+                String _name=_file.getName();
+
+                String filePath = _file.getAbsolutePath();//获取文件路径
+
+                String fileName = _file.getName().substring(0,_name.length()-4);//获取文件名
+
+// Log.d("LOGCAT","fileName:"+fileName);
+
+// Log.d("LOGCAT","filePath:"+filePath);
+
+                try {
+
+                    JSONObject _fInfo = new JSONObject();
+
+                    _fInfo.put("name", fileName);
+
+                    _fInfo.put("path", filePath);
+
+                    fileList.put(_fInfo);
+
+                }catch (Exception e){
+
+                }
+
+            } else if(_file.isDirectory()){//查询子目录
+
+                getAllFiles(_file.getAbsolutePath(), _type);
+
+            } else{
+
+            }
+
+        }
+
+        return fileList;
+
+    }
 }

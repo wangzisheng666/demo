@@ -78,7 +78,7 @@ public class GuideTipsDialog extends BaseDialog implements View.OnClickListener,
      * @param context 上下文
      */
     public static void showTipsForce(Context context) {
-        CustomRequest request = XHttp.custom().cacheMode(CacheMode.FIRST_CACHE).cacheTime(TimeConstants.DAY).cacheKey("getTips");
+       /* CustomRequest request = XHttp.custom().cacheMode(CacheMode.FIRST_CACHE).cacheTime(TimeConstants.DAY).cacheKey("getTips");
         request.apiCall(request.create(ApiService.IGetService.class).getTips(), new NoTipCallBack<List<TipInfo>>() {
             @Override
             public void onSuccess(List<TipInfo> response) throws Throwable {
@@ -86,7 +86,7 @@ public class GuideTipsDialog extends BaseDialog implements View.OnClickListener,
                     new GuideTipsDialog(context, response).show();
                 }
             }
-        });
+        });*/
     }
 
     public GuideTipsDialog(Context context, @NonNull List<TipInfo> tips) {

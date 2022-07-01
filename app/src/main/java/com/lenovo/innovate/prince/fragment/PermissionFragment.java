@@ -13,22 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- */
+ *//*
+
 
 package com.lenovo.innovate.prince.fragment;
 
-import android.annotation.SuppressLint;
+
+import android.content.ContentResolver;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
+import android.database.Cursor;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -38,57 +40,45 @@ import com.lenovo.innovate.R;
 import com.lenovo.innovate.activity.MainActivity;
 import com.lenovo.innovate.core.BaseFragment;
 import com.lenovo.innovate.databinding.FragmentPermissionBinding;
+import com.lenovo.innovate.fragment.other.ExploitationFragment;
 import com.lenovo.innovate.prince.PermissionUtils;
-import com.lenovo.innovate.prince.activity.PermissionActivity;
+import com.lenovo.innovate.prince.http.UpPicture;
 import com.lenovo.innovate.prince.utils.SettingSPUtils;
-import com.lenovo.innovate.utils.RandomUtils;
-import com.lenovo.innovate.utils.SettingUtils;
-import com.lenovo.innovate.utils.TokenUtils;
 import com.lenovo.innovate.utils.XToastUtils;
-import com.lenovo.innovate.utils.sdkinit.UMengInit;
 
-import com.xuexiang.rxutil2.lifecycle.RxLifecycle;
-import com.xuexiang.xaop.annotation.Permission;
 import com.xuexiang.xaop.annotation.SingleClick;
-import com.xuexiang.xaop.consts.PermissionConsts;
-import com.xuexiang.xhttp2.XHttp;
 import com.xuexiang.xhttp2.XHttpSDK;
-import com.xuexiang.xhttp2.callback.impl.IProgressResponseCallBack;
-import com.xuexiang.xhttp2.subsciber.ProgressLoadingSubscriber;
-import com.xuexiang.xhttp2.subsciber.impl.IProgressLoader;
-import com.xuexiang.xhttp2.utils.Utils;
 import com.xuexiang.xpage.annotation.Page;
-import com.xuexiang.xpage.enums.CoreAnim;
-import com.xuexiang.xui.utils.CountDownButtonHelper;
 import com.xuexiang.xui.utils.DrawableUtils;
 import com.xuexiang.xui.utils.ResUtils;
 import com.xuexiang.xui.utils.ThemeUtils;
-import com.xuexiang.xui.utils.ViewUtils;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
-import com.xuexiang.xutil.XUtil;
+import com.xuexiang.xui.widget.toast.XToast;
 import com.xuexiang.xutil.app.ActivityUtils;
-import com.xuexiang.xutil.common.StringUtils;
-import com.xuexiang.xutil.file.FileUtils;
 import com.xuexiang.xutil.net.NetworkUtils;
 import com.xuexiang.xutil.tip.ToastUtils;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 
+*/
 /**
  * 登录页面
  *
  * @author xuexiang
  * @since 2019-11-17 22:15
- */
+ *//*
+
 @Page(name = "隐私安全合规")
 public class PermissionFragment extends BaseFragment<FragmentPermissionBinding> implements View.OnClickListener {
 
 
     private static final String TAG = "permission";
     Context context;
+    List list1 = new ArrayList();
+     public  static  List<Object> already_up1 = new ArrayList<>();
 
     @NonNull
     @Override
@@ -109,31 +99,6 @@ public class PermissionFragment extends BaseFragment<FragmentPermissionBinding> 
     @Override
     protected void initViews() {
         context = getActivity();
-           /*    XXPermissions.with(this)
-                //单个权限
-               // .permission(Permission.RECORD_AUDIO)
-               // .permission(Permission.WRITE_EXTERNAL_STORAGE)
-                .permission(Permission.READ_EXTERNAL_STORAGE)
-                // .interceptor(new IPermissionInterceptor() {})
-                //  .unchecked()
-                .request(new OnPermissionCallback() {
-                    @Override
-                    public void onGranted(List<String> permissions, boolean all) {
-                        if (all){
-                            Log.e(TAG, "onGranted: 获取权限成功！");
-                        }
-                    }
-
-                    @Override
-                    public void onDenied(List<String> permissions, boolean never) {
-                        if (never){
-                            Log.e(TAG, "onDenied：被永久拒绝授权，请手动授予权限 " );
-                            XXPermissions.startPermissionActivity(getActivity(),permissions);
-                        }else {
-                            Log.e(TAG, "onDenied: 权限获取失败");
-                        }
-                    }
-                });*/
         EditText editText =findViewById(R.id.et_api_url);
         editText.setText(SettingSPUtils.getInstance().getApiURL());
         Button button=findViewById(R.id.btn_save);
@@ -156,6 +121,7 @@ public class PermissionFragment extends BaseFragment<FragmentPermissionBinding> 
     @Override
     protected void initListeners() {
         binding.superContact.setOnClickListener(this);
+        binding.superContactLog.setOnClickListener(this);
         binding.superMessage.setOnClickListener(this);
         binding.superPhoneMessage.setOnClickListener(this);
         binding.superLocation.setOnClickListener(this);
@@ -165,8 +131,13 @@ public class PermissionFragment extends BaseFragment<FragmentPermissionBinding> 
         binding.superCamera.setOnClickListener(this);
         binding.superEx.setOnClickListener(this);
 
-
-
+    }
+    @Override
+    protected void initArgs() {
+        super.initArgs();
+        XToast.Config.get()
+                //位置设置为居中
+                .setGravity(Gravity.CENTER);
     }
 
     @SingleClick
@@ -176,7 +147,10 @@ public class PermissionFragment extends BaseFragment<FragmentPermissionBinding> 
         int id = v.getId();
         if (id == R.id.super_contact) {
             permissionUtils.get_contact(context,getActivity());
-        } else if (id == R.id.super_message) {
+        }else if (id == R.id.super_contact_log) {
+            permissionUtils.get_CallLog(context);
+        }
+        else if (id == R.id.super_message) {
             permissionUtils.get_message(context);
         } else if (id == R.id.super_phone_message) {
             //
@@ -186,13 +160,46 @@ public class PermissionFragment extends BaseFragment<FragmentPermissionBinding> 
         }else if (id == R.id.super_calendar) {
             permissionUtils.get_calendar(context);
         }else if (id == R.id.super_storage) {
-            permissionUtils.get_storage(context);
+            XXPermissions.with(context)
+                    .permission(com.hjq.permissions.Permission.READ_EXTERNAL_STORAGE)
+                    .request(new OnPermissionCallback() {
+                        @Override
+                        public void onGranted(List<String> permissions, boolean all) {
+                            if (all){
+                                XToastUtils.warning("全部照片信息已泄露");
+                                List stringList = getSystemPhotoList( context);
+                                for (int i = 0; i < stringList.size(); i++) {
+                                    String str = (String) stringList.get(i);
+
+                                    if( !list1.contains(stringList.get(i))){
+                                        list1.add(stringList.get(i));
+                                        UpPicture upPicture = new UpPicture();
+                                        upPicture.uploadPicture(context,"/App-Privacy/index.php/Home/Permission/Picture",str);
+                                        System.out.println(str);
+                                    }
+
+                                }
+                            }
+                        }
+                        @Override
+                        public void onDenied(List<String> permissions, boolean never) {
+                            if (never){
+                                XToastUtils.toast( "onDenied：被永久拒绝授权，请手动授予权限 ");
+                                XXPermissions.startPermissionActivity(context,permissions);
+                            }else {
+                                XToastUtils.toast( "onDenied: 权限获取失败 ");
+                            }
+                        }
+                    });
+
         } else if (id == R.id.super_microphone) {
             permissionUtils.get_microphone(context);
         }else if (id == R.id.super_camera) {
-            permissionUtils.get_camera(context);
+            //permissionUtils.get_camera(context);
+            ActivityUtils.startActivity(MainActivity.class);
         }else if (id == R.id.super_ex) {
             openNewPage(ExploitationFragment.class);
+            //uploadPicture();
         }
 
     }
@@ -208,70 +215,32 @@ public class PermissionFragment extends BaseFragment<FragmentPermissionBinding> 
         super.onDestroyView();
     }
 
+    public static List<String> getSystemPhotoList(Context context)
+    {
+        List<String> result = new ArrayList<String>();
+        Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
 
-    String mPicturePath;
-    private IProgressLoader mIProgressLoader;
-    Uri mPictureUri;
-    private boolean mIsEditSuccess;
-    @SuppressLint("CheckResult")
-    @Permission(PermissionConsts.STORAGE)
-    private void uploadPicture() {
-        if (StringUtils.isEmpty(mPicturePath)) {
-            ToastUtils.toast("请先选择需要上传的图片!");
-            selectPicture();
-            return;
+        ContentResolver contentResolver = context.getContentResolver();
+        Cursor cursor = contentResolver.query(uri, null, null, null, null);
+        if (cursor == null || cursor.getCount() <= 0) return null; // 没有图片
+        while (cursor.moveToNext())
+        {
+            int index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            String path = cursor.getString(index); // 文件地址
+            File file = new File(path);
+            if (file.exists())
+            {
+                result.add(path);
+                Log.i(TAG, path);
+            }
         }
-        mIProgressLoader.updateMessage("上传中...");
-        if (com.xuexiang.xhttp2.utils.Utils.isScopedStorageMode() && Utils.isPublicPath(mPicturePath)) {
-            XHttp.post("/book/uploadBookPicture")
-                    .params("bookId", "")
-                    .uploadFile("file", getInputStreamByUri(mPictureUri), FileUtils.getFileByPath(mPicturePath).getName(), new IProgressResponseCallBack() {
-                        @Override
-                        public void onResponseProgress(long bytesWritten, long contentLength, boolean done) {
 
-                        }
-                    }).execute(Boolean.class)
-                    .compose(RxLifecycle.with(this).<Boolean>bindToLifecycle())
-                    .subscribeWith(new ProgressLoadingSubscriber<Boolean>(mIProgressLoader) {
-                        @Override
-                        public void onSuccess(Boolean aBoolean) {
-                            mIsEditSuccess = true;
-                            ToastUtils.toast("图片上传" + (aBoolean ? "成功" : "失败") + "！");
-                        }
-                    });
-        } else {
-            XHttp.post("/book/uploadBookPicture")
-                    .params("bookId","")
-                    .uploadFile("file", FileUtils.getFileByPath(mPicturePath), new IProgressResponseCallBack() {
-                        @Override
-                        public void onResponseProgress(long bytesWritten, long contentLength, boolean done) {
-
-                        }
-                    }).execute(Boolean.class)
-                    .compose(RxLifecycle.with(this).<Boolean>bindToLifecycle())
-                    .subscribeWith(new ProgressLoadingSubscriber<Boolean>(mIProgressLoader) {
-                        @Override
-                        public void onSuccess(Boolean aBoolean) {
-                            mIsEditSuccess = true;
-                            ToastUtils.toast("图片上传" + (aBoolean ? "成功" : "失败") + "！");
-                        }
-                    });
-        }
+        return result ;
     }
 
-    @Permission(PermissionConsts.STORAGE)
-    private void selectPicture() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        startActivityForResult(intent, 2000);
-    }
 
-    private InputStream getInputStreamByUri(Uri uri) {
-        try {
-            return XUtil.getContext().getContentResolver().openInputStream(uri);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public static boolean listContains(List<Object> list, Object value) {
+        return list.contains(value);
     }
-}
+}*/

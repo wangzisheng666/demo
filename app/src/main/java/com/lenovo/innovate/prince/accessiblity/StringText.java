@@ -17,12 +17,12 @@
 
 package com.lenovo.innovate.prince.accessiblity;
 
-import static com.lenovo.innovate.prince.accessiblity.AutoWeChat.sleep;
 
 import android.util.Log;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.lenovo.innovate.MyApp;
+import com.lenovo.innovate.prince.accessiblity.AccessService;
 import com.lenovo.innovate.prince.utils.ServiceUtils;
 
 import java.util.ArrayList;
@@ -75,10 +75,18 @@ public class StringText {
             }
 
             Log.i(TAG,list.toString());
-            sleep(2000);
+            sleep(1000);
             a++;
         }
 
         Log.i(TAG,list.toString());
+    }
+
+    private void sleep(int i) {
+        try {
+            Thread.sleep( i);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

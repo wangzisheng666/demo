@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.lenovo.innovate">
-
+    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
     <!--进程杀死-->
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.READ_SMS"/>
 
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
 
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions"/>
@@ -22,8 +23,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.BLUETOOTH"/>
@@ -31,6 +30,29 @@
     <!-- 读取手机IMEI的设备权限 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
+
+    <!--用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+    <!--用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <!--用于获取运营商信息，用于支持提供运营商信息相关的接口-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <!--用于访问网络，网络定位需要上网-->
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <!--用于读取手机当前的状态-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+    <!--用于写入缓存数据到扩展存储卡-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <!--用于申请调用A-GPS模块-->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"></uses-permission>
+    <!--如果设置了target >= 28 如果需要启动后台定位则必须声明这个权限-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <!--如果您的应用需要后台定位权限，且有可能运行在Android Q设备上,并且设置了target>28，必须增加这个权限声明-->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <application
         android:name="com.lenovo.innovate.MyApp"
         android:allowBackup="false"
@@ -47,29 +69,37 @@
         tools:replace="android:allowBackup">
 
 
+
+        <!-- 标志该 apk 为一个 Xposed 模块，供 Xposed 框架识别 -->
+        <meta-data
+            android:name="xposedmodule"
+            android:value="true" /> <!-- 模块说明，一般为模块的功能描述 -->
+        <meta-data
+            android:name="xposeddescription"
+            android:value="这个模块是用来检测xxxxxx" /> <!-- 模块兼容版本 -->
+        <meta-data
+            android:name="xposedminversion"
+            android:value="54" />
+
         <activity
-            android:name="com.lenovo.innovate.prince.activity.SplashActivity"
+            android:name="com.lenovo.innovate.activity.MainActivity"
             android:configChanges="screenSize|keyboardHidden|orientation|keyboard"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Launch.App"
-            android:windowSoftInputMode="adjustPan|stateHidden">
-
+            android:windowSoftInputMode="adjustPan|stateHidden" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
         <activity
-            android:name="com.lenovo.innovate.activity.MainActivity"
-            android:configChanges="screenSize|keyboardHidden|orientation|keyboard"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity
-            android:name="com.lenovo.innovate.prince.activity.PermissionActivity"
+            android:name="com.lenovo.innovate.activity.PermissionActivity"
             android:configChanges="screenSize|keyboardHidden|orientation|keyboard"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
+
 
         <!--通用浏览器-->
         <activity
@@ -159,6 +189,8 @@
                 android:resource="@xml/accessibility_service_config" />
         </service>
 
+        <service android:name="com.amap.api.location.APSService" >
+        </service>
         <!--屏幕自适应设计图-->
         <meta-data
             android:name="design_width_in_dp"
@@ -166,7 +198,6 @@
         <meta-data
             android:name="design_height_in_dp"
             android:value="640" />
-
     </application>
 
 </manifest>

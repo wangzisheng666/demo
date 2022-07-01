@@ -11,7 +11,7 @@ import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 
 
 import com.lenovo.innovate.prince.accessiblity.AccessService;
-import com.lenovo.innovate.prince.accessiblity.Utils;
+import com.lenovo.innovate.prince.accessiblity.AccUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,7 +57,7 @@ public class ServiceUtils {
     public static boolean findViewByIdAndClickView(AccessibilityService accessibilityService, String str) {
         try {
             List<AccessibilityNodeInfo> accessibilityNodeInfoList1 = ServiceUtils.findViewByIdList(accessibilityService, str);
-            if (!Utils.isEmptyArray(accessibilityNodeInfoList1)) {
+            if (!AccUtils.isEmptyArray(accessibilityNodeInfoList1)) {
                 return clickView(accessibilityNodeInfoList1.get(0));
             }
         } catch (Exception e) {
@@ -82,7 +82,7 @@ public class ServiceUtils {
     public static boolean findViewByTextAndClickView(AccessibilityService accessibilityService, String str) {
         try {
             List<AccessibilityNodeInfo> accessibilityNodeInfoList1 = ServiceUtils.findViewByEqualsText(accessibilityService, str);
-            if (!Utils.isEmptyArray(accessibilityNodeInfoList1)) {
+            if (!AccUtils.isEmptyArray(accessibilityNodeInfoList1)) {
                 return clickView(accessibilityNodeInfoList1.get(0));
             }
         } catch (Exception e) {
@@ -94,7 +94,7 @@ public class ServiceUtils {
     public static boolean findViewByIdAndClickScrollView(AccessibilityService accessibilityService, String str) {
         try {
             List<AccessibilityNodeInfo> accessibilityNodeInfoList1 = ServiceUtils.findViewByIdList(accessibilityService, str);
-            if (!Utils.isEmptyArray(accessibilityNodeInfoList1)) {
+            if (!AccUtils.isEmptyArray(accessibilityNodeInfoList1)) {
                 return clickScrollView(accessibilityNodeInfoList1.get(0));
             }
         } catch (Exception e) {
@@ -118,7 +118,7 @@ public class ServiceUtils {
     }
 
     public static List<AccessibilityNodeInfo> filterErrData(List<AccessibilityNodeInfo> list) {
-        if (Utils.isEmptyArray(list)) {
+        if (AccUtils.isEmptyArray(list)) {
             return null;
         }
         ArrayList arrayList = new ArrayList();
@@ -168,7 +168,7 @@ public class ServiceUtils {
 
     public static List<AccessibilityNodeInfo> findViewByEqualsText(AccessibilityService accessibilityService, String str) {
         List<AccessibilityNodeInfo> findViewByContainsText = findViewByContainsText(accessibilityService, str);
-        if (Utils.isEmptyArray(findViewByContainsText)) {
+        if (AccUtils.isEmptyArray(findViewByContainsText)) {
             return null;
         }
         ArrayList arrayList = new ArrayList();
@@ -184,7 +184,7 @@ public class ServiceUtils {
 
     public static List<AccessibilityNodeInfo> findViewByEqualsText(AccessibilityNodeInfo accessibilityNodeInfo, String str) {
         List<AccessibilityNodeInfo> findAccessibilityNodeInfosByText = accessibilityNodeInfo.findAccessibilityNodeInfosByText(str);
-        if (Utils.isEmptyArray(findAccessibilityNodeInfosByText)) {
+        if (AccUtils.isEmptyArray(findAccessibilityNodeInfosByText)) {
             return null;
         }
         ArrayList arrayList = new ArrayList();
@@ -200,7 +200,7 @@ public class ServiceUtils {
 
     public static List<AccessibilityNodeInfo> findViewByEqualsText(AccessibilityService accessibilityService, String str, String str2) {
         List<AccessibilityNodeInfo> findViewByContainsText = findViewByContainsText(accessibilityService, str);
-        if (Utils.isEmptyArray(findViewByContainsText)) {
+        if (AccUtils.isEmptyArray(findViewByContainsText)) {
             return null;
         }
         ArrayList arrayList = new ArrayList();
@@ -220,7 +220,7 @@ public class ServiceUtils {
 
     public static AccessibilityNodeInfo findViewById(AccessibilityService accessibilityService, String str) {
         List<AccessibilityNodeInfo> findViewByIdList = findViewByIdList(accessibilityService, str);
-        if (Utils.isEmptyArray(findViewByIdList)) {
+        if (AccUtils.isEmptyArray(findViewByIdList)) {
             return null;
         }
         return findViewByIdList.get(0);
@@ -229,7 +229,7 @@ public class ServiceUtils {
 
     public static AccessibilityNodeInfo findViewByIdIndex(AccessibilityService accessibilityService, String str, int i) {
         List<AccessibilityNodeInfo> findViewByIdList = findViewByIdList(accessibilityService, str);
-        if (Utils.isEmptyArray(findViewByIdList)) {
+        if (AccUtils.isEmptyArray(findViewByIdList)) {
             return null;
         }
         return i < findViewByIdList.size() ? findViewByIdList.get(i) : findViewByIdList.get(findViewByIdList.size() - 1);
@@ -237,7 +237,7 @@ public class ServiceUtils {
 
     public static AccessibilityNodeInfo findViewByTopRect(AccessibilityService accessibilityService, String str) {
         List<AccessibilityNodeInfo> findViewByIdList = findViewByIdList(accessibilityService, str);
-        if (Utils.isEmptyArray(findViewByIdList)) {
+        if (AccUtils.isEmptyArray(findViewByIdList)) {
             return null;
         }
         for (AccessibilityNodeInfo next : findViewByIdList) {
@@ -266,7 +266,7 @@ public class ServiceUtils {
                 findAccessibilityNodeInfosByViewId = rootInActiveWindow.findAccessibilityNodeInfosByViewId(str);
                 Thread.sleep(100);
                 n++;
-            } while (n < 20 && Utils.isEmptyArray(findAccessibilityNodeInfosByViewId));
+            } while (n < 20 && AccUtils.isEmptyArray(findAccessibilityNodeInfosByViewId));
 
             rootInActiveWindow.recycle();
 
@@ -562,7 +562,7 @@ public class ServiceUtils {
     }
 
     public static void recycleAccessibilityNodeInfo(List<AccessibilityNodeInfo> list) {
-        if (!Utils.isEmptyArray(list)) {
+        if (!AccUtils.isEmptyArray(list)) {
             for (AccessibilityNodeInfo recycle : list) {
                 recycle.recycle();
             }
@@ -593,7 +593,7 @@ public class ServiceUtils {
         List<AccessibilityNodeInfo> findViewByEqualsText;
         do {
             findViewByEqualsText = ServiceUtils.findViewByEqualsText(service, text);
-        } while (Utils.isEmptyArray(findViewByEqualsText));
+        } while (AccUtils.isEmptyArray(findViewByEqualsText));
 
         ServiceUtils.clickView(findViewByEqualsText.get(0));
 

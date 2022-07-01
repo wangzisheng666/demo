@@ -29,47 +29,63 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:paddingTop="20dp">
+                android:paddingTop="10dp">
 
                 <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
                     android:id="@+id/super_contact"
                     style="@style/InfoItem.Account"
+                    app:sLeftIconRes="@drawable/ic_txl"
                     app:sLeftTextString="通讯录" />
+
+                <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
+                    android:id="@+id/super_contact_log"
+                    style="@style/InfoItem.Account"
+                    app:sLeftIconRes="@drawable/ic_____thjl"
+                    app:sLeftTextString="通话记录" />
 
                 <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
                     android:id="@+id/super_message"
                     style="@style/InfoItem.Account"
+                    app:sLeftIconRes="@drawable/ic___dxx"
                     app:sLeftTextString="短信" />
 
                 <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
                     android:id="@+id/super_phone_message"
                     style="@style/InfoItem.Account"
+                    app:sLeftIconRes="@drawable/ic___sjcs"
                     app:sLeftTextString="手机参数" />
 
                 <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
                     android:id="@+id/super_location"
                     style="@style/InfoItem.Account"
+                    app:sLeftIconRes="@drawable/ic___dqwz"
                     app:sLeftTextString="位置" />
 
                 <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
                     android:id="@+id/super_calendar"
                     style="@style/InfoItem.Account"
+                    app:sLeftIconRes="@drawable/ic___rl"
                     app:sLeftTextString="日历" />
 
                 <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
                     android:id="@+id/super_storage"
                     style="@style/InfoItem.Account"
+                    app:sLeftIconRes="@drawable/ic___zp"
                     app:sLeftTextString="照片及文件" />
 
                 <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
                     android:id="@+id/super_microphone"
                     style="@style/InfoItem.Account"
+                    app:sLeftIconRes="@drawable/ic____mkf"
                     app:sLeftTextString="麦克风" />
+
 
                 <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
                     android:id="@+id/super_camera"
                     style="@style/InfoItem.Account"
+                    app:sLeftIconRes="@drawable/ic___xj"
                     app:sLeftTextString="相机" />
+
 
 
 
@@ -78,6 +94,7 @@
                     style="@style/InfoItem.Account"
                     android:layout_marginTop="16dp"
                     app:sLeftTextString="隐私权限利用"
+                    app:sLeftIconRes="@drawable/ic___ys"
                     app:sDividerLineType="none" />
 
                 <LinearLayout

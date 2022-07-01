@@ -62,4 +62,12 @@ public class SettingSPUtils extends BaseSPUtil {
     public boolean setApiURL(String apiUrl) {
         return putString(getString(R.string.service_api_key), apiUrl);
     }
+
+    public boolean put_String(String key,String value) {
+        return putString( key, value);
+    }
+
+    public String get_String(String key,String value) {
+        return getString(key, value);
+    }
 }

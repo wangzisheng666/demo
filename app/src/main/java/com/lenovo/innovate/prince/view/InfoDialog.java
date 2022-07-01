@@ -91,8 +91,8 @@ public class InfoDialog extends Dialog {
                 mDialog.dismiss();
             });
             mDialog.setContentView(mLayout);
-            mDialog.setCancelable(false);                //User can click back to close dialog_info
-            mDialog.setCanceledOnTouchOutside(false);   //User can not click outside area to close dialog_info
+            mDialog.setCancelable(true);                //User can click back to close dialog_info
+            mDialog.setCanceledOnTouchOutside(true);   //User can not click outside area to close dialog_info
             return mDialog;
         }
     }

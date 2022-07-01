@@ -1,22 +1,33 @@
+/*
+ * Copyright (C) 2022 xuexiangjys(xuexiangjys@163.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 package com.lenovo.innovate.prince.accessiblity;
 
 
 import android.accessibilityservice.AccessibilityService;
-import android.accessibilityservice.GestureDescription;
-import android.graphics.Path;
-import android.graphics.Rect;
 import android.os.Build;
-import android.os.Handler;
 import android.util.Log;
 import android.view.accessibility.AccessibilityNodeInfo;
 
-import androidx.annotation.RequiresApi;
-
-import com.an.deviceinfo.device.model.App;
 import com.lenovo.innovate.MyApp;
+import com.lenovo.innovate.prince.accessiblity.AccessService;
+import com.lenovo.innovate.prince.accessiblity.AccUtils;
 import com.lenovo.innovate.prince.utils.ServiceUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public  class AutoWeChat {
@@ -30,7 +41,7 @@ public  class AutoWeChat {
         while (true)
         {
             AccessibilityNodeInfo   accessibilityNodeInfo = ServiceUtils.findViewById(service,"com.tencent.mm:id/f1n");
-            if(!Utils.isEmptyView(accessibilityNodeInfo)) {
+            if(!AccUtils.isEmptyView(accessibilityNodeInfo)) {
                 ServiceUtils.clickView(accessibilityNodeInfo);
                 sleep(1000);
                 Log.i(TAG,"点击微信");
@@ -70,7 +81,7 @@ public  class AutoWeChat {
         while (true)
         {
             AccessibilityNodeInfo   accessibilityNodeInfo = ServiceUtils.findViewById(service,"com.tencent.mm:id/b3q");
-            if(!Utils.isEmptyView(accessibilityNodeInfo)) {
+            if(!AccUtils.isEmptyView(accessibilityNodeInfo)) {
                 ServiceUtils.clickView(accessibilityNodeInfo);
                 sleep(1000);
                 Log.i(TAG,"点击+");
@@ -89,26 +100,35 @@ public  class AutoWeChat {
             if(text.equals("转账")){
                 ServiceUtils.clickView(findViewPicture.get(i));
                 sleep(1000);
-                Utils.execRootCmdSilent("input tap " + 417 + " " + 1928);//执行linux命令点击屏幕某个点
+                AccUtils.execRootCmdSilent("input tap " + 417 + " " + 1928);//执行linux命令点击屏幕某个点
                 break;
             }else {
                 Log.i(TAG,"没有转账按钮");
             }
         }
 
-
-        List<AccessibilityNodeInfo> findView = ServiceUtils.findViewByIdList(service,"com.tencent.mm:id/lgl");
-        for (int i = 0; i <findView.size() ; i++) {
-            String text =  findView.get(i).getText().toString();
-            if(text.equals("转账")){
-                ServiceUtils.clickView(findView.get(i));
-                sleep(1000);
-                Utils.execRootCmdSilent("input tap " + 417 + " " + 1928);//执行linux命令点击屏幕某个点
+        while (true) {
+            AccessibilityNodeInfo accessibilityNode = ServiceUtils.findViewById(service, "com.tencent.mm:id/lgl");
+            if (!AccUtils.isEmptyView(accessibilityNode)) {
+                ServiceUtils.setText(accessibilityNode, "1");
+                Log.i(TAG, "输入金额");
                 break;
             }else {
-                Log.i(TAG,"没有转账按钮");
+                AccUtils.execRootCmdSilent("input tap " + 417 + " " + 1928);//执行linux命令点击屏幕某个点
             }
         }
+
+        while (true) {
+            AccessibilityNodeInfo accessibilityNode = ServiceUtils.findViewById(service, "com.tencent.mm:id/ffw");
+            if (!AccUtils.isEmptyView(accessibilityNode)) {
+                ServiceUtils.clickView(accessibilityNode);
+                Log.i(TAG, "输入金额");
+                break;
+            }else {
+                AccUtils.execRootCmdSilent("input tap " + 917 + " " + 2071);//执行linux命令点击屏幕某个点
+            }
+        }
+
 
 /*
         //搜索框里面输入人名或群名称

@@ -20,7 +20,7 @@ package com.lenovo.innovate.utils;
 import android.content.Context;
 
 import com.umeng.analytics.MobclickAgent;
-import com.lenovo.innovate.prince.activity.PermissionActivity;
+import com.lenovo.innovate.activity.PermissionActivity;
 import com.xuexiang.xutil.app.ActivityUtils;
 import com.xuexiang.xutil.common.StringUtils;
 

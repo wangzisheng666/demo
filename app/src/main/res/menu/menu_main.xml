@@ -22,14 +22,8 @@
         android:id="@+id/action_privacy"
         android:icon="@drawable/ic_menu_privacy"
         android:orderInCategory="100"
-        android:title="隐私政策"
+        android:title="删除"
         app:showAsAction="always" />
 
-    <item
-        android:id="@+id/action_about"
-        android:icon="@drawable/ic_menu_about_white"
-        android:orderInCategory="100"
-        android:title="关于"
-        app:showAsAction="always" />
 
 </menu>

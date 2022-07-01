@@ -22,6 +22,7 @@ import android.content.Context;
 
 import androidx.multidex.MultiDex;
 
+import com.amap.api.location.AMapLocationClient;
 import com.an.deviceinfo.device.model.App;
 import com.lenovo.innovate.prince.accessiblity.AccessService;
 import com.lenovo.innovate.utils.sdkinit.ANRWatchDogInit;
@@ -63,6 +64,9 @@ public class MyApp extends Application {
         UMengInit.init(this);
         // ANR监控
         ANRWatchDogInit.init();
+
+        AMapLocationClient.updatePrivacyShow(getApplicationContext(), true, true);
+        AMapLocationClient.updatePrivacyAgree(getApplicationContext(), true);
     }
 
     public static MyApp getInstance() {

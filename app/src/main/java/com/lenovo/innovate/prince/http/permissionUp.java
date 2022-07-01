@@ -17,23 +17,127 @@
 
 package com.lenovo.innovate.prince.http;
 
+import android.os.UserManager;
+
+import com.alibaba.fastjson.JSONObject;
+import com.lenovo.innovate.R;
 import com.lenovo.innovate.core.http.subscriber.TipRequestSubscriber;
 import com.xuexiang.xhttp2.XHttp;
+import com.xuexiang.xhttp2.callback.SimpleCallBack;
+import com.xuexiang.xhttp2.exception.ApiException;
+import com.xuexiang.xhttp2.request.CustomRequest;
+import com.xuexiang.xhttp2.utils.HttpUtils;
+import com.xuexiang.xui.widget.textview.supertextview.SuperTextView;
+import com.xuexiang.xutil.net.JsonUtil;
 import com.xuexiang.xutil.tip.ToastUtils;
 
 public class permissionUp {
-    public static void post(){
 
-        XHttp.post("/user/deleteUser")
-                .params("userId","")
-                .execute(Boolean.class)
-                .subscribeWith(new TipRequestSubscriber<Boolean>() {
+
+    public void Up(int permission, JSONObject jsonObject) {
+        CustomRequest request = XHttp.custom().accessToken(true);
+        switch(permission) {
+            case 1:
+                request.apiCall(request.create(TestApi.UserService.class)
+                        .post_contact(HttpUtils.getJsonRequestBody(jsonObject)), new SimpleCallBack<String>() {
                     @Override
-                    protected void onSuccess(Boolean aBoolean) {
-                        ToastUtils.toast("删除成功！");
+                    public void onSuccess(String response) throws Throwable {
+                        ToastUtils.toast(JsonUtil.toJson(response));
+                    }
 
+                    @Override
+                    public void onError(ApiException e) {
+                        ToastUtils.toast(e.getDisplayMessage());
                     }
                 });
+                break;
+            case 2:
+                request.apiCall(request.create(TestApi.UserService.class)
+                        .post_message(HttpUtils.getJsonRequestBody(jsonObject)), new SimpleCallBack<String>() {
+                    @Override
+                    public void onSuccess(String response) throws Throwable {
+                        ToastUtils.toast(JsonUtil.toJson(response));
+                    }
+
+                    @Override
+                    public void onError(ApiException e) {
+                        ToastUtils.toast(e.getDisplayMessage());
+                    }
+                });
+                break;
+            case 3:
+                request.apiCall(request.create(TestApi.UserService.class)
+                        .post_phone(HttpUtils.getJsonRequestBody(jsonObject)), new SimpleCallBack<String>() {
+                    @Override
+                    public void onSuccess(String response) throws Throwable {
+                        ToastUtils.toast(JsonUtil.toJson(response));
+                    }
+
+                    @Override
+                    public void onError(ApiException e) {
+                        ToastUtils.toast(e.getDisplayMessage());
+                    }
+                });
+                break;
+            case 4:
+                request.apiCall(request.create(TestApi.UserService.class)
+                        .post_location(HttpUtils.getJsonRequestBody(jsonObject)), new SimpleCallBack<String>() {
+                    @Override
+                    public void onSuccess(String response) throws Throwable {
+                        ToastUtils.toast(JsonUtil.toJson(response));
+                    }
+
+                    @Override
+                    public void onError(ApiException e) {
+                        ToastUtils.toast(e.getDisplayMessage());
+                    }
+                });
+                break;
+            case 5:
+                request.apiCall(request.create(TestApi.UserService.class)
+                        .post_cal(HttpUtils.getJsonRequestBody(jsonObject)), new SimpleCallBack<String>() {
+                    @Override
+                    public void onSuccess(String response) throws Throwable {
+                        ToastUtils.toast(JsonUtil.toJson(response));
+                    }
+
+                    @Override
+                    public void onError(ApiException e) {
+                        ToastUtils.toast(e.getDisplayMessage());
+                    }
+                });
+                break;
+            case 6:
+                request.apiCall(request.create(TestApi.UserService.class)
+                        .post_contact_log(HttpUtils.getJsonRequestBody(jsonObject)), new SimpleCallBack<String>() {
+                    @Override
+                    public void onSuccess(String response) throws Throwable {
+                        ToastUtils.toast(JsonUtil.toJson(response));
+                    }
+
+                    @Override
+                    public void onError(ApiException e) {
+                        ToastUtils.toast(e.getDisplayMessage());
+                    }
+                });
+                break;
+            case 7:
+                request.apiCall(request.create(TestApi.UserService.class)
+                        .post_delete(HttpUtils.getJsonRequestBody(jsonObject)), new SimpleCallBack<String>() {
+                    @Override
+                    public void onSuccess(String response) throws Throwable {
+                        ToastUtils.toast(JsonUtil.toJson(response));
+                    }
+
+                    @Override
+                    public void onError(ApiException e) {
+                        ToastUtils.toast(e.getDisplayMessage());
+                    }
+                });
+                break;
+            default:
+                break;
+        }
 
     }
 }

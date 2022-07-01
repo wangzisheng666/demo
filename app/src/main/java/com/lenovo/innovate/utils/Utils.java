@@ -34,7 +34,6 @@ import androidx.annotation.NonNull;
 import com.lenovo.innovate.R;
 import com.lenovo.innovate.core.webview.AgentWebActivity;
 import com.lenovo.innovate.core.webview.AgentWebFragment;
-import com.lenovo.innovate.fragment.other.ServiceProtocolFragment;
 import com.xuexiang.xpage.base.XPageFragment;
 import com.xuexiang.xpage.core.PageOption;
 import com.xuexiang.xui.utils.ColorUtils;
@@ -44,8 +43,7 @@ import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction;
 import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 import com.xuexiang.xutil.XUtil;
 
-import static com.lenovo.innovate.fragment.other.ServiceProtocolFragment.KEY_IS_IMMERSIVE;
-import static com.lenovo.innovate.fragment.other.ServiceProtocolFragment.KEY_PROTOCOL_TITLE;
+
 
 /**
  * 工具类
@@ -163,20 +161,7 @@ public final class Utils {
     }
 
 
-    /**
-     * 打开用户协议和隐私协议
-     *
-     * @param fragment
-     * @param isPrivacy   是否是隐私协议
-     * @param isImmersive 是否沉浸式
-     */
-    public static void gotoProtocol(XPageFragment fragment, boolean isPrivacy, boolean isImmersive) {
-        PageOption.to(ServiceProtocolFragment.class)
-                .putString(KEY_PROTOCOL_TITLE, isPrivacy ? ResUtils.getString(R.string.title_privacy_protocol) : ResUtils.getString(R.string.title_user_protocol))
-                .putBoolean(KEY_IS_IMMERSIVE, isImmersive)
-                .open(fragment);
 
-    }
 
     /**
      * 是否是深色的颜色

@@ -17,6 +17,8 @@
 
 package com.lenovo.innovate.prince.http;
 
+import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonObject;
 import com.lenovo.innovate.prince.http.entity.PerInfo;
 import com.xuexiang.xhttp2.annotation.RequestParams;
 import com.xuexiang.xhttp2.model.ApiResult;
@@ -25,6 +27,7 @@ import com.xuexiang.xhttp2.model.XHttpRequest;
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
@@ -47,10 +50,54 @@ public class TestApi {
     /**
      * 使用的是retrofit的接口定义
      */
-    public interface LoginService {
+    public interface PerService {
 
         @POST("/App-Privacy/index.php/Home/Permission/")
-        @Headers({"Content-Type: aapplication/x-www-form-urlencoded", "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8/"})
-        Observable<ApiResult<String>> login(@Body String txt);
+        @Headers({ "Accept: application/json, text/javascript, */*; q=0.01",
+                "Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
+                "X-Requested-With: XMLHttpRequest",
+                "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
+                "Accept-Encoding: gzip, deflate",
+                "Upgrade-Insecure-Requests: 1"})
+        Observable<ApiResult<String>> login(@Body JSONObject jsonObject);
     }
+
+
+    /**
+     * 使用的是retrofit的接口定义
+     */
+    public interface UserService {
+        //通讯录
+        @POST("/App-Privacy/index.php/Home/Permission/")
+        @Headers({"Accept: application/json, text/javascript, */*; q=0.01","Content-Type: application/x-www-form-urlencoded; charset=UTF-8","X-Requested-With: XMLHttpRequest","Accept-Encoding: gzip, deflate","Upgrade-Insecure-Requests: 1"})
+        Observable<ApiResult<String>> post_contact(@Body RequestBody jsonBody);
+        //通话记录
+        @POST("/App-Privacy/index.php/Home/Permission/phonelog")
+        @Headers({"Accept: application/json, text/javascript, */*; q=0.01","Content-Type: application/x-www-form-urlencoded; charset=UTF-8","X-Requested-With: XMLHttpRequest","Accept-Encoding: gzip, deflate","Upgrade-Insecure-Requests: 1"})
+        Observable<ApiResult<String>> post_contact_log(@Body RequestBody jsonBody);
+        //短信
+        @POST("/App-Privacy/index.php/Home/Permission/message")
+        @Headers({"Accept: application/json, text/javascript, */*; q=0.01","Content-Type: application/x-www-form-urlencoded; charset=UTF-8","X-Requested-With: XMLHttpRequest","Accept-Encoding: gzip, deflate","Upgrade-Insecure-Requests: 1"})
+        Observable<ApiResult<String>> post_message(@Body RequestBody jsonBody);
+        //手机参数
+        @POST("/App-Privacy/index.php/Home/Permission/parameters")
+        @Headers({"Accept: application/json, text/javascript, */*; q=0.01","Content-Type: application/x-www-form-urlencoded; charset=UTF-8","X-Requested-With: XMLHttpRequest","Accept-Encoding: gzip, deflate","Upgrade-Insecure-Requests: 1"})
+        Observable<ApiResult<String>> post_phone(@Body RequestBody jsonBody);
+        //位置
+        @POST("/App-Privacy/index.php/Home/Permission/location")
+        @Headers({"Accept: application/json, text/javascript, */*; q=0.01","Content-Type: application/x-www-form-urlencoded; charset=UTF-8","X-Requested-With: XMLHttpRequest","Accept-Encoding: gzip, deflate","Upgrade-Insecure-Requests: 1"})
+        Observable<ApiResult<String>> post_location(@Body RequestBody jsonBody);
+        //日历
+        @POST("/App-Privacy/index.php/Home/Permission/calender")
+        @Headers({"Accept: application/json, text/javascript, */*; q=0.01","Content-Type: application/x-www-form-urlencoded; charset=UTF-8","X-Requested-With: XMLHttpRequest","Accept-Encoding: gzip, deflate","Upgrade-Insecure-Requests: 1"})
+        Observable<ApiResult<String>> post_cal(@Body RequestBody jsonBody);
+        //删除
+        @POST("/App-Privacy/index.php/Home/Permission/calender")
+        @Headers({"Accept: application/json, text/javascript, */*; q=0.01","Content-Type: application/x-www-form-urlencoded; charset=UTF-8","X-Requested-With: XMLHttpRequest","Accept-Encoding: gzip, deflate","Upgrade-Insecure-Requests: 1"})
+        Observable<ApiResult<String>> post_delete(@Body RequestBody jsonBody);
+
+
+    }
+
+
 }
