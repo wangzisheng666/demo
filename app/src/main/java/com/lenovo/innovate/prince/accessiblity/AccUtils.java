@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -365,6 +366,50 @@ public class AccUtils {
             }
         }
         return result;
+    }
+
+    public static List<String> execRootCmd_list(String cmd) {
+        String result = "";
+        DataOutputStream dos = null;
+        DataInputStream dis = null;
+        List<String> list = new ArrayList<>();
+
+        try {
+            Process p = Runtime.getRuntime().exec("su");// 经过Root处理的android系统即有su命令
+            dos = new DataOutputStream(p.getOutputStream());
+            dis = new DataInputStream(p.getInputStream());
+
+            Log.i(TAG, cmd);
+            dos.writeBytes(cmd + "\n");
+            dos.flush();
+            dos.writeBytes("exit\n");
+            dos.flush();
+            String line = null;
+            while ((line = dis.readLine()) != null) {
+                //Log.i("11111111", line);
+                list.add(line);
+                //  result += line;
+            }
+            p.waitFor();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (dos != null) {
+                try {
+                    dos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (dis != null) {
+                try {
+                    dis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return list;
     }
 
     public static boolean RootCommand(String command)

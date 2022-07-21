@@ -49,27 +49,7 @@
                     app:sd_shapeRadius="5dp" />
 
 
-                <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
-                    android:id="@+id/menu_screen_hijack"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    app:sLeftBottomTextString="获取手机运行中的应用权限，造成的屏幕劫持攻击"
-                    app:sLeftBottomTextSize="@dimen/config_margin_12dp"
-                    app:sLeftIconRes="@drawable/ic_jc"
-                    app:sLeftTopTextString="获取手机运行状态权限"
-                    app:sLeftViewGravity="left_center"
-                    app:sRightIconRes="@drawable/icon_arrow_right_grey" />
 
-                <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
-                    android:id="@+id/menu_screen"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    app:sLeftBottomTextString="利用截屏权限，在敏感页面进行截图保存"
-                    app:sLeftBottomTextSize="@dimen/config_margin_12dp"
-                    app:sLeftIconRes="@drawable/ic_jp"
-                    app:sLeftTopTextString="截屏权限"
-                    app:sLeftViewGravity="left_center"
-                    app:sRightIconRes="@drawable/icon_arrow_right_grey" />
 
 
                 <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
@@ -116,16 +96,6 @@
                     app:sLeftViewGravity="left_center"
                     app:sRightIconRes="@drawable/icon_arrow_right_grey" />
 
-                <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
-                    android:id="@+id/menu_install"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    app:sLeftBottomTextString="****8888"
-                    app:sLeftBottomTextSize="@dimen/config_margin_12dp"
-                    app:sLeftIconRes="@drawable/ic_comment"
-                    app:sLeftTopTextString="test"
-                    app:sLeftViewGravity="left_center"
-                    app:sRightIconRes="@drawable/icon_arrow_right_grey" />
 
 
             </LinearLayout>

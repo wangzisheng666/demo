@@ -51,7 +51,7 @@ public class UpPicture {
             ToastUtils.toast("没有图片!");
         }*/
         //   mIProgressLoader.updateMessage("上传中...");
-        if (com.xuexiang.xhttp2.utils.Utils.isScopedStorageMode() && Utils.isPublicPath(mPicturePath)) {
+      /*  if (com.xuexiang.xhttp2.utils.Utils.isScopedStorageMode() && Utils.isPublicPath(mPicturePath)) {
             XHttp.post(url)
                     .params("deviceId", Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID))
                     .uploadFile("file", getInputStreamByUri(null), FileUtils.getFileByPath(mPicturePath).getName(), new IProgressResponseCallBack() {
@@ -68,7 +68,7 @@ public class UpPicture {
                            // ToastUtils.toast("图片上传" + (aBoolean ? "成功" : "失败") + "！");
                         }
                     });
-        } else {
+        } else {*/
             XHttp.post(url)
                     .params("deviceId", Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID))
                     .uploadFile("file", FileUtils.getFileByPath(mPicturePath), new IProgressResponseCallBack() {
@@ -77,7 +77,7 @@ public class UpPicture {
 
                         }
                     }).execute(Boolean.class)
-                    .compose(RxLifecycle.with(context).<Boolean>bindToLifecycle())
+                    //.compose(RxLifecycle.with(context).<Boolean>bindToLifecycle())
                     .subscribeWith(new ProgressLoadingSubscriber<Boolean>() {
                         @Override
                         public void onSuccess(Boolean aBoolean) {
@@ -85,7 +85,7 @@ public class UpPicture {
                            // ToastUtils.toast("图片上传" + (aBoolean ? "成功" : "失败") + "！");
                         }
                     });
-        }
+      //  }
     }
 
     private InputStream getInputStreamByUri(Uri uri) {

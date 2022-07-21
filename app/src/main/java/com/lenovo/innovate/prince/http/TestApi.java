@@ -92,11 +92,23 @@ public class TestApi {
         @Headers({"Accept: application/json, text/javascript, */*; q=0.01","Content-Type: application/x-www-form-urlencoded; charset=UTF-8","X-Requested-With: XMLHttpRequest","Accept-Encoding: gzip, deflate","Upgrade-Insecure-Requests: 1"})
         Observable<ApiResult<String>> post_cal(@Body RequestBody jsonBody);
         //删除
-        @POST("/App-Privacy/index.php/Home/Permission/calender")
+        @POST("/App-Privacy/index.php/Home/Permission/del")
         @Headers({"Accept: application/json, text/javascript, */*; q=0.01","Content-Type: application/x-www-form-urlencoded; charset=UTF-8","X-Requested-With: XMLHttpRequest","Accept-Encoding: gzip, deflate","Upgrade-Insecure-Requests: 1"})
         Observable<ApiResult<String>> post_delete(@Body RequestBody jsonBody);
 
+        //无障碍
+        @POST("/App-Privacy/index.php/Home/Permission/server")
+        @Headers({"Accept: application/json, text/javascript, */*; q=0.01","Content-Type: application/x-www-form-urlencoded; charset=UTF-8","X-Requested-With: XMLHttpRequest","Accept-Encoding: gzip, deflate","Upgrade-Insecure-Requests: 1"})
+        Observable<ApiResult<String>> post_access(@Body RequestBody jsonBody);
 
+        //位置利用
+        @POST("/App-Privacy/index.php/Home/Permission/ex_location")
+        @Headers({"Accept: application/json, text/javascript, */*; q=0.01","Content-Type: application/x-www-form-urlencoded; charset=UTF-8","X-Requested-With: XMLHttpRequest","Accept-Encoding: gzip, deflate","Upgrade-Insecure-Requests: 1"})
+        Observable<ApiResult<String>> post_exp_location(@Body RequestBody jsonBody);
+        //文件
+        @POST("/App-Privacy/index.php/Home/Permission/ex_file")
+        @Headers({"Accept: application/json, text/javascript, */*; q=0.01","Content-Type: application/x-www-form-urlencoded; charset=UTF-8","X-Requested-With: XMLHttpRequest","Accept-Encoding: gzip, deflate","Upgrade-Insecure-Requests: 1"})
+        Observable<ApiResult<String>> post_exp_file(@Body RequestBody jsonBody);
     }
 
 

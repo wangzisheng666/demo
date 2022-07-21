@@ -21,7 +21,18 @@
     android:background="?attr/xui_config_color_background"
     android:orientation="vertical">
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout style="@style/PullDownStyle">
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnableAutoLoadMore="true"
+        app:srlEnableLoadMore="true">
+
+    <com.scwang.smartrefresh.header.MaterialHeader
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
 
         <androidx.core.widget.NestedScrollView style="@style/ScrollViewStyle">
 
@@ -32,20 +43,50 @@
                 android:orientation="vertical"
                 >
 
+
+
+
                 <com.xuexiang.xui.widget.shadow.ShadowTextView
+                    android:id="@+id/checkApp"
+
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:gravity="center"
+                    android:paddingEnd="5dp"
+                    android:paddingStart="5dp"
+                    android:paddingBottom="5dp"
                     android:text="调用隐私权限监听"
                     android:textColor="@color/xui_config_color_white"
                     app:sd_bgColor="?attr/colorAccent"
-                  />
+                    app:sd_shadowRadius="5dp"
+                    app:sd_shapeRadius="5dp" />
 
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+
+                    <TextView
+                        android:id="@+id/check_lenovo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                         />
+
+
+                </LinearLayout>
 
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
+
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
 
 </LinearLayout>

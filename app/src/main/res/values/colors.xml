@@ -14,7 +14,7 @@
     <color name="toast_success_color" tools:ignore="PrivateResource">#388E3C</color>
     <color name="toast_warning_color" tools:ignore="PrivateResource">@color/xui_config_color_waring</color>
     <color name="toast_normal_tint_color" tools:ignore="PrivateResource">#353A3E</color>
-
+    <color name="xui_config_color_light_blue_gray">#9FABBC</color>
     <color name="app_color_theme_1">#EF5362</color> <!-- Grapefruit -->
     <color name="app_color_theme_2">#FE6D4B</color> <!-- Bittersweet -->
     <color name="app_color_theme_3">#FFCF47</color> <!-- Sunflower -->

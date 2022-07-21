@@ -2,6 +2,7 @@ package com.lenovo.innovate.hook;
 
 import android.accounts.AccountManager;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.graphics.Camera;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -37,6 +38,7 @@ import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
+import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 
@@ -74,6 +76,124 @@ public class HookTrack implements IXposedHookLoadPackage {
 
     private void hookApi(XC_LoadPackage.LoadPackageParam lpparam) {
 
+
+        XposedHelpers.findAndHookMethod(
+                "android.app.ApplicationPackageManager",
+                lpparam.classLoader,
+                "getInstalledPackages",
+                int.class,
+                new DumpMethodHook(lpparam.packageName) {
+                    @Override
+                    protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
+                        XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&获取已安装应用列表");
+                       // writeTxt("#"+get_time()+"@"+lpparam.packageName+"&获取已安装应用列表");
+                    }
+                }
+        );
+
+        XposedHelpers.findAndHookMethod(
+                "android.app.ApplicationPackageManager",
+                lpparam.classLoader,
+                "getInstalledApplications",
+                int.class,
+                new DumpMethodHook(lpparam.packageName) {
+                    @Override
+                    protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
+                        XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&获取已安装应用列表");
+                       // writeTxt("#"+get_time()+"@"+lpparam.packageName+"&获取已安装应用列表");
+                    }
+                }
+        );
+
+        XposedHelpers.findAndHookMethod(
+                "android.app.ApplicationPackageManager",
+                lpparam.classLoader,
+                "queryIntentActivities",
+                Intent.class,
+                int.class,
+                new DumpMethodHook(lpparam.packageName) {
+                    @Override
+                    protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
+                        XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&获取已安装应用信息");
+                       // writeTxt("#"+get_time()+"@"+lpparam.packageName+"&获取已安装应用信息");
+                    }
+                }
+        );
+
+
+        XposedHelpers.findAndHookMethod(
+                "android.telephony.TelephonyManager",
+                lpparam.classLoader,
+                "getSubscriberId",
+                int.class,
+                new DumpMethodHook(lpparam.packageName) {
+                    @Override
+                    protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
+                        XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&获取imsi");
+                      //  writeTxt("#"+get_time()+"@"+lpparam.packageName+"&获取imsi");
+                    }
+                }
+        );
+
+
+
+        XposedHelpers.findAndHookMethod(
+                "android.os.SystemProperties",
+                lpparam.classLoader,
+                "get",
+                String.class,
+                String.class,
+                new DumpMethodHook(lpparam.packageName) {
+                    @Override
+                    protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
+                        if (param.args[0].equals("ro.serialno")) {
+                            XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&获取手机序列号");
+                          //  writeTxt("#"+get_time()+"@"+lpparam.packageName+"&获取手机序列号");
+                        }
+                    }
+                }
+        );
+
+        XposedHelpers.findAndHookMethod(
+                "android.content.ClipboardManager",
+                lpparam.classLoader,
+                "getPrimaryClip",
+                new DumpMethodHook(lpparam.packageName) {
+                    @Override
+                    protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
+                        if (param.args[0].equals("ro.serialno")) {
+                            XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&获取剪贴板信息");
+                        //    writeTxt("#"+get_time()+"@"+lpparam.packageName+"&获取剪贴板信息");
+                        }
+                    }
+                }
+        );
+
+        XposedHelpers.findAndHookMethod(
+                "android.net.wifi.WifiInfo",
+                lpparam.classLoader,
+                "getMacAddress",
+                new DumpMethodHook(lpparam.packageName) {
+                    @Override
+                    protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
+                        XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&获取mac地址");
+                      //  writeTxt("#"+get_time()+"@"+lpparam.packageName+"&获取mac地址");
+                    }
+                }
+        );
+
+        XposedHelpers.findAndHookMethod(
+                "java.net.NetworkInterface",
+                lpparam.classLoader,
+                "getHardwareAddress",
+                new DumpMethodHook(lpparam.packageName) {
+                    @Override
+                    protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
+                        XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&获取mac地址");
+                     //   writeTxt("#"+get_time()+"@"+lpparam.packageName+"&获取mac地址");
+                    }
+                }
+        );
         //TelephonyManager
         XposedBridge.hookAllMethods(TelephonyManager.class, "getDeviceId", new XC_MethodHook() {
             @Override
@@ -81,10 +201,10 @@ public class HookTrack implements IXposedHookLoadPackage {
                 super.afterHookedMethod(param);
                 Map<String,String> map = new HashMap<>();
                 map.put("time",get_time());
-                map.put("type","手机信息");
+                map.put("type","手机设备ID");
                 map.put("package",lpparam.packageName);
-                XposedBridge.log("<"+map+">");
-                writeTxt("#"+get_time()+"@"+lpparam.packageName+"&手机信息");
+                XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&手机设备ID");
+             //   writeTxt("#"+get_time()+"@"+lpparam.packageName+"&手机设备ID");
             }
         });
         XposedBridge.hookAllMethods(TelephonyManager.class, "getLine1Number", new XC_MethodHook() {
@@ -95,8 +215,8 @@ public class HookTrack implements IXposedHookLoadPackage {
                 map.put("time",get_time());
                 map.put("type","手机信息");
                 map.put("package",lpparam.packageName);
-                XposedBridge.log("<"+map+">");
-                writeTxt("#"+get_time()+"@"+lpparam.packageName+"&手机信息");
+                XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&手机标识");
+             //   writeTxt("#"+get_time()+"@"+lpparam.packageName+"&手机标识");
             }
         });
         XposedBridge.hookAllMethods(TelephonyManager.class, "getSimSerialNumber", new XC_MethodHook() {
@@ -107,7 +227,8 @@ public class HookTrack implements IXposedHookLoadPackage {
                 map.put("time",get_time());
                 map.put("type","手机信息");
                 map.put("package",lpparam.packageName);
-                writeTxt("#"+get_time()+"@"+lpparam.packageName+"&手机信息");
+                XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&获取SIM信息");
+            //    writeTxt("#"+get_time()+"@"+lpparam.packageName+"&手机标识");
             }
         });
         XposedBridge.hookAllMethods(TelephonyManager.class, "getSubscriberId", new XC_MethodHook() {
@@ -118,7 +239,8 @@ public class HookTrack implements IXposedHookLoadPackage {
                 map.put("time",get_time());
                 map.put("type","手机信息");
                 map.put("package",lpparam.packageName);
-                writeTxt("#"+get_time()+"@"+lpparam.packageName+"&手机信息");
+                XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&获取SIM信息");
+              //  writeTxt("#"+get_time()+"@"+lpparam.packageName+"&手机标识");
             }
         });
         //https://blog.csdn.net/qq_43278826/article/details/95216504
@@ -130,8 +252,8 @@ public class HookTrack implements IXposedHookLoadPackage {
                 map.put("time",get_time());
                 map.put("type","手机信息");
                 map.put("package",lpparam.packageName);
-                XposedBridge.log("<"+map+">");
-                writeTxt("#"+get_time()+"@"+lpparam.packageName+"&手机信息");
+                XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&手机IMEI");
+               // writeTxt("#"+get_time()+"@"+lpparam.packageName+"&手机IMEI");
             }
         });
 
@@ -142,10 +264,10 @@ public class HookTrack implements IXposedHookLoadPackage {
                 super.afterHookedMethod(param);
                 Map<String,String> map = new HashMap<>();
                 map.put("time",get_time());
-                map.put("type","文件存储");
+                map.put("type","文件读写");
                 map.put("package",lpparam.packageName);
-                XposedBridge.log("<"+map+">");
-                writeTxt("#"+get_time()+"@"+lpparam.packageName+"&文件读写");
+              //  writeTxt("#"+get_time()+"@"+lpparam.packageName+"&文件读写");
+                XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&文件读写");
             }
         });
 
@@ -161,29 +283,29 @@ public class HookTrack implements IXposedHookLoadPackage {
                     map.put("time",get_time());
                     map.put("type","日历");
                     map.put("package",lpparam.packageName);
-                    XposedBridge.log("<"+map+">");
-                    writeTxt("#"+get_time()+"@"+lpparam.packageName+"&日历");
+                    XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&获取日历");
+                 //   writeTxt("#"+get_time()+"@"+lpparam.packageName+"&日历");
                 } else if (arg.contains("phone")) {
                     Map<String,String> map = new HashMap<>();
                     map.put("time",get_time());
                     map.put("type","通讯录");
                     map.put("package",lpparam.packageName);
-                    XposedBridge.log("<"+map+">");
-                    writeTxt("#"+get_time()+"@"+lpparam.packageName+"&通讯录");
+                    XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&通讯录");
+                   // writeTxt("#"+get_time()+"@"+lpparam.packageName+"&通讯录");
                 } else if (arg.contains("call")) {
                     Map<String,String> map = new HashMap<>();
                     map.put("time",get_time());
                     map.put("type","通话记录");
                     map.put("package",lpparam.packageName);
-                    XposedBridge.log("<"+map+">");
-                    writeTxt("#"+get_time()+"@"+lpparam.packageName+"&通话记录");
+                    XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&通话记录");
+                  //  writeTxt("#"+get_time()+"@"+lpparam.packageName+"&通话记录");
                 } else if (arg.contains("sms")) {
                     Map<String,String> map = new HashMap<>();
                     map.put("time",get_time());
                     map.put("type","短信");
                     map.put("package",lpparam.packageName);
-                    XposedBridge.log("<"+map+">");
-                    writeTxt("#"+get_time()+"@"+lpparam.packageName+"&短信");
+                    XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&短信");
+                 //   writeTxt("#"+get_time()+"@"+lpparam.packageName+"&短信");
                 }
             }
         });
@@ -198,29 +320,29 @@ public class HookTrack implements IXposedHookLoadPackage {
                     map.put("time",get_time());
                     map.put("type","日历");
                     map.put("package",lpparam.packageName);
-                    XposedBridge.log("<"+map+">");
-                    writeTxt("#"+get_time()+"@"+lpparam.packageName+"&日历");
+                    XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&获取日历");
+                  //  writeTxt("#"+get_time()+"@"+lpparam.packageName+"&日历");
                 } else if (arg.contains("phone")) {
                     Map<String,String> map = new HashMap<>();
                     map.put("time",get_time());
                     map.put("type","通讯录");
                     map.put("package",lpparam.packageName);
-                    XposedBridge.log("<"+map+">");
-                    writeTxt("#"+get_time()+"@"+lpparam.packageName+"&通讯录");
+                    XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&通讯录");
+                  //  writeTxt("#"+get_time()+"@"+lpparam.packageName+"&通讯录");
                 } else if (arg.contains("call")) {
                     Map<String,String> map = new HashMap<>();
                     map.put("time",get_time());
                     map.put("type","通话记录");
                     map.put("package",lpparam.packageName);
-                    XposedBridge.log("<"+map+">");
-                    writeTxt("#"+get_time()+"@"+lpparam.packageName+"&通话记录");
+                    XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&通话记录");
+                 //   writeTxt("#"+get_time()+"@"+lpparam.packageName+"&通话记录");
                 } else if (arg.contains("sms")) {
                     Map<String,String> map = new HashMap<>();
                     map.put("time",get_time());
                     map.put("type","短信");
                     map.put("package",lpparam.packageName);
-                    XposedBridge.log("<"+map+">");
-                    writeTxt("#"+get_time()+"@"+lpparam.packageName+"&短信");
+                    XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&短信");
+                  //  writeTxt("#"+get_time()+"@"+lpparam.packageName+"&短信");
                 }
             }
         });
@@ -234,8 +356,8 @@ public class HookTrack implements IXposedHookLoadPackage {
                 map.put("time",get_time());
                 map.put("type","位置");
                 map.put("package",lpparam.packageName);
-                XposedBridge.log("<"+map+">");
-                writeTxt("#"+get_time()+"@"+lpparam.packageName+"&位置");
+                XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&获取当前位置");
+              //  writeTxt("#"+get_time()+"@"+lpparam.packageName+"&位置");
             }
         });
 
@@ -248,12 +370,56 @@ public class HookTrack implements IXposedHookLoadPackage {
                 map.put("time",get_time());
                 map.put("type","账户");
                 map.put("package",lpparam.packageName);
-                XposedBridge.log("<"+map+">");
-                writeTxt("#"+get_time()+"@"+lpparam.packageName+"&账户");
+                XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&获取手机账户");
+              //  writeTxt("#"+get_time()+"@"+lpparam.packageName+"&账户");
             }
         });
 
         //Camera
+        XposedHelpers.findAndHookMethod(
+                "android.hardware.Camera",
+                lpparam.classLoader,
+                "open",
+                new DumpMethodHook(lpparam.packageName) {
+                    @Override
+                    protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
+                        XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&相机");
+                        // writeTxt("#"+get_time()+"@"+lpparam.packageName+"&获取已安装应用列表");
+                    }
+                }
+        );
+
+        //Camera
+        XposedHelpers.findAndHookMethod(
+                "android.hardware.Camera",
+                lpparam.classLoader,
+                "open",
+                int.class,
+                new DumpMethodHook(lpparam.packageName) {
+                    @Override
+                    protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
+                        XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&相机");
+                        // writeTxt("#"+get_time()+"@"+lpparam.packageName+"&获取已安装应用列表");
+                    }
+                }
+        );
+
+
+        XposedHelpers.findAndHookMethod(
+                "android.hardware.Camera",
+                lpparam.classLoader,
+                "openLegacy",
+                int.class,
+                int.class,
+                new DumpMethodHook(lpparam.packageName) {
+                    @Override
+                    protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) {
+                        XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&相机");
+                        // writeTxt("#"+get_time()+"@"+lpparam.packageName+"&获取已安装应用列表");
+                    }
+                }
+        );
+/*
         XposedBridge.hookAllMethods(Camera.class, "open", new XC_MethodHook() {
             @Override
             protected void afterHookedMethod(MethodHookParam param) throws Throwable {
@@ -262,8 +428,8 @@ public class HookTrack implements IXposedHookLoadPackage {
                 map.put("time",get_time());
                 map.put("type","相机");
                 map.put("package",lpparam.packageName);
-                XposedBridge.log("<"+map+">");
-                writeTxt("#"+get_time()+"@"+lpparam.packageName+"&相机");
+                XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&相机");
+              //  writeTxt("#"+get_time()+"@"+lpparam.packageName+"&相机");
             }
         });
         XposedBridge.hookAllMethods(Camera.class, "getNumberOfCameras", new XC_MethodHook() {
@@ -274,10 +440,10 @@ public class HookTrack implements IXposedHookLoadPackage {
                 map.put("time",get_time());
                 map.put("type","相机");
                 map.put("package",lpparam.packageName);
-                XposedBridge.log("<"+map+">");
-                writeTxt("#"+get_time()+"@"+lpparam.packageName+"&相机");
+                XposedBridge.log("#"+get_time()+"@"+lpparam.packageName+"&相机");
+               // writeTxt("#"+get_time()+"@"+lpparam.packageName+"&相机");
             }
-        });
+        });*/
 
     }
 
@@ -289,7 +455,7 @@ public class HookTrack implements IXposedHookLoadPackage {
     }
 
 
-    public static void writeTxt(String json) {
+    public static void writeTxt1(String json) {
         if (TextUtils.isEmpty(json)) {
             return;
         }

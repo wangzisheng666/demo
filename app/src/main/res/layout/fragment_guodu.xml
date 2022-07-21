@@ -35,6 +35,7 @@
 
 
                 <com.xuexiang.xui.widget.shadow.ShadowTextView
+                    android:id="@+id/super_test"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginTop="5dp"
@@ -90,20 +91,10 @@
                     app:sLeftIconRes="@drawable/ic___zp"
                     app:sLeftTextString="照片及文件" />
 
-                <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
-                    android:id="@+id/super_microphone"
-                    style="@style/InfoItem.Account"
-                    app:sLeftIconRes="@drawable/ic____mkf"
-                    app:sLeftTextString="麦克风" />
 
-
-                <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
-                    android:id="@+id/super_camera"
-                    style="@style/InfoItem.Account"
-                    app:sLeftIconRes="@drawable/ic___xj"
-                    app:sLeftTextString="相机" />
 
                 <com.xuexiang.xui.widget.shadow.ShadowTextView
+                    android:id="@+id/super_all"
                     android:layout_width="200dp"
                     android:layout_height="60dp"
                     android:layout_marginTop="10dp"
@@ -118,41 +109,7 @@
                     app:sd_shadowRadius="5dp"
                     app:sd_shapeRadius="5dp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="10dp"
-                    android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@android:color/black"
-                        android:text="服务器地址:"/>
-
-                    <LinearLayout
-                        android:layout_marginTop="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <EditText
-                            android:id="@+id/et_api_url"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:hint="请输入服务器的地址..."
-                            android:layout_weight="1"/>
-
-                        <Button
-                            android:id="@+id/btn_save"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="保存"/>
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

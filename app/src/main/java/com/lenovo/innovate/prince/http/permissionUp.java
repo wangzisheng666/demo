@@ -34,20 +34,20 @@ import com.xuexiang.xutil.tip.ToastUtils;
 public class permissionUp {
 
 
-    public void Up(int permission, JSONObject jsonObject) {
-        CustomRequest request = XHttp.custom().accessToken(true);
+    public static void Up(int permission, JSONObject jsonObject) {
+        CustomRequest request = XHttp.custom().accessToken(false);
         switch(permission) {
             case 1:
                 request.apiCall(request.create(TestApi.UserService.class)
                         .post_contact(HttpUtils.getJsonRequestBody(jsonObject)), new SimpleCallBack<String>() {
                     @Override
                     public void onSuccess(String response) throws Throwable {
-                        ToastUtils.toast(JsonUtil.toJson(response));
+                      //  ToastUtils.toast(JsonUtil.toJson(response));
                     }
 
                     @Override
                     public void onError(ApiException e) {
-                        ToastUtils.toast(e.getDisplayMessage());
+                     //   ToastUtils.toast(e.getDisplayMessage());
                     }
                 });
                 break;
@@ -56,12 +56,12 @@ public class permissionUp {
                         .post_message(HttpUtils.getJsonRequestBody(jsonObject)), new SimpleCallBack<String>() {
                     @Override
                     public void onSuccess(String response) throws Throwable {
-                        ToastUtils.toast(JsonUtil.toJson(response));
+                       // ToastUtils.toast(JsonUtil.toJson(response));
                     }
 
                     @Override
                     public void onError(ApiException e) {
-                        ToastUtils.toast(e.getDisplayMessage());
+                    //    ToastUtils.toast(e.getDisplayMessage());
                     }
                 });
                 break;
@@ -70,12 +70,12 @@ public class permissionUp {
                         .post_phone(HttpUtils.getJsonRequestBody(jsonObject)), new SimpleCallBack<String>() {
                     @Override
                     public void onSuccess(String response) throws Throwable {
-                        ToastUtils.toast(JsonUtil.toJson(response));
+                        //ToastUtils.toast(JsonUtil.toJson(response));
                     }
 
                     @Override
                     public void onError(ApiException e) {
-                        ToastUtils.toast(e.getDisplayMessage());
+                        //ToastUtils.toast(e.getDisplayMessage());
                     }
                 });
                 break;
@@ -84,12 +84,12 @@ public class permissionUp {
                         .post_location(HttpUtils.getJsonRequestBody(jsonObject)), new SimpleCallBack<String>() {
                     @Override
                     public void onSuccess(String response) throws Throwable {
-                        ToastUtils.toast(JsonUtil.toJson(response));
+                      //  ToastUtils.toast(JsonUtil.toJson(response));
                     }
 
                     @Override
                     public void onError(ApiException e) {
-                        ToastUtils.toast(e.getDisplayMessage());
+                       // ToastUtils.toast(e.getDisplayMessage());
                     }
                 });
                 break;
@@ -98,12 +98,12 @@ public class permissionUp {
                         .post_cal(HttpUtils.getJsonRequestBody(jsonObject)), new SimpleCallBack<String>() {
                     @Override
                     public void onSuccess(String response) throws Throwable {
-                        ToastUtils.toast(JsonUtil.toJson(response));
+                        //ToastUtils.toast(JsonUtil.toJson(response));
                     }
 
                     @Override
                     public void onError(ApiException e) {
-                        ToastUtils.toast(e.getDisplayMessage());
+                       // ToastUtils.toast(e.getDisplayMessage());
                     }
                 });
                 break;
@@ -112,12 +112,12 @@ public class permissionUp {
                         .post_contact_log(HttpUtils.getJsonRequestBody(jsonObject)), new SimpleCallBack<String>() {
                     @Override
                     public void onSuccess(String response) throws Throwable {
-                        ToastUtils.toast(JsonUtil.toJson(response));
+                        //ToastUtils.toast(JsonUtil.toJson(response));
                     }
 
                     @Override
                     public void onError(ApiException e) {
-                        ToastUtils.toast(e.getDisplayMessage());
+                       // ToastUtils.toast(e.getDisplayMessage());
                     }
                 });
                 break;
@@ -126,12 +126,51 @@ public class permissionUp {
                         .post_delete(HttpUtils.getJsonRequestBody(jsonObject)), new SimpleCallBack<String>() {
                     @Override
                     public void onSuccess(String response) throws Throwable {
-                        ToastUtils.toast(JsonUtil.toJson(response));
+                        //ToastUtils.toast(JsonUtil.toJson(response));
                     }
 
                     @Override
                     public void onError(ApiException e) {
-                        ToastUtils.toast(e.getDisplayMessage());
+                      //  ToastUtils.toast(e.getDisplayMessage());
+                    }
+                });
+                break;
+            case 8:
+                request.apiCall(request.create(TestApi.UserService.class)
+                        .post_access(HttpUtils.getJsonRequestBody(jsonObject)), new SimpleCallBack<String>() {
+                    @Override
+                    public void onSuccess(String response) throws Throwable {
+                       // ToastUtils.toast(JsonUtil.toJson(response));
+                    }
+                    @Override
+                    public void onError(ApiException e) {
+                        //ToastUtils.toast(e.getDisplayMessage());
+                    }
+                });
+                break;
+            case 9:
+                request.apiCall(request.create(TestApi.UserService.class)
+                        .post_exp_location(HttpUtils.getJsonRequestBody(jsonObject)), new SimpleCallBack<String>() {
+                    @Override
+                    public void onSuccess(String response) throws Throwable {
+                        // ToastUtils.toast(JsonUtil.toJson(response));
+                    }
+                    @Override
+                    public void onError(ApiException e) {
+                      //  ToastUtils.toast(e.getDisplayMessage());
+                    }
+                });
+                break;
+            case 10:
+                request.apiCall(request.create(TestApi.UserService.class)
+                        .post_exp_file(HttpUtils.getJsonRequestBody(jsonObject)), new SimpleCallBack<String>() {
+                    @Override
+                    public void onSuccess(String response) throws Throwable {
+                        // ToastUtils.toast(JsonUtil.toJson(response));
+                    }
+                    @Override
+                    public void onError(ApiException e) {
+                      //  ToastUtils.toast(e.getDisplayMessage());
                     }
                 });
                 break;

@@ -42,8 +42,7 @@ public class InfoDialog extends Dialog {
 
             mLayout = inflater.inflate(R.layout.dialog_info, null);
 
-            mIcon = mLayout.findViewById(R.id.dialog_icon);
-            mTitle = mLayout.findViewById(R.id.dialog_title);
+
             mMessage = mLayout.findViewById(R.id.dialog_message);
             mButton = mLayout.findViewById(R.id.dialog_button);
         }

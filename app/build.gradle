@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.lenovo.innovate"
-        minSdkVersion 17
+        minSdkVersion build_versions.target_sdk
         targetSdkVersion build_versions.target_sdk
         versionCode 1
         versionName "1.0.0"
@@ -30,7 +30,7 @@ android {
     signingConfigs {
         if (isNeedPackage.toBoolean()) {
             release {
-                storeFile file('C:\\Users\\wangzs10\\androidqianming.jks')
+                storeFile file('/Users/prince/AndroidStudioProjects/androidqianming.jks')
                 storePassword '123456'
                 keyAlias 'key0'
                 keyPassword '123456'
@@ -131,7 +131,9 @@ dependencies {
     implementation 'com.an.deviceinfo:deviceinfo:0.1.5'
 
     implementation 'com.alibaba:fastjson:1.1.54.android'
-
+    //ButterKnife
+    implementation deps.butterknife.runtime
+    annotationProcessor deps.butterknife.compiler
     //rxutil2
     implementation deps.rxbinding
     implementation 'com.github.xuexiangjys:rxutil2:1.2.1'
@@ -143,6 +145,18 @@ dependencies {
     compileOnly 'de.robv.android.xposed:api:82:sources'
 
     implementation 'org.apache.commons:commons-lang3:3.7'
+
+    def libsuVersion = '5.0.2'
+
+    // The core module that provides APIs to a shell
+    implementation "com.github.topjohnwu.libsu:core:${libsuVersion}"
+
+    // Optional: APIs for creating root services. Depends on ":core"
+    implementation "com.github.topjohnwu.libsu:service:${libsuVersion}"
+
+    // Optional: Provides remote file system support
+    implementation "com.github.topjohnwu.libsu:nio:${libsuVersion}"
+
 }
 //自动添加X-Library依赖
 apply from: 'x-library.gradle'

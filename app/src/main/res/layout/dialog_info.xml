@@ -8,37 +8,6 @@
     android:layout_height="wrap_content"
     android:background="#ffffff">
 
-    <LinearLayout
-        android:id="@+id/dialog_header"
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:gravity="center"
-        android:background="@color/toast_info_color">
-
-        <!-- Icon -->
-        <ImageView
-            android:contentDescription="@id/dialog_title"
-            android:id="@+id/dialog_icon"
-            android:adjustViewBounds="true"
-            android:scaleType="fitXY"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon" />
-
-        <!-- Title（default is gone) -->
-        <TextView
-            android:id="@+id/dialog_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="#ffffff"
-            android:visibility="gone" />
-
-    </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"

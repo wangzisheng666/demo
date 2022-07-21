@@ -68,15 +68,13 @@
         tools:ignore="LockedOrientationActivity"
         tools:replace="android:allowBackup">
 
-
-
         <!-- 标志该 apk 为一个 Xposed 模块，供 Xposed 框架识别 -->
         <meta-data
             android:name="xposedmodule"
             android:value="true" /> <!-- 模块说明，一般为模块的功能描述 -->
         <meta-data
             android:name="xposeddescription"
-            android:value="这个模块是用来检测xxxxxx" /> <!-- 模块兼容版本 -->
+            android:value="这个模块是用来检测权限调用" /> <!-- 模块兼容版本 -->
         <meta-data
             android:name="xposedminversion"
             android:value="54" />

@@ -16,7 +16,7 @@
     <string name="lab_yes">是</string>
     <string name="lab_no">否</string>
     <string name="lab_open_third_app">是否允许页面打开第三方应用?</string>
-
+    <string name="lab_yy">1</string>
     <!-- 隐私政策弹窗   -->
     <string name="lab_exit_app">退出应用</string>
     <string name="lab_agree">同意</string>
@@ -38,9 +38,11 @@
 
     <string name="text_accessibility_service_description">所申请的权限均用于測試，不涉及任何隐私。</string>
 
-
+    <!--下拉刷新-->
+    <string name="item_example_number_title">第%02d条数据</string>
+    <string name="item_example_number_abstract">这是测试的第%02d条数据</string>
 
 
     <string name="service_api_key">service_api_key</string>
-    <string name="default_service_api">http://127.0.0.1:1111</string>
+    <string name="default_service_api">http://10.103.252.187</string>
 </resources>

