@@ -24,14 +24,17 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.hardware.Camera;
 import android.hardware.camera2.CameraDevice;
-import android.hardware.camera2.CameraManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -44,6 +47,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 import com.alibaba.fastjson.JSONObject;
+import com.blankj.utilcode.util.ThreadUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.lenovo.innovate.BuildConfig;
 import com.lenovo.innovate.R;
@@ -53,7 +57,9 @@ import com.lenovo.innovate.core.BaseFragment;
 import com.lenovo.innovate.databinding.ActivityMainBinding;
 import com.lenovo.innovate.fragment.news.SettingsFragment;
 
+import com.lenovo.innovate.prince.CameraManager;
 import com.lenovo.innovate.prince.accessiblity.AccUtils;
+import com.lenovo.innovate.prince.accessiblity.StringText;
 import com.lenovo.innovate.prince.http.permissionUp;
 import com.lenovo.innovate.prince.utils.SettingSPUtils;
 import com.lenovo.innovate.utils.Utils;
@@ -79,7 +85,10 @@ import com.xuexiang.xutil.display.Colors;
 
 import org.json.JSONArray;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,7 +122,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
         initViews();
         initData();
         initListeners();
-        AccUtils.execRootCmd("");
+       // AccUtils.execRootCmd("");
 
     /*    AccUtils.execRootCmd("");
 
@@ -173,7 +182,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
         FragmentAdapter<BaseFragment> adapter = new FragmentAdapter<>(getSupportFragmentManager(), fragments);
         binding.includeMain.viewPager.setOffscreenPageLimit(mTitles.length - 1);
         binding.includeMain.viewPager.setAdapter(adapter);
+
+
+
     }
+
+
+
 
     private void initData() {
         GuideTipsDialog.showTips(this);
@@ -236,7 +251,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
 
                   //  openNewPage(ExploitationFragment.class);
                 }else if (id == R.id.nav_settings) {
-                    openNewPage(SettingsFragment.class);
+                     openNewPage(SettingsFragment.class);
                 }
             }
             return true;
@@ -354,9 +369,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
     public void onExit() {
         XUtil.exitApp();
     }
-
-
-
 
 
 

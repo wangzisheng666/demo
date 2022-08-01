@@ -96,6 +96,8 @@ public class LanYongFragment extends BaseFragment<FragmentLanyongBinding>  imple
         binding.menuAutomaticKz.setOnSuperTextViewClickListener(this);
         binding.menuService.setOnSuperTextViewClickListener(this);
 
+
+
     }
 
     @Override

@@ -70,7 +70,7 @@ public class Sdcard {
 
             mResult += str;
 
-            mResult += "\n";
+            mResult += "<br/>";
 
         }
         Log.i(TAG,mResult.toString());

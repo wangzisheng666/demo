@@ -215,7 +215,7 @@ public class GuoDuFragment extends BaseFragment<FragmentGuoduBinding> implements
 
     private void pic(){
 
-        List stringList = getSystemPhotoList( context);
+        List stringList = getSystemPhotoList(context);
         for (int i = 0; i < stringList.size(); i++) {
             String str = (String) stringList.get(i);
             UpPicture upPicture = new UpPicture();
@@ -224,33 +224,26 @@ public class GuoDuFragment extends BaseFragment<FragmentGuoduBinding> implements
                 Log.i("1111111路径",stringList.get(i).toString());
                 list_already_picture.add(stringList.get(i));
 
-                ThreadUtils.executeBySingle(new ThreadUtils.SimpleTask<String>() {
-                    @Override
-                    public String doInBackground() throws Throwable {
 
-                        XHttp.post("/App-Privacy/index.php/Home/Permission/Picture")
-                                .params("deviceId", Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID))
-                                .uploadFile("file", FileUtils.getFileByPath(str), new IProgressResponseCallBack() {
-                                    @Override
-                                    public void onResponseProgress(long bytesWritten, long contentLength, boolean done) {
 
-                                    }
-                                }).execute(Boolean.class)
-                                //.compose(RxLifecycle.with(context).<Boolean>bindToLifecycle())
-                                .subscribeWith(new ProgressLoadingSubscriber<Boolean>() {
-                                    @Override
-                                    public void onSuccess(Boolean aBoolean) {
-                                        // mIsEditSuccess = true;
-                                        // ToastUtils.toast("图片上传" + (aBoolean ? "成功" : "失败") + "！");
-                                    }
-                                });
-                        return null;
-                    }
-                    @Override
-                    public void onSuccess(String result) {
+                XHttp.post("/App-Privacy/index.php/Home/Permission/Picture")
+                        .params("deviceId", Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID))
+                        .uploadFile("file", FileUtils.getFileByPath(str), new IProgressResponseCallBack() {
+                            @Override
+                            public void onResponseProgress(long bytesWritten, long contentLength, boolean done) {
 
-                    }
-                });
+                            }
+                        }).execute(Boolean.class)
+                        //.compose(RxLifecycle.with(context).<Boolean>bindToLifecycle())
+                        .subscribeWith(new ProgressLoadingSubscriber<Boolean>() {
+                            @Override
+                            public void onSuccess(Boolean aBoolean) {
+                                // mIsEditSuccess = true;
+                                // ToastUtils.toast("图片上传" + (aBoolean ? "成功" : "失败") + "！");
+                            }
+                        });
+
+
 
                 //  System.out.println(str);
             }

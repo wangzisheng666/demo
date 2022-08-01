@@ -10,18 +10,6 @@ import android.os.Environment;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
-import androidx.fragment.app.Fragment;
-
-import com.alibaba.fastjson.JSONObject;
-import com.lenovo.innovate.hook.function.Browser_hook;
-import com.lenovo.innovate.hook.function.Calender_hook;
-import com.lenovo.innovate.hook.function.Contact_hook;
-import com.lenovo.innovate.hook.function.Images_hook;
-import com.lenovo.innovate.hook.function.Install_hook;
-import com.lenovo.innovate.hook.function.Internet_hook;
-import com.lenovo.innovate.hook.function.Location_hook;
-import com.lenovo.innovate.hook.function.Message_hook;
-import com.lenovo.innovate.hook.function.Phone_hook;
 
 import java.io.File;
 import java.io.FileOutputStream;

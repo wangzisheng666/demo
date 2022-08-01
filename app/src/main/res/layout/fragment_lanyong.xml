@@ -22,7 +22,6 @@
     android:background="?attr/xui_config_color_background"
     android:orientation="vertical">
 
-
     <com.scwang.smartrefresh.layout.SmartRefreshLayout style="@style/PullDownStyle">
 
         <androidx.core.widget.NestedScrollView style="@style/ScrollViewStyle">

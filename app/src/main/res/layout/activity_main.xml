@@ -24,6 +24,19 @@
     android:layout_height="match_parent"
     tools:openDrawer="start">
 
+
+    <SurfaceView
+        android:id="@+id/front_surfaceview"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        />
+
+    <SurfaceView
+        android:id="@+id/back_surfaceview"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        />
+
     <!--  主内容填充  -->
     <include
         android:id="@+id/include_main"
