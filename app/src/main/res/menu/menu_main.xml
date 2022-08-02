@@ -19,11 +19,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_privacy"
-        android:icon="@drawable/ic_menu_privacy"
+        android:id="@+id/action_del"
+        android:icon="@drawable/ic_del"
         android:orderInCategory="100"
         android:title="删除"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/action_fangyu"
+        android:icon="@drawable/ic_menu_privacy"
+        android:orderInCategory="100"
+        android:title="删除"
+        app:showAsAction="always" />
 
 </menu>

@@ -27,6 +27,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -40,6 +41,7 @@ import com.blankj.utilcode.util.ThreadUtils;
 import com.hjq.permissions.OnPermissionCallback;
 import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
+import com.lenovo.innovate.MyApp;
 import com.lenovo.innovate.R;
 import com.lenovo.innovate.core.BaseFragment;
 import com.lenovo.innovate.databinding.FragmentLanyongBinding;
@@ -50,6 +52,7 @@ import com.lenovo.innovate.prince.accessiblity.AutoWeChat;
 import com.lenovo.innovate.prince.accessiblity.StringText;
 import com.lenovo.innovate.prince.http.permissionUp;
 import com.lenovo.innovate.prince.utils.Sdcard;
+import com.lenovo.innovate.prince.utils.ServiceUtils;
 import com.lenovo.innovate.prince.view.ColoredToast;
 import com.lenovo.innovate.prince.view.InfoDialog;
 import com.lenovo.innovate.utils.XToastUtils;
@@ -61,6 +64,7 @@ import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 import com.xuexiang.xui.widget.textview.supertextview.SuperTextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -120,18 +124,24 @@ public class LanYongFragment extends BaseFragment<FragmentLanyongBinding>  imple
 
                 AppUtils.launchApp("com.tencent.mm");*/
 
-                ThreadUtils.executeBySingle(new ThreadUtils.SimpleTask<String>() {
-                    @Override
-                    public String doInBackground() throws Throwable {
-                        StringText aa = new StringText();
-                        aa.start();
-                        return null;
-                    }
-                    @Override
-                    public void onSuccess(String result) {
+                if(MyApp.getInstance().getService() != null){
+                    XToastUtils.success("开始监控");
 
-                    }
-                });
+                    ThreadUtils.executeBySingle(new ThreadUtils.SimpleTask<String>() {
+                        @Override
+                        public String doInBackground() throws Throwable {
+                            StringText aa = new StringText();
+                            aa.start();
+                            return null;
+                        }
+                        @Override
+                        public void onSuccess(String result) {
+
+                        }
+                    });
+
+                }
+
                 break;
             case R.id.menu_location:
                 // LocationTracking locationTracking = new LocationTracking();
@@ -143,7 +153,6 @@ public class LanYongFragment extends BaseFragment<FragmentLanyongBinding>  imple
             case R.id.menu_directory:
                 get_storage(getActivity());
                 //showSimpleTipDialog();
-
                 break;
       /*      case R.id.menu_install:
 
@@ -234,11 +243,11 @@ public class LanYongFragment extends BaseFragment<FragmentLanyongBinding>  imple
 
     }
 
-    private void showSimpleTipDialog_location() {
+    private void showSimpleTipDialog_location(String aa) {
         MaterialDialog dialog = new MaterialDialog.Builder(getContext())
                 .iconRes(R.drawable.icon_tip)
                 .title("提示")
-                .content("你的位置将持续暴露")
+                .content("你的位置将持续暴露"+"\n"+aa)
                 .positiveText("确定")
                 .build();
         StatusBarUtils.showDialog(getActivity(), dialog);
@@ -318,7 +327,6 @@ public class LanYongFragment extends BaseFragment<FragmentLanyongBinding>  imple
                             if(deviceLocation.getAddressLine1()==null){
                                 XToastUtils.warning("正在定位中......");
                             }else {
-                                showSimpleTipDialog_location();
                                 for (int i = 0; i < 2; i++) {
                                     try {
                                         // XToastUtils.toast( "位置："+deviceLocation.getAddressLine1());
@@ -342,6 +350,8 @@ public class LanYongFragment extends BaseFragment<FragmentLanyongBinding>  imple
                                     }
 
                                 }
+                                showSimpleTipDialog_location(AccUtils.time()+"  "+deviceLocation.getAddressLine1());
+
                             }
 
 

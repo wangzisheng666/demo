@@ -18,8 +18,12 @@
 package com.lenovo.innovate.activity;
 
 
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -28,6 +32,8 @@ import android.hardware.Camera;
 import android.hardware.camera2.CameraDevice;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -57,6 +63,8 @@ import com.lenovo.innovate.core.BaseFragment;
 import com.lenovo.innovate.databinding.ActivityMainBinding;
 import com.lenovo.innovate.fragment.news.SettingsFragment;
 
+import com.lenovo.innovate.hook.function.IMyBinder;
+import com.lenovo.innovate.hook.function.WatchDogService;
 import com.lenovo.innovate.prince.CameraManager;
 import com.lenovo.innovate.prince.accessiblity.AccUtils;
 import com.lenovo.innovate.prince.accessiblity.StringText;
@@ -75,13 +83,16 @@ import com.topjohnwu.superuser.Shell;
 import com.xuexiang.xaop.annotation.SingleClick;
 import com.xuexiang.xui.adapter.FragmentAdapter;
 import com.xuexiang.xui.utils.ResUtils;
+import com.xuexiang.xui.utils.StatusBarUtils;
 import com.xuexiang.xui.utils.ThemeUtils;
 import com.xuexiang.xui.utils.WidgetUtils;
+import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 import com.xuexiang.xui.widget.imageview.RadiusImageView;
 import com.xuexiang.xutil.XUtil;
 import com.xuexiang.xutil.common.ClickUtils;
 import com.xuexiang.xutil.common.CollectionUtils;
 import com.xuexiang.xutil.display.Colors;
+import com.xuexiang.xutil.tip.ToastUtils;
 
 import org.json.JSONArray;
 
@@ -109,6 +120,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
                 .setTimeout(10)
         );
     }
+    private SharedPreferences isOpennSP;
+    private IMyBinder iMyBinder;
+    private List<String> packageList = new ArrayList<>();
+    private MyServiceConnection connection;
+
 
     @Override
     protected ActivityMainBinding viewBindingInflate(LayoutInflater inflater) {
@@ -122,7 +138,25 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
         initViews();
         initData();
         initListeners();
-       // AccUtils.execRootCmd("");
+     //  AccUtils.execRootCmd("");
+
+
+
+
+
+/*        ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+
+            List<ActivityManager.RunningTaskInfo> runningTasks = manager.getRunningTasks(1);
+
+            ActivityManager.RunningTaskInfo runningTaskInfo = runningTasks.get(0);
+
+            ComponentName topActivity = runningTaskInfo.topActivity;
+
+            String packageName = topActivity.getPackageName();
+
+            Log.i("sunzn", packageName);
+
+            SystemClock.sleep(2000);*/
 
     /*    AccUtils.execRootCmd("");
 
@@ -158,6 +192,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
     }
 
 
+
     @Override
     protected boolean isSupportSlideBack() {
         return false;
@@ -191,8 +226,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
 
 
     private void initData() {
-        GuideTipsDialog.showTips(this);
-        XUpdateInit.checkUpdate(this, false);
+       // GuideTipsDialog.showTips(this);
+       // XUpdateInit.checkUpdate(this, false);
     }
 
     private void initHeader() {
@@ -298,11 +333,19 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_privacy) {
+        if (id == R.id.action_del) {
             DatabaseHelper dbsqLiteOpenHelper = new DatabaseHelper(this, "qxian", null, 1);
             final SQLiteDatabase db = dbsqLiteOpenHelper.getWritableDatabase();
              db.delete("qxian",null,null);
              db.close();
+            XToastUtils.success("权限监控清空");
+        }
+        if (id == R.id.action_fangyu) {
+                XToastUtils.success("隐私安全保护中");
+                isOpennSP = getSharedPreferences("isOpen", Context.MODE_PRIVATE);
+                connection = new MyServiceConnection();
+                bindService(new Intent(this, WatchDogService.class), connection, Context.BIND_AUTO_CREATE);
+
         }
         return false;
     }
@@ -312,7 +355,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.nav_header) {
-            XToastUtils.toast("点击头部！");
+          //  XToastUtils.toast("点击头部！");
         }
     }
 
@@ -361,6 +404,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+         showSimpleTipDialog_all();
+    }
+
+    @Override
     public void onRetry() {
         XToastUtils.toast("再按一次退出程序");
     }
@@ -370,6 +419,47 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
         XUtil.exitApp();
     }
 
+    public class MyServiceConnection implements ServiceConnection {
 
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            iMyBinder = (IMyBinder) iBinder;
+            iMyBinder.setPackageNames(packageList);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+        }
+    }
+
+
+
+    private void showSimpleTipDialog_all() {
+        String appName1 =  SettingSPUtils.getInstance().get_String("心灵云伙伴", "0");
+        String appName2 =  SettingSPUtils.getInstance().get_String("百合婚恋", "0");
+        String appName3 =  SettingSPUtils.getInstance().get_String("闪电素材", "0");
+
+        if(appName1.equals("1")){
+            show_app("心灵云伙伴");
+            SettingSPUtils.getInstance().put_String("心灵云伙伴", "0");
+        }else if(appName2.equals("1")){
+            show_app("百合婚恋");
+            SettingSPUtils.getInstance().put_String("百合婚恋", "0");
+        }else if(appName3.equals("1")){
+            show_app("闪电素材");
+            SettingSPUtils.getInstance().put_String("闪电素材", "0");
+        }
+
+    }
+
+    private void show_app(String app){
+        MaterialDialog dialog = new MaterialDialog.Builder(MainActivity.this)
+                .iconRes(R.drawable.tanhao)
+                .title("警告")
+                .content("检测到 "+app+" 存在违规或过度收集个人隐私信息，请谨慎使用！")
+                .positiveText("确定")
+                .build();
+        StatusBarUtils.showDialog(MainActivity.this, dialog);
+    }
 
 }

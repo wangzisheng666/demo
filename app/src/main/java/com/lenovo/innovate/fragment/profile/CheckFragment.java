@@ -421,6 +421,12 @@ public class CheckFragment extends BaseFragment<FragmentCheckBinding> {
         log_text(list_app);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        CSH_per();
+
+    }
 
     private void log_text(ArrayList<String> list) {
 

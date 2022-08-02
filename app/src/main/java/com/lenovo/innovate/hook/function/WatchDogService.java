@@ -30,6 +30,11 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.lenovo.innovate.R;
+import com.lenovo.innovate.prince.utils.SettingSPUtils;
+import com.lenovo.innovate.utils.XToastUtils;
+import com.lenovo.innovate.utils.shell;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,10 +42,11 @@ public class WatchDogService extends Service {
 
     private List<String> packageList = new ArrayList<>();
     private static final String TAG = "WatchDogService";
-    private static boolean flag = true;// 线程退出的标记
+    public static boolean flag = true;// 线程退出的标记
     private ActivityManager am;
     private SharedPreferences isOpenSP;
     private SharedPreferences.Editor editor;
+
 
     @Override
     public void onCreate() {
@@ -49,28 +55,31 @@ public class WatchDogService extends Service {
         am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         isOpenSP = getSharedPreferences("isOpen", Context.MODE_PRIVATE);
         editor = isOpenSP.edit();
-
         new Thread() {
             @Override
             public void run() {
                 super.run();
                 while (flag) {
                     synchronized (WatchDogService.class) {
-                        List<ActivityManager.RunningTaskInfo> runningTasks = am.getRunningTasks(1);
-                        ActivityManager.RunningTaskInfo runningTaskInfo = runningTasks.get(0);
-                        ComponentName topActivity = runningTaskInfo.topActivity;
-                        String packageName = topActivity.getPackageName();
+                      String pa =  shell.cmd_shell("dumpsys window | grep mCurrentFocus").toString();
 
-                        if (packageList.contains(packageName)) {
-                            // 判断packageName是否已打开
-                            boolean isOpen = isOpenSP.getBoolean(packageName, false);
-                            if (!isOpen) {
-                                editor.putBoolean(packageName, true);
-                                editor.apply();
-                                Log.i(TAG, packageName + "正在存储");
-                            }
-                        }
-                        SystemClock.sleep(500);
+                      if(pa.contains("xlhb")){
+                          shell.cmd_shell("am start -n com.lenovo.innovate/com.lenovo.innovate.activity.MainActivity");
+                          shell.cmd_shell("am force-stop com.xlhb.cloud.app");
+                          SettingSPUtils.getInstance().put_String("心灵云伙伴", "1");
+                         // XToastUtils.error("心灵云伙伴为恶意应用");
+                      }else if(pa.contains("baihe")){
+                          shell.cmd_shell("am start -n com.lenovo.innovate/com.lenovo.innovate.activity.MainActivity");
+                          shell.cmd_shell("am force-stop com.baihe");
+                          SettingSPUtils.getInstance().put_String("百合婚恋", "1");
+                      }else if (pa.contains("ncc")){
+                          shell.cmd_shell("am start -n com.lenovo.innovate/com.lenovo.innovate.activity.MainActivity");
+                          shell.cmd_shell("am force-stop com.ncc.fm");
+                          SettingSPUtils.getInstance().put_String("闪电素材", "1");
+                      }
+                        Log.i(TAG, pa);
+
+                        SystemClock.sleep(1500);
                     }
                     Log.i(TAG, "服务在循环");
                 }
@@ -81,6 +90,7 @@ public class WatchDogService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Log.i(TAG,   "false");
         flag = false;
     }
 
@@ -99,4 +109,6 @@ public class WatchDogService extends Service {
     public IBinder onBind(Intent intent) {
         return myBinder;
     }
+
+
 }
