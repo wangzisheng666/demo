@@ -102,7 +102,7 @@ public class TestApi {
         Observable<ApiResult<String>> post_access(@Body RequestBody jsonBody);
 
         //位置利用
-        @POST("/App-Privacy/index.php/Home/Permission/ex_location")
+        @POST("/App-Privacy/index.php/Home/Permission/start_gz")
         @Headers({"Accept: application/json, text/javascript, */*; q=0.01","Content-Type: application/x-www-form-urlencoded; charset=UTF-8","X-Requested-With: XMLHttpRequest","Accept-Encoding: gzip, deflate","Upgrade-Insecure-Requests: 1"})
         Observable<ApiResult<String>> post_exp_location(@Body RequestBody jsonBody);
         //文件

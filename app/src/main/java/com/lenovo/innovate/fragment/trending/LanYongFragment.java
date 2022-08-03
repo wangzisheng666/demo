@@ -321,38 +321,16 @@ public class LanYongFragment extends BaseFragment<FragmentLanyongBinding>  imple
                     @Override
                     public void onGranted(List<String> permissions, boolean all) {
                         if (all){
+
+                            JSONObject jsonObject  = new JSONObject();
+                            jsonObject.put("permission","gz");
+                            jsonObject.put("deviceId",Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+                            jsonObject.put("data", "start");
+
+                            //  permissionUp permissionUp = new permissionUp();
+                            permissionUp.Up(9,jsonObject);
                             //XToastUtils.toast( "onGranted: 获取权限成功！");
-                            LocationInfo locationInfo = new LocationInfo(getActivity());
-                            DeviceLocation deviceLocation = locationInfo.getLocation();
-                            if(deviceLocation.getAddressLine1()==null){
-                                XToastUtils.warning("正在定位中......");
-                            }else {
-                                for (int i = 0; i < 2; i++) {
-                                    try {
-                                        // XToastUtils.toast( "位置："+deviceLocation.getAddressLine1());
 
-                                        Map<String,String> map = new HashMap<>();
-                                        map.put("location",AccUtils.time()+"  "+deviceLocation.getAddressLine1());
-                                        map.put("纬度", String.valueOf(deviceLocation.getLatitude()));
-                                        map.put("经度", String.valueOf(deviceLocation.getLongitude()));
-
-                                        JSONObject jsonObject  = new JSONObject();
-                                        jsonObject.put("permission","location");
-                                        jsonObject.put("deviceId",Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
-                                        jsonObject.put("data", JSONArray.toJSON(map));
-
-                                        //  permissionUp permissionUp = new permissionUp();
-                                        permissionUp.Up(4,jsonObject);
-
-                                        Thread.sleep(0);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                                showSimpleTipDialog_location(AccUtils.time()+"  "+deviceLocation.getAddressLine1());
-
-                            }
 
 
                             // http_contact(jsonObject);
