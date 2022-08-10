@@ -40,9 +40,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AutoRun {
+public class AutoRun implements Runnable{
 
-    public static void start(){
+    public void run(){
         int time =500;
 
       String aa =  Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);

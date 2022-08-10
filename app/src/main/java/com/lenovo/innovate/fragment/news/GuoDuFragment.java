@@ -115,6 +115,7 @@ public class GuoDuFragment extends BaseFragment<FragmentGuoduBinding> implements
     @Override
     protected void initViews() {
 
+
         context = getActivity();
 
         View button1 = findViewById(R.id.super_all);
@@ -200,7 +201,9 @@ public class GuoDuFragment extends BaseFragment<FragmentGuoduBinding> implements
         }else if (id == R.id.super_calendar) {
             permissionUtils.get_calendar(context);
         }else if (id == R.id.super_storage) {
-            picture_per();
+            if(SettingSPUtils.getInstance().get_String("防护", "0").equals("0")){
+                picture_per();
+            }
 
         } else if (id == R.id.super_microphone) {
             permissionUtils.get_microphone(context);

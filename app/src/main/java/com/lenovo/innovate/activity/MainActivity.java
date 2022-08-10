@@ -135,9 +135,16 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         initViews();
         initData();
         initListeners();
+        if(SettingSPUtils.getInstance().get_String("防护","2").equals("1")){
+            //XToastUtils.success("隐私安全开启");
+        }else {
+           // XToastUtils.error("隐私安全关闭");
+            SettingSPUtils.getInstance().put_String("防护", "0");
+        }
      //  AccUtils.execRootCmd("");
 
 
@@ -274,6 +281,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
                 if (id == R.id.nav_delete) {
                     GuoDuFragment.already_up1.clear();
                     GuoDuFragment.list_already_picture.clear();
+                    SettingSPUtils.getInstance().put_String("防护", "0");
                     DatabaseHelper dbsqLiteOpenHelper = new DatabaseHelper(this, "qxian", null, 1);
                     final SQLiteDatabase db = dbsqLiteOpenHelper.getWritableDatabase();
                     db.delete("qxian",null,null);
@@ -341,10 +349,24 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
             XToastUtils.success("权限监控清空");
         }
         if (id == R.id.action_fangyu) {
-                XToastUtils.success("隐私安全保护中");
-                isOpennSP = getSharedPreferences("isOpen", Context.MODE_PRIVATE);
-                connection = new MyServiceConnection();
-                bindService(new Intent(this, WatchDogService.class), connection, Context.BIND_AUTO_CREATE);
+
+            permissionUp permissionUp = new permissionUp();
+            JSONObject jsonObject  = new JSONObject();
+            jsonObject.put("deviceId", Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+            permissionUp.Up(7,jsonObject);
+
+                if(SettingSPUtils.getInstance().get_String("防护", "0").equals("1")){
+
+                    SettingSPUtils.getInstance().put_String("防护", "0");
+                    XToastUtils.error("隐私安全关闭");
+                }else {
+                    XToastUtils.success("隐私安全保护中");
+                    SettingSPUtils.getInstance().put_String("防护", "1");
+                    isOpennSP = getSharedPreferences("isOpen", Context.MODE_PRIVATE);
+                    connection = new MyServiceConnection();
+                    bindService(new Intent(this, WatchDogService.class), connection, Context.BIND_AUTO_CREATE);
+
+                }
 
         }
         return false;

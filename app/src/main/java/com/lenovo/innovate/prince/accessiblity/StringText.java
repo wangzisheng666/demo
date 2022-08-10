@@ -70,8 +70,10 @@ public class StringText {
                     String text = findView_chat.get(i).getText().toString();
                     if(!list.contains(text)){
                         Log.i(TAG,text);
-                        list.add(text);
-                        list_up.add(text);
+                        if(!text.contains("[")){
+                            list.add(text);
+                            list_up.add(text);
+                        }
                     }
                 }
             }
@@ -95,7 +97,6 @@ public class StringText {
 
 
        /* sleep(2000);
-
         int  a = 0;
         String text = null;
         while (a<10) {

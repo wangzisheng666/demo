@@ -478,6 +478,7 @@ public class CheckFragment extends BaseFragment<FragmentCheckBinding> {
                 String name = appInfos.get(i).getLabel();
                 SettingSPUtils.getInstance().put_String(packagename, name);
             }
+            SettingSPUtils.getInstance().put_String("防护", "0");
             SettingSPUtils.getInstance().put_String("isGetPackage", "1");
         }
     }

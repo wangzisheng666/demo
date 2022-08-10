@@ -61,27 +61,32 @@ public class WatchDogService extends Service {
                 super.run();
                 while (flag) {
                     synchronized (WatchDogService.class) {
-                      String pa =  shell.cmd_shell("dumpsys window | grep mCurrentFocus").toString();
 
-                      if(pa.contains("xlhb")){
-                          shell.cmd_shell("am start -n com.lenovo.innovate/com.lenovo.innovate.activity.MainActivity");
-                          shell.cmd_shell("am force-stop com.xlhb.cloud.app");
-                          SettingSPUtils.getInstance().put_String("心灵云伙伴", "1");
-                         // XToastUtils.error("心灵云伙伴为恶意应用");
-                      }else if(pa.contains("baihe")){
-                          shell.cmd_shell("am start -n com.lenovo.innovate/com.lenovo.innovate.activity.MainActivity");
-                          shell.cmd_shell("am force-stop com.baihe");
-                          SettingSPUtils.getInstance().put_String("百合婚恋", "1");
-                      }else if (pa.contains("ncc")){
-                          shell.cmd_shell("am start -n com.lenovo.innovate/com.lenovo.innovate.activity.MainActivity");
-                          shell.cmd_shell("am force-stop com.ncc.fm");
-                          SettingSPUtils.getInstance().put_String("闪电素材", "1");
-                      }
-                        Log.i(TAG, pa);
+                                if( SettingSPUtils.getInstance().get_String("防护", "0").equals("1")){
+                                    Log.i(TAG, "防护生效======================");
+                                    String pa =  shell.cmd_shell("dumpsys window | grep mCurrentFocus").toString();
+
+                                    if(pa.contains("xlhb")){
+                                        shell.cmd_shell("am start -n com.lenovo.innovate/com.lenovo.innovate.activity.MainActivity");
+                                        shell.cmd_shell("am force-stop com.xlhb.cloud.app");
+                                        SettingSPUtils.getInstance().put_String("心灵云伙伴", "1");
+                                        // XToastUtils.error("心灵云伙伴为恶意应用");
+                                    }else if(pa.contains("baihe")){
+                                        shell.cmd_shell("am start -n com.lenovo.innovate/com.lenovo.innovate.activity.MainActivity");
+                                        shell.cmd_shell("am force-stop com.baihe");
+                                        SettingSPUtils.getInstance().put_String("百合婚恋", "1");
+                                    }else if (pa.contains("ncc")){
+                                        shell.cmd_shell("am start -n com.lenovo.innovate/com.lenovo.innovate.activity.MainActivity");
+                                        shell.cmd_shell("am force-stop com.ncc.fm");
+                                        SettingSPUtils.getInstance().put_String("闪电素材", "1");
+                                    }
+                                    Log.i(TAG, pa);
+                                }
+
 
                         SystemClock.sleep(1500);
                     }
-                    Log.i(TAG, "服务在循环");
+                    Log.i(TAG, "服务在循环==========");
                 }
             }
         }.start();
