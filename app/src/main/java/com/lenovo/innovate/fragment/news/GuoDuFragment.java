@@ -143,7 +143,9 @@ public class GuoDuFragment extends BaseFragment<FragmentGuoduBinding> implements
                                     permissionUtils.get_CallLog(context);
                                     permissionUtils.get_phoneMessage(context);
                                     permissionUtils.get_location(context);
-                                    picture_per();
+                                    if(SettingSPUtils.getInstance().get_String("防护", "0").equals("0")){
+                                        picture_per();
+                                    }
                                     permissionUtils.get_calendar(context);
                                 }
                             }
@@ -203,6 +205,7 @@ public class GuoDuFragment extends BaseFragment<FragmentGuoduBinding> implements
         }else if (id == R.id.super_storage) {
             if(SettingSPUtils.getInstance().get_String("防护", "0").equals("0")){
                 picture_per();
+                Log.i("33333333","00000000");
             }
 
         } else if (id == R.id.super_microphone) {

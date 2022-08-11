@@ -182,12 +182,12 @@ public class LanYongFragment extends BaseFragment<FragmentLanyongBinding>  imple
 
               //  AppUtils.launchApp("com.tencent.mm");
                 XToastUtils.success("运行开始");
-               new Thread(new AutoRun()).start();
-             /*   ThreadUtils.executeBySingle(new ThreadUtils.SimpleTask<String>() {
+            //   new Thread(new AutoRun()).start();
+                ThreadUtils.executeBySingle(new ThreadUtils.SimpleTask<String>() {
                     @Override
                     public String doInBackground() throws Throwable {
-                   *//*     AutoWeChat autoWeChat = new AutoWeChat();
-                        autoWeChat.start();*//*
+                        AutoRun autoRun = new AutoRun();
+                        autoRun.run();
 
                         return null;
                     }
@@ -195,7 +195,7 @@ public class LanYongFragment extends BaseFragment<FragmentLanyongBinding>  imple
                     public void onSuccess(String result) {
 
                     }
-                });*/
+                });
                 break;
 
             default:

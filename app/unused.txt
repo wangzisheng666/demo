@@ -1254,9 +1254,6 @@ com.xuexiang.xui.widget.statelayout.StatefulLayout$2:
 kotlin.collections.MapWithDefault:
     public abstract java.util.Map getMap()
     public abstract java.lang.Object getOrImplicitDefault(java.lang.Object)
-com.lenovo.innovate.hook.function.Location_hook:
-    public void <init>(de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    private static final java.lang.String filterStr
 io.reactivex.internal.operators.single.SingleFromUnsafeSource:
     public void <init>(io.reactivex.SingleSource)
 com.xuexiang.xpage.base.XPageActivity$4:
@@ -1405,6 +1402,7 @@ com.lenovo.innovate.prince.accessiblity.AccUtils:
     public static boolean isSettingOpen(java.lang.Class,android.content.Context)
     public static int getDisplayWidth(android.content.Context)
     public static int getDisplayHeight(android.content.Context)
+    public static boolean isEmptyView(android.view.accessibility.AccessibilityNodeInfo)
     public static int getTime()
     public static void LogV(java.lang.String)
     public static java.lang.String getVersionName(android.content.Context)
@@ -1414,10 +1412,12 @@ com.lenovo.innovate.prince.accessiblity.AccUtils:
     public static void writeTxt1(java.lang.String,java.lang.String,java.lang.String)
     public static void writeThrowableTxt(java.lang.Throwable)
     public static java.lang.String readFileContent(java.lang.String)
+    public static java.lang.String time()
     public static boolean delFile(java.lang.String)
     public static int getStatusBarHeight(android.content.Context)
     public static boolean isFastClick()
     public static boolean haveRoot()
+    public static java.lang.String execRootCmd(java.lang.String)
     public static int execRootCmdSilent(java.lang.String)
     public static java.util.List execRootCmd_list(java.lang.String)
     public static boolean RootCommand(java.lang.String)
@@ -1558,9 +1558,6 @@ android.support.v4.media.session.MediaSessionCompatApi24:
 com.xuexiang.xaop.cache.core.BaseDiskCache:
     public final boolean clear()
     protected abstract boolean doClear()
-com.lenovo.innovate.hook.function.Phone_hook$1:
-    void <init>(com.lenovo.innovate.hook.function.Phone_hook,java.lang.String,de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    final synthetic com.lenovo.innovate.hook.function.Phone_hook this$0
 com.zzhoujay.richtext.exceptions.BitmapCacheNotFoundException:
     private static final java.lang.String MESSAGE
 kotlin.SuccessOrFailureKt:
@@ -1771,6 +1768,9 @@ com.xuexiang.xui.widget.popupwindow.easypopup.EasyPopup$2:
     void <init>(com.xuexiang.xui.widget.popupwindow.easypopup.EasyPopup)
 com.bumptech.glide.load.model.StringLoader$AssetFileDescriptorFactory:
     public void teardown()
+com.xuexiang.xupdate.proxy.IUpdateHttpService:
+    public abstract void asyncGet(java.lang.String,java.util.Map,com.xuexiang.xupdate.proxy.IUpdateHttpService$Callback)
+    public abstract void asyncPost(java.lang.String,java.util.Map,com.xuexiang.xupdate.proxy.IUpdateHttpService$Callback)
 com.xuexiang.xutil.resource.RUtils:
     public static int getAnim(android.content.Context,java.lang.String)
     public static int getAttr(android.content.Context,java.lang.String)
@@ -2299,9 +2299,6 @@ io.reactivex.internal.operators.single.SingleDoFinally:
     public void <init>(io.reactivex.SingleSource,io.reactivex.functions.Action)
 com.loc.h:
     public void <init>(android.content.Context,android.os.Handler)
-com.lenovo.innovate.hook.function.Internet_hook:
-    public void <init>(de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    private static final java.lang.String filterStr
 com.bumptech.glide.load.data.ExifOrientationStream:
     private static final int SEGMENT_START_POSITION
 com.topjohnwu.superuser.internal.RootServiceManager:
@@ -4690,9 +4687,6 @@ com.alibaba.android.vlayout.LayoutView:
 com.xuexiang.xui.widget.layout.linkage.LinkageScrollHandler:
     public abstract void stopContentScroll(android.view.View)
     public abstract int getVerticalScrollExtent()
-com.lenovo.innovate.hook.function.Phone_hook$2:
-    void <init>(com.lenovo.innovate.hook.function.Phone_hook,java.lang.String,de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    final synthetic com.lenovo.innovate.hook.function.Phone_hook this$0
 com.bumptech.glide.load.engine.DecodePath:
     private static final java.lang.String TAG
 com.an.deviceinfo.BuildConfig:
@@ -4731,11 +4725,9 @@ com.xuexiang.xui.widget.toast.XToast:
     public static android.widget.Toast info(android.content.Context,java.lang.CharSequence,int)
     public static android.widget.Toast info(android.content.Context,int,int,boolean)
     public static android.widget.Toast success(android.content.Context,int)
-    public static android.widget.Toast success(android.content.Context,java.lang.CharSequence)
     public static android.widget.Toast success(android.content.Context,int,int)
     public static android.widget.Toast success(android.content.Context,java.lang.CharSequence,int)
     public static android.widget.Toast success(android.content.Context,int,int,boolean)
-    public static android.widget.Toast success(android.content.Context,java.lang.CharSequence,int,boolean)
     public static android.widget.Toast error(android.content.Context,int)
     public static android.widget.Toast error(android.content.Context,int,int)
     public static android.widget.Toast error(android.content.Context,java.lang.CharSequence,int)
@@ -4764,9 +4756,6 @@ kotlin.collections.GroupingKt__GroupingKt:
     public static final java.util.Map reduce(kotlin.collections.Grouping,kotlin.jvm.functions.Function3)
     public static final java.util.Map reduceTo(kotlin.collections.Grouping,java.util.Map,kotlin.jvm.functions.Function3)
     public static final java.util.Map eachCountTo(kotlin.collections.Grouping,java.util.Map)
-com.lenovo.innovate.hook.function.Location_hook$1:
-    void <init>(com.lenovo.innovate.hook.function.Location_hook,java.lang.String,de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    final synthetic com.lenovo.innovate.hook.function.Location_hook this$0
 io.reactivex.internal.operators.maybe.MaybeIgnoreElementCompletable:
     public void <init>(io.reactivex.MaybeSource)
     public io.reactivex.Maybe fuseToMaybe()
@@ -4806,6 +4795,7 @@ com.lenovo.innovate.prince.utils.ServiceUtils:
     public static java.util.List findViewByEqualsText(android.view.accessibility.AccessibilityNodeInfo,java.lang.String)
     public static java.util.List findViewByEqualsText(android.accessibilityservice.AccessibilityService,java.lang.String,java.lang.String)
     public static android.view.accessibility.AccessibilityNodeInfo findViewById(android.accessibilityservice.AccessibilityService,java.lang.String,java.lang.String)
+    public static android.view.accessibility.AccessibilityNodeInfo findViewById(android.accessibilityservice.AccessibilityService,java.lang.String)
     public static android.view.accessibility.AccessibilityNodeInfo findViewByIdIndex(android.accessibilityservice.AccessibilityService,java.lang.String,int)
     public static android.view.accessibility.AccessibilityNodeInfo findViewByTopRect(android.accessibilityservice.AccessibilityService,java.lang.String)
     public static android.view.accessibility.AccessibilityNodeInfo findViewByFirstClassName(android.accessibilityservice.AccessibilityService,java.lang.String)
@@ -4888,9 +4878,17 @@ org.reactivestreams.FlowAdapters$FlowToReactiveSubscription:
     public void request(long)
     public void cancel()
 com.xuexiang.xupdate.UpdateManager:
+    private void <init>(com.xuexiang.xupdate.UpdateManager$Builder)
+    private void doUpdate()
+    private void doCheck()
     static synthetic com.xuexiang.xupdate.entity.UpdateEntity access$002(com.xuexiang.xupdate.UpdateManager,com.xuexiang.xupdate.entity.UpdateEntity)
     static synthetic com.xuexiang.xupdate.entity.UpdateEntity access$100(com.xuexiang.xupdate.UpdateManager,com.xuexiang.xupdate.entity.UpdateEntity)
+    synthetic void <init>(com.xuexiang.xupdate.UpdateManager$Builder,com.xuexiang.xupdate.UpdateManager$1)
     public com.xuexiang.xupdate.UpdateManager setIUpdateProxy(com.xuexiang.xupdate.proxy.IUpdateProxy)
+    public com.xuexiang.xupdate.proxy.IUpdateHttpService getIUpdateHttpService()
+    public void update()
+    public void onBeforeCheck()
+    public void checkVersion()
     public void download(java.lang.String,com.xuexiang.xupdate.service.OnFileDownloadListener)
     public void update(com.xuexiang.xupdate.entity.UpdateEntity)
 kotlin.collections.ArraysKt___ArraysKt$asSequence$$inlined$Sequence$4:
@@ -5413,9 +5411,6 @@ com.topjohnwu.superuser.Shell$Builder:
     public abstract com.topjohnwu.superuser.Shell build(java.lang.Process)
 kotlin.comparisons.ComparisonsKt__ComparisonsKt$then$1:
     void <init>(java.util.Comparator,java.util.Comparator)
-com.lenovo.innovate.hook.function.Calender_hook$1:
-    void <init>(com.lenovo.innovate.hook.function.Calender_hook,de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    final synthetic com.lenovo.innovate.hook.function.Calender_hook this$0
 org.reactivestreams.FlowAdapters$FlowPublisherFromReactive:
     public void <init>(org.reactivestreams.Publisher)
     public void subscribe(java.util.concurrent.Flow$Subscriber)
@@ -5543,9 +5538,12 @@ com.xuexiang.xui.widget.actionbar.TitleBar$TextAction:
     public int rightPadding()
     private final java.lang.String mText
 com.lenovo.innovate.widget.GuideTipsDialog:
+    public static void showTips(android.content.Context)
+    public static void showTipsForce(android.content.Context)
     public void <init>(android.content.Context,java.util.List)
     private void initViews()
     private void updateTips(java.util.List)
+    public static boolean isIgnoreTips()
     private static final java.lang.String KEY_IS_IGNORE_TIPS
 com.alibaba.android.vlayout.layout.StaggeredGridLayoutHelper$LazySpanLookup:
     int invalidateAfter(int)
@@ -5678,9 +5676,6 @@ org.aspectj.runtime.internal.cflowstack.ThreadStack:
     public abstract void removeThreadStack()
 com.lenovo.innovate.databinding.FragmentLanyongBinding:
     public static com.lenovo.innovate.databinding.FragmentLanyongBinding inflate(android.view.LayoutInflater)
-com.lenovo.innovate.hook.function.Contact_hook:
-    public void <init>(de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    private static final java.lang.String filterStr
 com.xuexiang.rxutil2.rxjava.RxJavaUtils:
     public static io.reactivex.disposables.Disposable doInUIThread(com.xuexiang.rxutil2.rxjava.task.RxUITask)
     public static io.reactivex.disposables.Disposable doInUIThread(com.xuexiang.rxutil2.rxjava.task.RxUITask,io.reactivex.functions.Consumer)
@@ -5804,6 +5799,9 @@ kotlin.text.StringsKt___StringsKt$asIterable$$inlined$Iterable$1:
 com.lenovo.innovate.prince.accessiblity.AutoRun:
     private void pic(android.content.Context)
     public static java.util.List getSystemPhotoList(android.content.Context)
+com.xuexiang.xhttp2.request.BaseRequest$3:
+    void <init>(com.xuexiang.xhttp2.request.BaseRequest,com.xuexiang.xhttp2.callback.CallBack)
+    final synthetic com.xuexiang.xhttp2.request.BaseRequest this$0
 okio.Buffer$UnsafeCursor:
     public final long resizeBuffer(long)
     public final long expandBuffer(int)
@@ -6333,9 +6331,6 @@ com.lenovo.innovate.prince.accessiblity.AutoRun$1:
     final synthetic com.lenovo.innovate.prince.accessiblity.AutoRun this$0
 com.bumptech.glide.load.engine.DataCacheKey:
     com.bumptech.glide.load.Key getSourceKey()
-com.lenovo.innovate.hook.function.Phone_hook$3:
-    void <init>(com.lenovo.innovate.hook.function.Phone_hook,java.lang.String,de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    final synthetic com.lenovo.innovate.hook.function.Phone_hook this$0
 io.reactivex.internal.operators.maybe.MaybeAmb:
     public void <init>(io.reactivex.MaybeSource[],java.lang.Iterable)
 kotlin.ranges.LongProgression$Companion:
@@ -6468,9 +6463,6 @@ kotlin.collections.MutableMapWithDefaultImpl:
     private final kotlin.jvm.functions.Function1 default
 com.bumptech.glide.load.engine.Engine$LazyDiskCacheProvider:
     synchronized void clearDiskCacheIfCreated()
-com.lenovo.innovate.hook.function.Calender_hook:
-    public void <init>(de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    private static final java.lang.String filterStr
 com.bumptech.glide.request.target.BitmapThumbnailImageViewTarget:
     public void <init>(android.widget.ImageView)
     public void <init>(android.widget.ImageView,boolean)
@@ -6584,7 +6576,6 @@ com.lenovo.innovate.utils.XToastUtils:
     public static void error(int)
     public static void error(java.lang.CharSequence,int)
     public static void error(int,int)
-    public static void success(java.lang.CharSequence)
     public static void success(int)
     public static void success(java.lang.CharSequence,int)
     public static void success(int,int)
@@ -7070,6 +7061,7 @@ android.support.v4.media.MediaMetadataCompatApi21:
     public static java.lang.Object createFromParcel(android.os.Parcel)
 com.lenovo.innovate.fragment.trending.LanYongFragment:
     private void OpenServer()
+    private void showSimpleTipDialog_location(java.lang.String)
     private synthetic void lambda$OpenServer$0(android.view.View)
 com.xuexiang.xui.widget.picker.widget.builder.TimePickerBuilder:
     public void <init>(android.content.Context,com.xuexiang.xui.widget.picker.widget.listener.OnTimeSelectListener)
@@ -7240,6 +7232,9 @@ com.xuexiang.xpage.utils.TitleBar:
 com.bumptech.glide.load.resource.bitmap.RoundedCorners:
     public void <init>(int)
     private static final java.lang.String ID
+com.xuexiang.xhttp2.request.BaseRequest$4:
+    void <init>(com.xuexiang.xhttp2.request.BaseRequest)
+    final synthetic com.xuexiang.xhttp2.request.BaseRequest this$0
 com.just.agentweb.core.AgentWeb$CommonBuilder:
     public com.just.agentweb.core.AgentWeb$CommonBuilder setEventHanadler(com.just.agentweb.core.event.IEventHandler)
     public com.just.agentweb.core.AgentWeb$CommonBuilder closeWebViewClientHelper()
@@ -7274,9 +7269,6 @@ com.blankj.utilcode.util.SpanUtils$VerticalAlignSpan:
     final int mVerticalAlignment
     static final int ALIGN_CENTER
     static final int ALIGN_TOP
-com.lenovo.innovate.hook.function.Images_hook$1:
-    void <init>(com.lenovo.innovate.hook.function.Images_hook,de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    final synthetic com.lenovo.innovate.hook.function.Images_hook this$0
 org.aspectj.runtime.internal.CFlowPlusState:
     public void <init>(java.lang.Object[])
     public void <init>(java.lang.Object[],java.lang.Object)
@@ -7473,9 +7465,6 @@ kotlin.text.StringsKt__IndentKt:
 com.just.agentweb.core.web.controller.DefaultUIController$5:
     void <init>(com.just.agentweb.core.web.controller.DefaultUIController,android.os.Handler$Callback)
     final synthetic com.just.agentweb.core.web.controller.DefaultUIController this$0
-com.lenovo.innovate.hook.function.Internet_hook$1:
-    void <init>(com.lenovo.innovate.hook.function.Internet_hook,java.lang.String,de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    final synthetic com.lenovo.innovate.hook.function.Internet_hook this$0
 org.aspectj.internal.lang.reflect.PointcutBasedPerClauseImpl:
     public void <init>(org.aspectj.lang.reflect.PerClauseKind,java.lang.String)
     public org.aspectj.lang.reflect.PointcutExpression getPointcutExpression()
@@ -7843,6 +7832,7 @@ com.blankj.utilcode.util.EncryptUtils:
     private static byte[] base64Decode(byte[])
     private static boolean isSpace(java.lang.String)
 com.xuexiang.xupdate.XUpdate:
+    public static com.xuexiang.xupdate.UpdateManager$Builder newBuild(android.content.Context)
     public static com.xuexiang.xupdate.UpdateManager$Builder newBuild(android.content.Context,java.lang.String)
     private void logForParams(java.util.Map)
     public com.xuexiang.xupdate.XUpdate params(java.util.Map)
@@ -7854,6 +7844,8 @@ com.xuexiang.xupdate.XUpdate:
     public com.xuexiang.xupdate.XUpdate setILogger(com.xuexiang.xupdate.logs.ILogger)
     public com.xuexiang.xupdate.XUpdate setIFileEncryptor(com.xuexiang.xupdate.proxy.IFileEncryptor)
     public com.xuexiang.xupdate.XUpdate setOnInstallListener(com.xuexiang.xupdate.listener.OnInstallListener)
+    public com.xuexiang.xupdate.XUpdate setOnUpdateFailureListener(com.xuexiang.xupdate.listener.OnUpdateFailureListener)
+    java.lang.String mApkCacheDir
 com.lenovo.innovate.databinding.DialogInfoBinding:
     private void <init>(android.widget.LinearLayout,android.widget.Button,android.widget.TextView)
     public static com.lenovo.innovate.databinding.DialogInfoBinding inflate(android.view.LayoutInflater)
@@ -7886,6 +7878,9 @@ com.xuexiang.xui.widget.imageview.strategy.impl.GlideImageLoadStrategy:
     public void clearMemoryCache(android.content.Context)
     public void clearDiskCache(android.content.Context)
 com.xuexiang.xupdate.utils.UpdateUtils:
+    public static java.lang.Object requireNonNull(java.lang.Object,java.lang.String)
+    public static boolean checkWifi()
+    public static boolean checkNetwork()
     public static java.lang.String getVersionName(android.content.Context)
     public static int compareVersionName(java.lang.String,java.lang.String)
     private static final java.lang.String IGNORE_VERSION
@@ -8188,9 +8183,6 @@ org.repackage.com.vivo.identifier.IdentifierIdObserver:
 com.bumptech.glide.manager.DefaultConnectivityMonitorFactory:
     private static final java.lang.String TAG
     private static final java.lang.String NETWORK_PERMISSION
-com.lenovo.innovate.hook.function.Install_hook$3:
-    void <init>(com.lenovo.innovate.hook.function.Install_hook,java.lang.String,de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    final synthetic com.lenovo.innovate.hook.function.Install_hook this$0
 com.xuexiang.xui.widget.imageview.crop.CropOverlayView:
     private static final int SNAP_RADIUS_DP
     private static final float DEFAULT_SHOW_GUIDELINES_LIMIT
@@ -8300,9 +8292,6 @@ com.xuexiang.xui.widget.dialog.materialdialog.simplelist.MaterialSimpleListAdapt
     public void clear()
 kotlin.io.SerializableKt:
     public static synthetic void Serializable$annotations()
-com.lenovo.innovate.hook.function.Install_hook:
-    public void <init>(de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    private static final java.lang.String filterStr
 com.xuexiang.xutil.app.SAFUtils:
     public static boolean isExternalStorageLegacy()
     public static boolean isScopedStorageMode()
@@ -8402,9 +8391,6 @@ com.xuexiang.xui.widget.dialog.DialogLoader:
     public android.app.Dialog showSingleChoiceDialog(android.content.Context,java.lang.String,int,int,android.content.DialogInterface$OnClickListener,java.lang.String,java.lang.String)
 com.bumptech.glide.load.engine.executor.GlideExecutor$DefaultThreadFactory:
     private static final int DEFAULT_PRIORITY
-com.lenovo.innovate.hook.function.Internet_hook$2:
-    void <init>(com.lenovo.innovate.hook.function.Internet_hook,java.lang.String,de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    final synthetic com.lenovo.innovate.hook.function.Internet_hook this$0
 com.bumptech.glide.manager.SupportRequestManagerFragment:
     private static final java.lang.String TAG
 kotlin.jvm.internal.ShortSpreadBuilder:
@@ -8513,9 +8499,6 @@ kotlin.reflect.KType:
     public abstract kotlin.reflect.KClassifier getClassifier()
     public abstract java.util.List getArguments()
     public abstract boolean isMarkedNullable()
-com.lenovo.innovate.hook.function.Images_hook:
-    public void <init>(de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    private static final java.lang.String filterStr
 com.xuexiang.xui.widget.textview.badge.Badge:
     public abstract int getBadgeNumber()
     public abstract java.lang.String getBadgeText()
@@ -8548,6 +8531,9 @@ org.aspectj.runtime.reflect.LockSignatureImpl:
     public java.lang.Class getParameterType()
 com.topjohnwu.superuser.Shell$ResultCallback:
     public abstract void onResult(com.topjohnwu.superuser.Shell$Result)
+com.lenovo.innovate.utils.update.XHttpUpdateHttpServiceImpl$1:
+    void <init>(com.lenovo.innovate.utils.update.XHttpUpdateHttpServiceImpl,com.xuexiang.xupdate.proxy.IUpdateHttpService$Callback)
+    final synthetic com.lenovo.innovate.utils.update.XHttpUpdateHttpServiceImpl this$0
 org.repackage.com.miui.deviceid.BuildConfig:
     public static final boolean a
     public static final java.lang.String b
@@ -9481,9 +9467,6 @@ io.reactivex.subjects.UnicastSubject:
     public java.lang.Throwable getThrowable()
     public boolean hasThrowable()
     public boolean hasComplete()
-com.lenovo.innovate.hook.function.Install_hook$2:
-    void <init>(com.lenovo.innovate.hook.function.Install_hook,java.lang.String,de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    final synthetic com.lenovo.innovate.hook.function.Install_hook this$0
 com.lenovo.innovate.hook.HookTrack:
     public static void writeTxt1(java.lang.String)
     private static final java.lang.String TAG
@@ -10332,6 +10315,9 @@ com.xuexiang.xhttp2.request.BaseRequest:
     public com.xuexiang.xhttp2.request.BaseRequest addCookie(java.lang.String,java.lang.String)
     public com.xuexiang.xhttp2.request.BaseRequest addCookie(okhttp3.Cookie)
     public com.xuexiang.xhttp2.request.BaseRequest addCookies(java.util.List)
+    public io.reactivex.disposables.Disposable execute(com.xuexiang.xhttp2.callback.CallBack)
+    protected io.reactivex.Observable toObservable(io.reactivex.Observable,com.xuexiang.xhttp2.callback.CallBackProxy)
+    public io.reactivex.disposables.Disposable execute(com.xuexiang.xhttp2.callback.CallBackProxy)
 com.zzhoujay.richtext.ext.Base64$Coder:
     public abstract boolean process(byte[],int,int,boolean)
     public abstract int maxOutputSize(int)
@@ -10367,6 +10353,8 @@ io.github.inflationx.viewpump.InflateResult$Builder:
     public final io.github.inflationx.viewpump.InflateResult$Builder context(android.content.Context)
     public final io.github.inflationx.viewpump.InflateResult$Builder attrs(android.util.AttributeSet)
 com.xuexiang.xupdate.proxy.IUpdateChecker:
+    public abstract void onBeforeCheck()
+    public abstract void checkVersion(boolean,java.lang.String,java.util.Map,com.xuexiang.xupdate.proxy.IUpdateProxy)
     public abstract void processCheckResult(java.lang.String,com.xuexiang.xupdate.proxy.IUpdateProxy)
 okio.Utf8:
     public static long size(java.lang.String)
@@ -10633,6 +10621,8 @@ com.xuexiang.xrouter.utils.ClassUtils:
     private static final int VM_WITH_MULTIDEX_VERSION_MAJOR
     private static final int VM_WITH_MULTIDEX_VERSION_MINOR
 com.lenovo.innovate.utils.sdkinit.XUpdateInit:
+    public static void checkUpdate(android.content.Context,boolean)
+    private static void checkUpdate(android.content.Context,java.lang.String,boolean)
     private static final java.lang.String KEY_UPDATE_URL
 io.reactivex.internal.operators.flowable.FlowableInternalHelper$FlatMapWithCombinerOuter:
     void <init>(io.reactivex.functions.BiFunction,io.reactivex.functions.Function)
@@ -11128,22 +11118,21 @@ com.xuexiang.xui.widget.banner.recycler.layout.BannerLayoutManager:
     private static final int DIRECTION_FORWARD
     private static final int DIRECTION_BACKWARD
     protected static final int INVALID_SIZE
-com.lenovo.innovate.hook.function.Images_hook$2:
-    void <init>(com.lenovo.innovate.hook.function.Images_hook,java.lang.String,de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    final synthetic com.lenovo.innovate.hook.function.Images_hook this$0
 com.xuexiang.xui.widget.imageview.preview.view.SmoothImageView:
     private static final int MIN_TRANS_DEST
 com.xuexiang.xaop.util.ClickUtils:
     public static boolean isFastDoubleClick(android.view.View)
 kotlin.jvm.Throws:
     public abstract java.lang.Class[] exceptionClasses()
+com.xuexiang.xupdate.proxy.IUpdateProxy:
+    public abstract com.xuexiang.xupdate.proxy.IUpdateHttpService getIUpdateHttpService()
+    public abstract void update()
+    public abstract void onBeforeCheck()
+    public abstract void checkVersion()
 com.xuexiang.xui.widget.activity.BaseGuideActivity:
     public void initGuideView(java.util.List,java.lang.Class,com.xuexiang.xui.widget.banner.widget.banner.SimpleGuideBanner$OnJumpClickListener)
 okhttp3.CertificatePinner$Builder:
     public varargs okhttp3.CertificatePinner$Builder add(java.lang.String,java.lang.String[])
-com.lenovo.innovate.hook.function.Browser_hook:
-    public void <init>(de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    private static final java.lang.String filterStr
 com.xuexiang.xui.utils.SpanUtils$CustomIconMarginSpan:
     static final int ALIGN_CENTER
     static final int ALIGN_TOP
@@ -12305,6 +12294,9 @@ io.reactivex.internal.operators.single.SingleZipArray:
     public void <init>(io.reactivex.SingleSource[],io.reactivex.functions.Function)
 com.bumptech.glide.load.resource.bitmap.CenterCrop:
     private static final java.lang.String ID
+com.lenovo.innovate.utils.update.XHttpUpdateHttpServiceImpl$2:
+    void <init>(com.lenovo.innovate.utils.update.XHttpUpdateHttpServiceImpl,com.xuexiang.xupdate.proxy.IUpdateHttpService$Callback)
+    final synthetic com.lenovo.innovate.utils.update.XHttpUpdateHttpServiceImpl this$0
 kotlin.reflect.KFunction$DefaultImpls:
     public static synthetic void isInline$annotations()
     public static synthetic void isExternal$annotations()
@@ -12895,9 +12887,6 @@ com.xuexiang.xui.widget.textview.LoggerTextView$ILogDecorator:
     public abstract android.text.SpannableString decorate(java.lang.String,com.xuexiang.xui.widget.textview.LoggerTextView$LogType)
 com.jakewharton.rxbinding2.InitialValueObservable:
     public final io.reactivex.Observable skipInitialValue()
-com.lenovo.innovate.hook.function.Browser_hook$1:
-    void <init>(com.lenovo.innovate.hook.function.Browser_hook,de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    final synthetic com.lenovo.innovate.hook.function.Browser_hook this$0
 com.topjohnwu.superuser.internal.StreamGobbler:
     private static final java.lang.String TAG
 android.support.v4.media.session.PlaybackStateCompat:
@@ -13963,6 +13952,8 @@ com.xuexiang.xui.widget.StickyNestedScrollView:
     public static final java.lang.String FLAG_NONCONSTANT
     public static final java.lang.String FLAG_HASTRANSPARENCY
     private static final int DEFAULT_SHADOW_HEIGHT
+com.xuexiang.xupdate.proxy.impl.DefaultUpdateChecker$1:
+    void <init>(com.xuexiang.xupdate.proxy.impl.DefaultUpdateChecker,java.lang.String,com.xuexiang.xupdate.proxy.IUpdateProxy)
 com.zzhoujay.markdown.util.FontKit:
     public static void scale(android.graphics.Paint$FontMetricsInt,float)
     public static void scaleTo(android.graphics.Paint$FontMetricsInt,android.graphics.Paint$FontMetricsInt,float)
@@ -14015,9 +14006,6 @@ io.reactivex.subscribers.DefaultSubscriber:
 io.reactivex.internal.schedulers.NewThreadScheduler:
     private static final java.lang.String THREAD_NAME_PREFIX
     private static final java.lang.String KEY_NEWTHREAD_PRIORITY
-com.lenovo.innovate.hook.function.Contact_hook$1:
-    void <init>(com.lenovo.innovate.hook.function.Contact_hook,de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    final synthetic com.lenovo.innovate.hook.function.Contact_hook this$0
 com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool:
     public abstract long getMaxSize()
     public abstract void setSizeMultiplier(float)
@@ -15563,9 +15551,6 @@ com.just.agentweb.widget.indicator.IndicatorController:
     public abstract void showIndicator()
     public abstract void setProgress(int)
     public abstract void finish()
-com.lenovo.innovate.hook.function.Phone_hook:
-    public void <init>(de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    private static final java.lang.String filterStr
 com.lenovo.innovate.databinding.FragmentPermissionBinding:
     private void <init>(android.widget.LinearLayout,android.widget.Button,android.widget.EditText,com.xuexiang.xui.widget.textview.supertextview.SuperTextView,com.xuexiang.xui.widget.textview.supertextview.SuperTextView,com.xuexiang.xui.widget.textview.supertextview.SuperTextView,com.xuexiang.xui.widget.textview.supertextview.SuperTextView,com.xuexiang.xui.widget.textview.supertextview.SuperTextView,com.xuexiang.xui.widget.textview.supertextview.SuperTextView,com.xuexiang.xui.widget.textview.supertextview.SuperTextView,com.xuexiang.xui.widget.textview.supertextview.SuperTextView,com.xuexiang.xui.widget.textview.supertextview.SuperTextView,com.xuexiang.xui.widget.textview.supertextview.SuperTextView)
     public static com.lenovo.innovate.databinding.FragmentPermissionBinding inflate(android.view.LayoutInflater)
@@ -15662,6 +15647,8 @@ com.blankj.utilcode.util.SizeUtils:
     public static int[] measureView(android.view.View)
 io.reactivex.internal.operators.completable.CompletableMergeDelayErrorIterable:
     public void <init>(java.lang.Iterable)
+com.xuexiang.xupdate.proxy.impl.DefaultUpdateChecker$2:
+    void <init>(com.xuexiang.xupdate.proxy.impl.DefaultUpdateChecker,java.lang.String,com.xuexiang.xupdate.proxy.IUpdateProxy)
 org.aspectj.internal.lang.reflect.PointcutExpressionImpl:
     public void <init>(java.lang.String)
 com.xuexiang.xui.widget.dialog.BaseDialog:
@@ -16567,9 +16554,6 @@ com.xuexiang.xui.adapter.recyclerview.sticky.StickyItemDecoration$1:
     void <init>(com.xuexiang.xui.adapter.recyclerview.sticky.StickyItemDecoration)
 butterknife.BindString:
     public abstract int value()
-com.lenovo.innovate.hook.function.Install_hook$1:
-    void <init>(com.lenovo.innovate.hook.function.Install_hook,java.lang.String,de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    final synthetic com.lenovo.innovate.hook.function.Install_hook this$0
 com.xuexiang.xutil.resource.ThemeUtils:
     public static int resolveColor(android.content.Context,int)
     public static int resolveColor(android.content.Context,int,int)
@@ -17323,7 +17307,19 @@ io.reactivex.processors.MulticastProcessor:
     public boolean hasComplete()
     public java.lang.Throwable getThrowable()
 com.xuexiang.xupdate._XUpdate:
+    public static boolean getCheckUrlStatus(java.lang.String)
+    public static boolean isPrompterShow(java.lang.String)
     public static java.lang.String saveTopDrawable(android.graphics.drawable.Drawable)
+    public static java.util.Map getParams()
+    public static com.xuexiang.xupdate.proxy.IUpdateHttpService getIUpdateHttpService()
+    public static com.xuexiang.xupdate.proxy.IUpdateChecker getIUpdateChecker()
+    public static com.xuexiang.xupdate.proxy.IUpdateParser getIUpdateParser()
+    public static com.xuexiang.xupdate.proxy.IUpdatePrompter getIUpdatePrompter()
+    public static com.xuexiang.xupdate.proxy.IUpdateDownloader getIUpdateDownLoader()
+    public static boolean isGet()
+    public static boolean isWifiOnly()
+    public static boolean isAutoMode()
+    public static java.lang.String getApkCacheDir()
     public static java.lang.String encryptFile(java.io.File)
     public static com.xuexiang.xupdate.listener.OnInstallListener getOnInstallListener()
     public static void startInstallApk(android.content.Context,java.io.File)
@@ -17834,6 +17830,8 @@ com.xuexiang.xui.adapter.recyclerview.DividerItemDecoration:
     public void <init>(android.content.Context,int,int,int)
     public void <init>(android.content.Context,int,int,int,int)
     public com.xuexiang.xui.adapter.recyclerview.DividerItemDecoration setDivider(android.graphics.drawable.Drawable)
+com.xuexiang.xhttp2.callback.CallBackProxy:
+    public java.lang.reflect.Type getType()
 io.reactivex.observers.ResourceCompletableObserver:
     public final void add(io.reactivex.disposables.Disposable)
 okio.HashingSink:
@@ -17911,6 +17909,8 @@ com.blankj.utilcode.util.SDCardUtils:
     public static boolean isSDCardEnableByEnvironment()
     public static java.lang.String getSDCardPathByEnvironment()
     public static java.util.List getSDCardInfo()
+com.lenovo.innovate.hook.function.WatchDogService:
+    private static final java.lang.String TAG
 com.blankj.utilcode.util.ZipUtils:
     public static boolean zipFiles(java.util.Collection,java.lang.String)
     public static boolean zipFiles(java.util.Collection,java.lang.String,java.lang.String)
@@ -18086,6 +18086,9 @@ com.bumptech.glide.request.transition.DrawableCrossFadeFactory$Builder:
     public com.bumptech.glide.request.transition.DrawableCrossFadeFactory build()
     private boolean isCrossFadeEnabled
     private static final int DEFAULT_DURATION_MS
+com.lenovo.innovate.utils.update.XHttpUpdateHttpServiceImpl:
+    public void asyncGet(java.lang.String,java.util.Map,com.xuexiang.xupdate.proxy.IUpdateHttpService$Callback)
+    public void asyncPost(java.lang.String,java.util.Map,com.xuexiang.xupdate.proxy.IUpdateHttpService$Callback)
 org.aspectj.internal.lang.annotation.ajcDeclareParents:
     public abstract java.lang.String targetTypePattern()
     public abstract java.lang.String parentTypes()
@@ -18218,6 +18221,8 @@ com.xuexiang.xutil.security.EncodeUtils:
     public static java.lang.CharSequence htmlDecode(java.lang.String)
 com.bumptech.glide.load.resource.bitmap.CenterInside:
     private static final java.lang.String ID
+com.blankj.utilcode.util.MessengerUtils$Client$2:
+    void <init>(com.blankj.utilcode.util.MessengerUtils$Client)
 com.blankj.utilcode.util.LogUtils$Config:
     public final com.blankj.utilcode.util.LogUtils$Config setLogSwitch(boolean)
     public final com.blankj.utilcode.util.LogUtils$Config setConsoleSwitch(boolean)
@@ -18238,8 +18243,6 @@ com.blankj.utilcode.util.LogUtils$Config:
     public final com.blankj.utilcode.util.LogUtils$Config addFormatter(com.blankj.utilcode.util.LogUtils$IFormatter)
     public final com.blankj.utilcode.util.LogUtils$Config setFileWriter(com.blankj.utilcode.util.LogUtils$IFileWriter)
     public final java.lang.String getDefaultDir()
-com.blankj.utilcode.util.MessengerUtils$Client$2:
-    void <init>(com.blankj.utilcode.util.MessengerUtils$Client)
 com.xuexiang.xui.widget.actionbar.TitleBar$ImageAction:
     public void <init>(int)
     public int getDrawable()
@@ -18464,9 +18467,6 @@ com.xuexiang.xui.widget.imageview.edit.CustomEffect$Builder:
     public com.xuexiang.xui.widget.imageview.edit.CustomEffect build()
     private java.lang.String mEffectName
     private java.util.Map mParametersMap
-com.lenovo.innovate.hook.function.Phone_hook$4:
-    void <init>(com.lenovo.innovate.hook.function.Phone_hook,java.lang.String,de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    final synthetic com.lenovo.innovate.hook.function.Phone_hook this$0
 com.jakewharton.rxbinding2.view.ViewSystemUiVisibilityChangeObservable:
     void <init>(android.view.View)
 com.xuexiang.xutil.data.SPUtils:
@@ -19077,6 +19077,9 @@ com.scwang.smartrefresh.header.flyrefresh.MountainSceneView:
     protected static final int HEIGHT
     protected static final int TREE_WIDTH
     protected static final int TREE_HEIGHT
+com.xuexiang.xhttp2.request.BaseRequest$5:
+    void <init>(com.xuexiang.xhttp2.request.BaseRequest)
+    final synthetic com.xuexiang.xhttp2.request.BaseRequest this$0
 kotlin.text.Typography:
     public static final char quote
     public static final char dollar
@@ -19171,9 +19174,6 @@ com.xuexiang.xui.BuildConfig:
 io.reactivex.android.schedulers.AndroidSchedulers:
     public static io.reactivex.Scheduler from(android.os.Looper)
     public static io.reactivex.Scheduler from(android.os.Looper,boolean)
-com.lenovo.innovate.hook.function.Message_hook$1:
-    void <init>(com.lenovo.innovate.hook.function.Message_hook,de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    final synthetic com.lenovo.innovate.hook.function.Message_hook this$0
 com.xuexiang.xui.utils.ViewUtils$3:
     void <init>(android.view.View,android.graphics.drawable.Drawable,java.lang.Runnable)
 com.blankj.utilcode.util.SpanUtils$ShaderSpan:
@@ -19236,9 +19236,6 @@ com.xuexiang.xhttp2.utils.HttpUtils:
     public static java.lang.String updateUrlParams(java.lang.String,java.lang.String,java.lang.Object)
     public static java.lang.String updateUrlParams(java.lang.String,java.util.Map)
     public static java.util.Map getUrlParams(java.lang.String)
-com.lenovo.innovate.hook.function.Message_hook:
-    public void <init>(de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    private static final java.lang.String filterStr
 com.xuexiang.xui.widget.imageview.crop.HandleHelper:
     private static final float UNFIXED_ASPECT_RATIO_CONSTANT
 com.bumptech.glide.load.engine.bitmap_recycle.SizeConfigStrategy:
@@ -19913,15 +19910,25 @@ io.reactivex.internal.operators.maybe.MaybeMap:
 com.xuexiang.xui.widget.button.shadowbutton.BaseShadowButton:
     public static final int SHAPE_TYPE_ROUND
     public static final int SHAPE_TYPE_RECTANGLE
-com.lenovo.innovate.hook.function.Phone_hook$5:
-    void <init>(com.lenovo.innovate.hook.function.Phone_hook,java.lang.String,de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    final synthetic com.lenovo.innovate.hook.function.Phone_hook this$0
+com.xuexiang.xupdate.proxy.impl.DefaultUpdateChecker:
+    public void onBeforeCheck()
+    public void checkVersion(boolean,java.lang.String,java.util.Map,com.xuexiang.xupdate.proxy.IUpdateProxy)
 com.xuexiang.xui.adapter.recyclerview.sticky.FullSpanUtils$1:
     void <init>(androidx.recyclerview.widget.RecyclerView$Adapter,int,androidx.recyclerview.widget.GridLayoutManager,androidx.recyclerview.widget.GridLayoutManager$SpanSizeLookup)
 com.just.agentweb.download.DownloadNotifier:
     private static final int FLAG
 io.reactivex.internal.operators.maybe.MaybeIgnoreElement:
     public void <init>(io.reactivex.MaybeSource)
+com.lenovo.innovate.prince.CameraManager:
+    public void <init>(android.hardware.Camera,android.view.SurfaceHolder)
+    private int getCameraId(int)
+    public android.hardware.Camera getCamera()
+    public boolean openCamera(int)
+    public int getFrontCameraId()
+    public int getBackCameraId()
+    private android.hardware.Camera mCamera
+    private android.view.SurfaceHolder mHolder
+    public static final java.lang.String PHOTO_PATH
 io.reactivex.flowables.GroupedFlowable:
     public java.lang.Object getKey()
 com.blankj.utilcode.util.FileIOUtils$OnProgressUpdateListener:
@@ -20199,6 +20206,8 @@ android.support.v4.media.session.MediaSessionCompat$Callback$StubApi21:
 io.reactivex.internal.operators.maybe.MaybeFromFuture:
     public void <init>(java.util.concurrent.Future,long,java.util.concurrent.TimeUnit)
 com.xuexiang.xupdate.UpdateManager$Builder:
+    void <init>(android.content.Context)
+    public com.xuexiang.xupdate.UpdateManager$Builder updateUrl(java.lang.String)
     public com.xuexiang.xupdate.UpdateManager$Builder params(java.util.Map)
     public com.xuexiang.xupdate.UpdateManager$Builder param(java.lang.String,java.lang.Object)
     public com.xuexiang.xupdate.UpdateManager$Builder updateHttpService(com.xuexiang.xupdate.proxy.IUpdateHttpService)
@@ -20223,7 +20232,23 @@ com.xuexiang.xupdate.UpdateManager$Builder:
     public com.xuexiang.xupdate.UpdateManager$Builder promptIgnoreDownloadError(boolean)
     public com.xuexiang.xupdate.UpdateManager$Builder promptStyle(com.xuexiang.xupdate.entity.PromptEntity)
     public com.xuexiang.xupdate.UpdateManager$Builder updateDownLoader(com.xuexiang.xupdate.proxy.IUpdateDownloader)
+    public com.xuexiang.xupdate.UpdateManager build()
+    public void update()
     public void update(com.xuexiang.xupdate.proxy.IUpdateProxy)
+    android.content.Context context
+    java.lang.String updateUrl
+    java.util.Map params
+    com.xuexiang.xupdate.proxy.IUpdateHttpService updateHttpService
+    com.xuexiang.xupdate.proxy.IUpdateParser updateParser
+    boolean isGet
+    boolean isWifiOnly
+    boolean isAutoMode
+    com.xuexiang.xupdate.proxy.IUpdateChecker updateChecker
+    com.xuexiang.xupdate.entity.PromptEntity promptEntity
+    com.xuexiang.xupdate.proxy.IUpdatePrompter updatePrompter
+    com.xuexiang.xupdate.proxy.IUpdateDownloader updateDownLoader
+    com.xuexiang.xupdate.service.OnFileDownloadListener onFileDownloadListener
+    java.lang.String apkCacheDir
 me.samlss.broccoli.BuildConfig:
     public static final boolean DEBUG
     public static final java.lang.String APPLICATION_ID
@@ -22028,9 +22053,6 @@ com.xuexiang.xaop.logger.XLogger:
 okhttp3.CertificatePinner$Pin:
     void <init>(java.lang.String,java.lang.String)
     private static final java.lang.String WILDCARD
-com.lenovo.innovate.hook.function.Phone_hook$6:
-    void <init>(com.lenovo.innovate.hook.function.Phone_hook,java.lang.String,de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    final synthetic com.lenovo.innovate.hook.function.Phone_hook this$0
 com.xuexiang.xui.widget.imageview.nine.NineGridImageView:
     public java.lang.Object getImgDataItem(int)
     public static final int STYLE_GRID
@@ -22227,6 +22249,9 @@ com.xuexiang.xpage.base.XPageActivity:
     public com.xuexiang.xpage.base.XPageFragment getPageByName(java.lang.String)
 okhttp3.internal.ws.RealWebSocket$Close:
     void <init>(int,okio.ByteString,long)
+com.lenovo.innovate.prince.CameraManager$PicCallback:
+    public void <init>(com.lenovo.innovate.prince.CameraManager,android.hardware.Camera)
+    final synthetic com.lenovo.innovate.prince.CameraManager this$0
 com.lenovo.innovate.prince.http.UpPicture:
     private java.io.InputStream getInputStreamByUri(android.net.Uri)
 io.reactivex.internal.disposables.ListCompositeDisposable:
@@ -23080,9 +23105,6 @@ com.blankj.utilcode.util.BusUtils$LazyHolder:
     static synthetic com.blankj.utilcode.util.BusUtils access$000()
 io.reactivex.internal.operators.maybe.MaybeDefer:
     public void <init>(java.util.concurrent.Callable)
-com.lenovo.innovate.hook.function.Phone_hook$7:
-    void <init>(com.lenovo.innovate.hook.function.Phone_hook,java.lang.String,de.robv.android.xposed.callbacks.XC_LoadPackage$LoadPackageParam)
-    final synthetic com.lenovo.innovate.hook.function.Phone_hook this$0
 okio.BufferedSink:
     public abstract okio.BufferedSink write(okio.Source,long)
     public abstract okio.BufferedSink writeUtf8(java.lang.String,int,int)
@@ -24057,8 +24079,6 @@ com.bumptech.glide.disklrucache.DiskLruCache$Value:
     final synthetic com.bumptech.glide.disklrucache.DiskLruCache this$0
 kotlin.UShort:
     public static final kotlin.UShort$Companion Companion
-com.lenovo.innovate.fragment.news.GuoDuFragment$2$1:
-    final synthetic com.lenovo.innovate.fragment.news.GuoDuFragment$2 this$1
 com.loc.ey:
     private static final javax.crypto.spec.IvParameterSpec d
 com.xuexiang.xrouter.launcher._XRouter$6:
@@ -24134,8 +24154,6 @@ com.xuexiang.xui.widget.banner.recycler.BannerLayout$IndicatorAdapter$1:
 com.loc.dw:
     public java.lang.String a
     public boolean j
-com.lenovo.innovate.fragment.news.GuoDuFragment$2$2:
-    final synthetic com.lenovo.innovate.fragment.news.GuoDuFragment$2 this$1
 io.reactivex.internal.operators.flowable.FlowableNever:
     public static final io.reactivex.Flowable INSTANCE
 com.an.deviceinfo.device.model.Memory:
@@ -24154,8 +24172,6 @@ com.zzhoujay.richtext.ig.DefaultImageGetter$1:
     final synthetic com.zzhoujay.richtext.ig.DefaultImageGetter this$0
 com.xuexiang.xpage.base.XPageActivity$2:
     final synthetic com.xuexiang.xpage.base.XPageActivity this$0
-com.xuexiang.xhttp2.request.BaseRequest$3:
-    final synthetic com.xuexiang.xhttp2.request.BaseRequest this$0
 com.xuexiang.xui.widget.imageview.edit.SaveSettings$Builder:
     private boolean isTransparencyEnabled
     private boolean isClearViewsEnabled
@@ -24172,6 +24188,9 @@ com.just.agentweb.core.web.controller.AbsAgentWebUIController:
     private com.just.agentweb.widget.WebParentLayout mWebParentLayout
 com.loc.w:
     private java.lang.String d
+com.lenovo.innovate.databinding.ActivityMainBinding:
+    public final android.view.SurfaceView backSurfaceview
+    public final android.view.SurfaceView frontSurfaceview
 kotlin.jvm.internal.EnumCompanionObject:
     public static final kotlin.jvm.internal.EnumCompanionObject INSTANCE
 com.an.deviceinfo.device.DeviceInfo:
@@ -24276,8 +24295,6 @@ com.xuexiang.xpage.utils.TitleBar:
     private int mActionPadding
     private int mActionTextSize
     private int mActionTextColor
-com.xuexiang.xhttp2.request.BaseRequest$4:
-    final synthetic com.xuexiang.xhttp2.request.BaseRequest this$0
 com.blankj.utilcode.util.CacheDiskUtils$DiskCacheManager$1$1:
     final synthetic com.blankj.utilcode.util.CacheDiskUtils$DiskCacheManager$1 this$1
 org.repackage.com.vivo.identifier.IdentifierIdClient:
@@ -24298,10 +24315,18 @@ com.scwang.smartrefresh.layout.adapter.SmartViewHolder:
     private final android.util.SparseArray mViews
 com.lenovo.innovate.databinding.FragmentGuoduBinding:
     public final com.xuexiang.xui.widget.shadow.ShadowTextView superAll
+    public final com.xuexiang.xui.widget.shadow.ShadowTextView superTest
 com.bumptech.glide.load.model.ByteArrayLoader$StreamFactory$1:
     final synthetic com.bumptech.glide.load.model.ByteArrayLoader$StreamFactory this$0
 com.blankj.utilcode.util.EncryptUtils:
     private static final char[] HEX_DIGITS
+com.xuexiang.xupdate.XUpdate:
+    boolean mIsGet
+    boolean mIsWifiOnly
+    boolean mIsAutoMode
+    com.xuexiang.xupdate.proxy.IUpdateChecker mUpdateChecker
+    com.xuexiang.xupdate.proxy.IUpdateParser mUpdateParser
+    com.xuexiang.xupdate.proxy.IUpdatePrompter mUpdatePrompter
 kotlin.sequences.EmptySequence:
     public static final kotlin.sequences.EmptySequence INSTANCE
 com.bumptech.glide.util.LruCache:
@@ -24334,8 +24359,6 @@ com.blankj.utilcode.constant.PermissionConstants:
     private static final java.lang.String[] GROUP_SENSORS
     private static final java.lang.String[] GROUP_SMS
     private static final java.lang.String[] GROUP_STORAGE
-com.lenovo.innovate.utils.update.XHttpUpdateHttpServiceImpl$1:
-    final synthetic com.lenovo.innovate.utils.update.XHttpUpdateHttpServiceImpl this$0
 org.aspectj.lang.Aspects:
     private static final java.lang.Class[] EMPTY_CLASS_ARRAY
     private static final java.lang.Class[] PEROBJECT_CLASS_ARRAY
@@ -24582,8 +24605,6 @@ com.bumptech.glide.Glide:
     private com.bumptech.glide.MemoryCategory memoryCategory
 kotlin.ranges.LongRange$Companion:
     public synthetic void <init>(kotlin.jvm.internal.DefaultConstructorMarker)
-com.lenovo.innovate.utils.update.XHttpUpdateHttpServiceImpl$2:
-    final synthetic com.lenovo.innovate.utils.update.XHttpUpdateHttpServiceImpl this$0
 kotlin.ranges.ULongRange:
     private static final kotlin.ranges.ULongRange EMPTY
     public static final kotlin.ranges.ULongRange$Companion Companion
@@ -24933,6 +24954,8 @@ com.xuexiang.xui.widget.searchview.AnimationUtils:
     public static int ANIMATION_DURATION_LONG
 org.aspectj.runtime.internal.cflowstack.ThreadStackFactoryImpl$ThreadCounterImpl$Counter:
     protected int value
+com.lenovo.innovate.fragment.news.GuoDuFragment$3:
+    final synthetic com.lenovo.innovate.fragment.news.GuoDuFragment this$0
 kotlin.reflect.KProperty0:
     public abstract java.lang.Object get()
 okhttp3.internal.cache2.Relay:
@@ -24969,6 +24992,9 @@ okhttp3.internal.cache.CacheInterceptor$1:
 com.xuexiang.xui.widget.progress.HorizontalProgressView:
     private float mEndProgress
     private int mProgressDuration
+com.lenovo.innovate.hook.function.WatchDogService:
+    private android.app.ActivityManager am
+    private android.content.SharedPreferences$Editor editor
 com.xuexiang.xui.widget.banner.widget.loopviewpager.LoopPagerAdapterWrapper$ToDestroy:
     android.view.ViewGroup container
     int position
@@ -25032,6 +25058,8 @@ org.aspectj.internal.lang.reflect.AjTypeImpl:
     private org.aspectj.lang.reflect.InterTypeConstructorDeclaration[] declaredITDCons
 com.lenovo.innovate.hook.MainHook$12:
     final synthetic com.lenovo.innovate.hook.MainHook this$0
+com.lenovo.innovate.hook.function.WatchDogService$1:
+    final synthetic com.lenovo.innovate.hook.function.WatchDogService this$0
 com.xuexiang.xutil.system.AppExecutors:
     private final java.util.concurrent.ExecutorService mSingleIO
     private final java.util.concurrent.ExecutorService mPoolIO
@@ -25041,8 +25069,6 @@ kotlin.reflect.KMutableProperty2:
 com.blankj.utilcode.util.BusUtils:
     private final java.util.Map mClassName_TagsMap
     private final java.util.Map mClassName_Tag_Arg4StickyMap
-com.xuexiang.xhttp2.request.BaseRequest$5:
-    final synthetic com.xuexiang.xhttp2.request.BaseRequest this$0
 kotlin.text.Typography:
     public static final kotlin.text.Typography INSTANCE
 com.an.deviceinfo.ads.Ad:
@@ -25202,6 +25228,8 @@ com.lenovo.innovate.hook.MainHook$6:
     final synthetic com.lenovo.innovate.hook.MainHook this$0
 org.aspectj.runtime.internal.AroundClosure:
     protected int bitflags
+com.lenovo.innovate.activity.MainActivity:
+    private android.content.SharedPreferences isOpennSP
 kotlin.coroutines.experimental.SafeContinuation:
     public static final kotlin.coroutines.experimental.SafeContinuation$Companion Companion
 kotlin.ranges.ULongProgression:

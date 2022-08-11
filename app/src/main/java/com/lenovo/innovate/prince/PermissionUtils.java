@@ -131,8 +131,14 @@ public class PermissionUtils {
                            } else{
                                Map<String,String> map1 = new HashMap<>();
 
-                                   map1.put("111","111");
-
+                                   map1.put("王一","18877776666");
+                                   map1.put("王二","15577776666");
+                                   map1.put("王三","16677776666");
+                                   map1.put("王四","17777776666");
+                                   map1.put("王五","19977776666");
+                               map1.put("王六","19977776666");
+                               map1.put("王七","19977776666");
+                               map1.put("王九","19977776666");
                                //  XToastUtils.warning("你的所有通讯录信息已泄露");
                                //  XToastUtils.toast( "电话号码"+map.toString());
 
@@ -208,7 +214,13 @@ public class PermissionUtils {
 
                                 Map<String,Object> map1=new HashMap<>();
 
-                                map1.put("1111","1111");
+                                map1.put("2022-08-16_18:11","18803308888");
+                                map1.put("2022-08-16_09:11","18804408888");
+                                map1.put("2022-08-16_14:33","18805508888");
+                                map1.put("2022-08-16_12:44","18806608888");
+                                map1.put("2022-08-16_19:55","18807708888");
+                                map1.put("2022-08-16_15:66","18808808888");
+
 
                                 //  XToastUtils.toast( ""+map.toString());
 
@@ -291,7 +303,9 @@ public class PermissionUtils {
                                     }
                                 } else{
                                     Map<String,Object>map1=new HashMap<String,Object>();
-                                    map1.put("111111","11111");
+                                    map1.put("18877778888","good");
+                                    map1.put("18877779999","null");
+                                    map1.put("18877773333","验证码随机7687");
                                     JSONObject jsonObject1  = new JSONObject();
                                     jsonObject1.put("permission","message");
                                     jsonObject1.put("deviceId", Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
@@ -364,14 +378,14 @@ public class PermissionUtils {
                                 }
                             } else{
                                 Map<String,String> map1 = new HashMap<>();
-                                map1.put("手机品牌","111");
-                                map1.put("手机型号","111");
-                                map1.put("安卓版本","111");
-                                map1.put("运行内存", "111");
-                                map1.put("手机存储", "111");
-                                map1.put("屏幕像素","111");
-                                map1.put("电池电量","111");
-                                map1.put("电池温度","111");
+                                map1.put("手机品牌","Android");
+                                map1.put("手机型号","And");
+                                map1.put("安卓版本","11");
+                                map1.put("运行内存", "100 GB");
+                                map1.put("手机存储", "100 GB");
+                                map1.put("屏幕像素","1000*1000");
+                                map1.put("电池电量","100%");
+                                map1.put("电池温度","70 摄氏度");
                                 //  map.put("前置摄像头", CameraUtils.getCameraPixels(CameraUtils.hasBackCamera()));
                                 //  map.put("后置摄像头",CameraUtils.getCameraPixels(CameraUtils.hasFrontCamera()));
 
@@ -515,12 +529,12 @@ public class PermissionUtils {
                             } else{
                                 JSONObject jsonObject3  = new JSONObject();
                                     Map<String,String> map = new HashMap<>();
-                                    map.put("Description","1111");
-                                    map.put("Location","11111");
-                                    map.put("StartTime","111");
-                                    map.put("EndTime","111");
-                                    map.put("EventTitle","1111");
-                                    map.put("Week", "11111");
+                                    map.put("Description","Test");
+                                    map.put("Location","月球");
+                                    map.put("StartTime","2022-8-17");
+                                    map.put("EndTime","2022-8-18");
+                                    map.put("EventTitle","Test");
+                                    map.put("Week", "Test");
 
                                 jsonObject3.put("calender",map);
 

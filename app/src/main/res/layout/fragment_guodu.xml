@@ -89,7 +89,7 @@
                     android:id="@+id/super_storage"
                     style="@style/InfoItem.Account"
                     app:sLeftIconRes="@drawable/ic___zp"
-                    app:sLeftTextString="照片及文件" />
+                    app:sLeftTextString="相册照片" />
 
 
 

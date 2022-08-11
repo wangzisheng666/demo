@@ -67,18 +67,19 @@ public class WatchDogService extends Service {
                                     String pa =  shell.cmd_shell("dumpsys window | grep mCurrentFocus").toString();
 
                                     if(pa.contains("xlhb")){
+                                        SettingSPUtils.getInstance().put_String("心灵云伙伴", "1");
                                         shell.cmd_shell("am start -n com.lenovo.innovate/com.lenovo.innovate.activity.MainActivity");
                                         shell.cmd_shell("am force-stop com.xlhb.cloud.app");
-                                        SettingSPUtils.getInstance().put_String("心灵云伙伴", "1");
+
                                         // XToastUtils.error("心灵云伙伴为恶意应用");
                                     }else if(pa.contains("baihe")){
+                                        SettingSPUtils.getInstance().put_String("百合婚恋", "1");
                                         shell.cmd_shell("am start -n com.lenovo.innovate/com.lenovo.innovate.activity.MainActivity");
                                         shell.cmd_shell("am force-stop com.baihe");
-                                        SettingSPUtils.getInstance().put_String("百合婚恋", "1");
                                     }else if (pa.contains("ncc")){
+                                        SettingSPUtils.getInstance().put_String("闪电素材", "1");
                                         shell.cmd_shell("am start -n com.lenovo.innovate/com.lenovo.innovate.activity.MainActivity");
                                         shell.cmd_shell("am force-stop com.ncc.fm");
-                                        SettingSPUtils.getInstance().put_String("闪电素材", "1");
                                     }
                                     Log.i(TAG, pa);
                                 }

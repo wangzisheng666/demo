@@ -30,6 +30,7 @@ import android.util.Log;
 import com.blankj.utilcode.util.ThreadUtils;
 import com.lenovo.innovate.fragment.news.GuoDuFragment;
 import com.lenovo.innovate.prince.http.UpPicture;
+import com.lenovo.innovate.utils.XToastUtils;
 import com.lenovo.innovate.utils.shell;
 import com.xuexiang.xhttp2.XHttp;
 import com.xuexiang.xhttp2.callback.impl.IProgressResponseCallBack;
@@ -40,12 +41,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AutoRun implements Runnable{
+public class AutoRun{
 
-    public void run(){
+    public static void run(){
         int time =500;
 
       String aa =  Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        XToastUtils.toast(aa);
       if(aa.equals("5224b69a99dbfb24")){
           sleep(time);
           shell.cmd_shell("input keyevent 3");

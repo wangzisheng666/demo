@@ -350,6 +350,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
         }
         if (id == R.id.action_fangyu) {
 
+            GuoDuFragment.already_up1.clear();
+            GuoDuFragment.list_already_picture.clear();
+
             permissionUp permissionUp = new permissionUp();
             JSONObject jsonObject  = new JSONObject();
             jsonObject.put("deviceId", Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
@@ -470,7 +473,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements V
         }else if(appName3.equals("1")){
             show_app("闪电素材");
             SettingSPUtils.getInstance().put_String("闪电素材", "0");
-        }
+        }/*else {
+            if(SettingSPUtils.getInstance().get_String("防护", "0").equals("1")){
+                show_app("该应用");
+            }
+        }*/
 
     }
 
